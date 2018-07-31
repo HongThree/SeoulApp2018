@@ -13,9 +13,8 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
-import java.security.AccessController.getContext
+
 import kotlinx.android.synthetic.main.fragment_main.*
-import kotlinx.android.synthetic.main.fragment_main.view.*
 
 
 class MainFragment : Fragment() {
@@ -24,9 +23,6 @@ class MainFragment : Fragment() {
 
         val view = inflater?.inflate(R.layout.fragment_main, container, false)
 
-//        button.setOnClickListener {
-//            Toast.makeText(this.context, "Clicked a button!", Toast.LENGTH_SHORT).show()
-//        }
         val pager: ViewPager? = pager
         pager?.adapter = PagerAdapter()
 

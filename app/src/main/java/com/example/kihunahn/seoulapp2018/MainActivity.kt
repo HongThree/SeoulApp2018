@@ -21,7 +21,6 @@ class MainActivity : AppCompatActivity(), DuoMenuView.OnMenuClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        //////////////////////////////////////////////
         mTitles = ArrayList<String>(Arrays.asList(*resources.getStringArray(R.array.menuOptions)))
 
         // Initialize the views
