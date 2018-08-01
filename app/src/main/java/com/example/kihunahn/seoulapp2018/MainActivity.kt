@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -23,6 +24,9 @@ class MainActivity : AppCompatActivity() {
             var user = firebaseAuth.currentUser
             if(user != null){
                 startActivity(Intent(this, HomeActivity::class.java))
+            }
+            else{
+                Log.d("s","what the f")
             }
         }
         // 구글 로그인 옵션

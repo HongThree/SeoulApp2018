@@ -23,6 +23,14 @@
           }
         },
         {
+          "client_id": "300002618214-srer32qr4pbgk7ig9740gt9fsd7ve93v.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.kihunahn.seoulapp2018",
+            "certificate_hash": "89f39db6a9bf4a426cc8021cf69a39f4ec9cf268"
+          }
+        },
+        {
           "client_id": "300002618214-mbckp97l0k4qg67pe54plddh6gq64m5e.apps.googleusercontent.com",
           "client_type": 3
         }
