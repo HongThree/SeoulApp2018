@@ -79,7 +79,7 @@ class HomeActivity : AppCompatActivity(), DuoMenuView.OnMenuClickListener {
     }
 
     private fun goToFragment(fragment: Fragment, addToBackStack: Boolean) {
-        val transaction = supportFragmentManager.beginTransaction()
+        var transaction = supportFragmentManager.beginTransaction()
 
         if (addToBackStack) {
             transaction.addToBackStack(null)
@@ -100,7 +100,7 @@ class HomeActivity : AppCompatActivity(), DuoMenuView.OnMenuClickListener {
             1 -> goToFragment(MainFragment(), false)
 
             3 ->  goToFragment(CourseFragment(), false)
-            else -> goToFragment(MainFragment(), false)
+            //else -> goToFragment(MainFragment(), false)
         }
 
         // Close the drawer
