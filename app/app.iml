@@ -156,6 +156,7 @@
     <orderEntry type="library" name="Gradle: com.android.support:cursoradapter-28.0.0-alpha3" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support.constraint:constraint-layout-1.1.2" level="project" />
     <orderEntry type="library" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib-jre7:1.2.50@jar" level="project" />
+    <orderEntry type="library" name="Gradle: com.github.imangazalievm:circlemenu-2.0.2" level="project" />
     <orderEntry type="library" name="Gradle: org.apache.httpcomponents:httpclient:4.0.1@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.google.http-client:google-http-client:1.22.0@jar" level="project" />
     <orderEntry type="library" name="Gradle: org.jetbrains:annotations:13.0@jar" level="project" />

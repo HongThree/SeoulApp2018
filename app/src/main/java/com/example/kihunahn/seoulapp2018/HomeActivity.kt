@@ -95,11 +95,11 @@ class HomeActivity : AppCompatActivity(), DuoMenuView.OnMenuClickListener {
         // Set the right options selected
         mMenuAdapter!!.setViewSelected(position, true)
 
-        if(position == 3){
-
-        }
         // Navigate to the right fragment
         when (position) {
+            1 -> goToFragment(MainFragment(), false)
+
+            3 ->  goToFragment(CourseFragment(), false)
             else -> goToFragment(MainFragment(), false)
         }
 
