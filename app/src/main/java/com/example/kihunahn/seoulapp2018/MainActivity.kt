@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
                 startActivity(Intent(this, HomeActivity::class.java))
             }
             else{
-                Log.d("s","what the f")
+                Log.d("s","login error")
             }
         }
         // 구글 로그인 옵션

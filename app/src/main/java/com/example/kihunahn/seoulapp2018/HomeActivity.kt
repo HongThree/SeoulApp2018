@@ -9,6 +9,10 @@ import nl.psdcompany.duonavigationdrawer.views.DuoMenuView
 import nl.psdcompany.duonavigationdrawer.widgets.DuoDrawerToggle
 import java.util.*
 import android.support.v4.app.Fragment
+import android.view.Menu
+import android.view.SubMenu
+import com.example.kihunahn.seoulapp2018.R.id.drawer
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_home.*
 
 class HomeActivity : AppCompatActivity(), DuoMenuView.OnMenuClickListener {
@@ -64,7 +68,10 @@ class HomeActivity : AppCompatActivity(), DuoMenuView.OnMenuClickListener {
     }
 
     override fun onFooterClicked() {
-        Toast.makeText(this, "onFooterClicked", Toast.LENGTH_SHORT).show()
+ //       Toast.makeText(this, "onFooterClicked", Toast.LENGTH_SHORT).show()
+        FirebaseAuth.getInstance().signOut()
+        finish()
+
     }
 
     override fun onHeaderClicked() {
@@ -90,12 +97,16 @@ class HomeActivity : AppCompatActivity(), DuoMenuView.OnMenuClickListener {
 
         // Navigate to the right fragment
         when (position) {
+            1 -> goToFragment(MainFragment(), false)
+
+            3 ->  goToFragment(CourseFragment(), false)
             else -> goToFragment(MainFragment(), false)
         }
 
         // Close the drawer
         mViewHolder!!.mDuoDrawerLayout.closeDrawer()
     }
+
 
     private inner class ViewHolder internal constructor() {
         val mDuoDrawerLayout: DuoDrawerLayout

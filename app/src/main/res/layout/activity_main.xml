@@ -18,7 +18,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:orientation="vertical"
-        android:text="둘\n레\n헤\n윰"
+        android:text="둘\n레\n혜\n윰"
         android:textColor="@android:color/black"
         android:textSize="70dp"
         app:layout_constraintBottom_toBottomOf="parent"
