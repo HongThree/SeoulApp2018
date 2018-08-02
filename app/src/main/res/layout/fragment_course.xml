@@ -9,7 +9,8 @@
         android:id="@+id/circle_menu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
         app:hintsEnabled="true">
 
         <com.imangazaliev.circlemenu.CircleMenuButton
@@ -87,5 +88,14 @@
             app:icon="@drawable/ic_eight" />
 
     </com.imangazaliev.circlemenu.CircleMenu>
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="233dp"
+        android:layout_height="181dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="32dp"
+        app:srcCompat="@drawable/seoul" />
 
 </RelativeLayout>
