@@ -22,6 +22,7 @@ class HomeActivity : AppCompatActivity(), DuoMenuView.OnMenuClickListener {
 
         mTitles = ArrayList<String>(Arrays.asList(*resources.getStringArray(R.array.menuOptions)))
 
+
         // Initialize the views
         mViewHolder = ViewHolder()
 
