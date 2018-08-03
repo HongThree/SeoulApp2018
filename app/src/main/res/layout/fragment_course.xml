@@ -5,97 +5,24 @@
     android:layout_height="match_parent">
     <!--android:background=>-->
 
-    <com.imangazaliev.circlemenu.CircleMenu
-        android:id="@+id/circle_menu"
+    <TextView
+        android:id="@+id/text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        app:hintsEnabled="true">
+        android:layout_marginStart="42dp"
+        android:layout_marginTop="57dp"
+        android:text='"QWEqweqwe"'
+        android:textColor="@android:color/black" />
 
-        <com.imangazaliev.circlemenu.CircleMenuButton
-            android:id="@+id/one"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:colorNormal="#FF9800"
-            app:colorPressed="#FB8C00"
-            app:hintText="one"
-
-            app:icon="@drawable/ic_one" />
-
-        <com.imangazaliev.circlemenu.CircleMenuButton
-            android:id="@+id/two"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:colorNormal="#f5089f"
-            app:colorPressed="#90ea1f8e"
-            app:hintText="two"
-            app:icon="@drawable/ic_two" />
-
-        <com.imangazaliev.circlemenu.CircleMenuButton
-            android:id="@+id/three"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:colorNormal="#2196F3"
-            app:colorPressed="#1E88E5"
-            app:hintText="three"
-            app:icon="@drawable/ic_three" />
-
-        <com.imangazaliev.circlemenu.CircleMenuButton
-            android:id="@+id/four"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:colorNormal="#4CAF50"
-            app:colorPressed="#43A047"
-
-            app:hintText="four"
-            app:icon="@drawable/ic_four" />
-
-        <com.imangazaliev.circlemenu.CircleMenuButton
-            android:id="@+id/five"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:colorNormal="#9C27B0"
-            app:colorPressed="#8E24AA"
-            app:hintText="five"
-            app:icon="@drawable/ic_five" />
-
-        <com.imangazaliev.circlemenu.CircleMenuButton
-            android:id="@+id/six"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:colorNormal="#F44336"
-            app:colorPressed="#E53935"
-            app:hintText="six"
-            app:icon="@drawable/ic_six" />
-
-        <com.imangazaliev.circlemenu.CircleMenuButton
-            android:id="@+id/seven"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:colorNormal="#5f3e0d"
-            app:colorPressed="#5a3404"
-            app:hintText="seven"
-            app:icon="@drawable/ic_seven" />
-
-        <com.imangazaliev.circlemenu.CircleMenuButton
-            android:id="@+id/eight"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:colorNormal="#050e74"
-            app:colorPressed="#0a0559"
-            app:hintText="eight"
-            app:icon="@drawable/ic_eight" />
-
-    </com.imangazaliev.circlemenu.CircleMenu>
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="233dp"
-        android:layout_height="181dp"
+    <com.nightonke.boommenu.BoomMenuButton
+        android:id="@+id/bmb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="32dp"
-        app:srcCompat="@drawable/seoul" />
-
+        android:layout_alignParentEnd="true"
+        app:bmb_buttonEnum="simpleCircle"
+        app:bmb_buttonPlaceEnum="buttonPlace_sc_9_1"
+        app:bmb_piecePlaceEnum="piecePlace_dot_9_1" />
 </RelativeLayout>

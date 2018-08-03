@@ -81,7 +81,9 @@ class HomeActivity : AppCompatActivity(), DuoMenuView.OnMenuClickListener {
         if (addToBackStack) {
             transaction.addToBackStack(null)
         }
+
         transaction.replace(R.id.container,fragment).commit()
+
     }
 
     override fun onOptionClicked(position: Int, objectClicked: Any) {
