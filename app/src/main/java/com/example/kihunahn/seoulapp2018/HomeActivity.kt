@@ -1,19 +1,15 @@
 package com.example.kihunahn.seoulapp2018
 
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
-
+import com.google.firebase.auth.FirebaseAuth
+import kotlinx.android.synthetic.main.activity_home.*
 import nl.psdcompany.duonavigationdrawer.views.DuoDrawerLayout
 import nl.psdcompany.duonavigationdrawer.views.DuoMenuView
 import nl.psdcompany.duonavigationdrawer.widgets.DuoDrawerToggle
 import java.util.*
-import android.support.v4.app.Fragment
-import android.view.Menu
-import android.view.SubMenu
-import com.example.kihunahn.seoulapp2018.R.id.drawer
-import com.google.firebase.auth.FirebaseAuth
-import kotlinx.android.synthetic.main.activity_home.*
 
 class HomeActivity : AppCompatActivity(), DuoMenuView.OnMenuClickListener {
     private var mMenuAdapter: MenuAdapter? = null
@@ -68,7 +64,7 @@ class HomeActivity : AppCompatActivity(), DuoMenuView.OnMenuClickListener {
     }
 
     override fun onFooterClicked() {
- //       Toast.makeText(this, "onFooterClicked", Toast.LENGTH_SHORT).show()
+        //       Toast.makeText(this, "onFooterClicked", Toast.LENGTH_SHORT).show()
         FirebaseAuth.getInstance().signOut()
         finish()
 
@@ -84,8 +80,7 @@ class HomeActivity : AppCompatActivity(), DuoMenuView.OnMenuClickListener {
         if (addToBackStack) {
             transaction.addToBackStack(null)
         }
-
-        transaction.add(R.id.container, fragment).commit()
+        transaction.replace(R.id.container,fragment).commit()
     }
 
     override fun onOptionClicked(position: Int, objectClicked: Any) {
@@ -97,10 +92,10 @@ class HomeActivity : AppCompatActivity(), DuoMenuView.OnMenuClickListener {
 
         // Navigate to the right fragment
         when (position) {
-            1 -> goToFragment(MainFragment(), false)
+            0 -> goToFragment(MainFragment(), false)
 
             3 ->  goToFragment(CourseFragment(), false)
-            //else -> goToFragment(MainFragment(), false)
+        //else -> goToFragment(MainFragment(), false)
         }
 
         // Close the drawer
