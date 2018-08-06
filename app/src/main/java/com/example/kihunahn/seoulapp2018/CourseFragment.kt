@@ -8,6 +8,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import com.nightonke.boommenu.BoomButtons.SimpleCircleButton
+import com.nightonke.boommenu.BoomMenuButton
 import org.json.JSONObject
 import java.io.BufferedReader
 import java.io.InputStream
@@ -27,9 +29,14 @@ class CourseFragment : Fragment() {
         textview = view.findViewById(R.id.text) as TextView
         //AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
         Getinformation().execute(url)
-
+        val bmb = view.findViewById(R.id.bmb) as BoomMenuButton
+        for (i in 0 until bmb.buttonPlaceEnum.buttonNumber()) {
+            bmb.addBuilder(SimpleCircleButton.Builder().normalImageRes(R.drawable.ic_one))
+        }
         return view
+
     }
+
     inner class Getinformation : AsyncTask<String, String, String>(){
 
         override fun onPreExecute() {
