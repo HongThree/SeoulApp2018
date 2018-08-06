@@ -27,16 +27,6 @@ class CourseFragment : Fragment() {
 
 
 
-        assert(bmb != null)
-        bmb.buttonEnum = ButtonEnum.Ham
-        bmb.piecePlaceEnum = PiecePlaceEnum.HAM_6
-        bmb.buttonPlaceEnum = ButtonPlaceEnum.HAM_6
-
-        for (i in 0 until bmb.piecePlaceEnum.pieceNumber()) {
-            val builder = HamButton.Builder()
-            bmb.addBuilder(builder)
-        }
-
         return view
     }
 }

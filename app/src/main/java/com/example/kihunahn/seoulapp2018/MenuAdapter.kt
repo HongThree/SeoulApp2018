@@ -3,7 +3,6 @@ package com.example.kihunahn.seoulapp2018
 import android.view.View
 import nl.psdcompany.duonavigationdrawer.views.DuoOptionView
 import android.view.ViewGroup
-import java.nio.file.Files.size
 import android.widget.BaseAdapter
 
 
