@@ -10,9 +10,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="42dp"
-        android:layout_marginTop="57dp"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="131dp"
         android:text='"QWEqweqwe"'
         android:textColor="@android:color/black" />
 
@@ -23,6 +22,16 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         app:bmb_buttonEnum="simpleCircle"
-        app:bmb_buttonPlaceEnum="buttonPlace_sc_9_1"
-        app:bmb_piecePlaceEnum="piecePlace_dot_9_1" />
+        app:bmb_buttonPlaceEnum="buttonPlace_sc_8_1"
+        app:bmb_piecePlaceEnum="piecePlace_dot_8_1" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="141dp"
+        android:layout_marginTop="100dp"
+        app:srcCompat="@android:drawable/sym_def_app_icon" />
 </RelativeLayout>
