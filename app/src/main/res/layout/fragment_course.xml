@@ -5,5 +5,15 @@
     android:layout_height="match_parent">
     <!--android:background=>-->
 
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="42dp"
+        android:layout_marginTop="57dp"
+        android:text='"QWEqweqwe"'
+        android:textColor="@android:color/black" />
 
 </RelativeLayout>
