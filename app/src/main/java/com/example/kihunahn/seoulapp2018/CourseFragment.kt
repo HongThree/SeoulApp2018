@@ -11,6 +11,7 @@ import android.widget.TextView
 import com.nightonke.boommenu.BoomButtons.OnBMClickListener
 import com.nightonke.boommenu.BoomButtons.SimpleCircleButton
 import com.nightonke.boommenu.BoomMenuButton
+import org.json.JSONArray
 import org.json.JSONObject
 import java.io.BufferedReader
 import java.io.InputStream
@@ -27,6 +28,9 @@ class CourseFragment : Fragment() {
 
         val view = inflater?.inflate(R.layout.fragment_course, container, false)
         textview = view.findViewById(R.id.text) as TextView
+        Getinformation().execute("https://mplatform.seoul.go.kr/api/dule/courseInfo.do?course=1")
+        textview?.text = str
+        str = ""
         //AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
         val bmb = view.findViewById(R.id.bmb) as BoomMenuButton
         val drawable = R.drawable::class.java
@@ -37,7 +41,6 @@ class CourseFragment : Fragment() {
                     .rotateImage(true)
                     .listener(OnBMClickListener { index ->
                         //Log.d("QWE", index.toString())
-                        textview?.text = (index+1).toString()
                         var url = "https://mplatform.seoul.go.kr/api/dule/courseInfo.do?course="+(index+1).toShort()
                         Getinformation().execute(url)
                     })
@@ -57,24 +60,20 @@ class CourseFragment : Fragment() {
             var urlConnection: HttpURLConnection? = null
             try {
                 val url = URL(urls[0])
-                Log.d("QWE",url.toString())
                 urlConnection = url.openConnection() as HttpURLConnection
 
                 var inString = streamToString(urlConnection.inputStream)
 
                 try {
                     var json = JSONObject(inString)
-                    Log.d("ASD",json.toString())
                     var tmp = json.getJSONArray("body")
-                    Log.d("QWE",tmp.length().toString())
                     for (i in 0..tmp.length()) {
                         val order = tmp.getJSONObject(i)
-                        var location = order.getString("LOCATION")
-                        var distance = order.getString("DISTANCE")
-                        var time = order.getString("WALK_TIME")
-                        var num = order.getString("COURSE_NO")
-                        var level = order.getString("COURSE_LEVEL")
-                        var name = order.getString("COURSE_NM")
+                        var name = order.getString("COT_CONTS_NAME")
+                        //var location = order.getString("COT_COORD_DATA")
+                        var location:JSONArray = order.getJSONArray("COT_COORD_DATA")
+                        Log.d("QWE",location.toString())
+                        str += name
                     }
                 } catch (ex: Exception) {
 
@@ -96,7 +95,8 @@ class CourseFragment : Fragment() {
 
         override fun onPostExecute(result: String?) {
             super.onPostExecute(result)
-
+            textview?.text = str
+            str = ""
         }
     }
 
