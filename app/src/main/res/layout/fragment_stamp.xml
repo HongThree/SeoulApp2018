@@ -9,4 +9,5 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="159dp"
         android:text="스탬프 북" />
+
 </LinearLayout>
