@@ -10,7 +10,7 @@ class SplashActivity : AppCompatActivity() {
 
 
         try {
-            Thread.sleep(3000)
+            Thread.sleep(1000)
         } catch (e: InterruptedException) {
             e.printStackTrace()
         }
@@ -18,5 +18,4 @@ class SplashActivity : AppCompatActivity() {
         startActivity(Intent(this, MainActivity::class.java))
         finish()
     }
-
 }

@@ -1,12 +1,16 @@
 package com.example.kihunahn.seoulapp2018
 
+import android.annotation.SuppressLint
 import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.ScrollView
 import android.widget.TextView
 import com.nightonke.boommenu.BoomButtons.OnBMClickListener
 import com.nightonke.boommenu.BoomButtons.SimpleCircleButton
@@ -19,18 +23,54 @@ import java.io.InputStreamReader
 import java.net.HttpURLConnection
 import java.net.URL
 
-
 class CourseFragment : Fragment() {
     var str: String? = null
     var textview: TextView? = null
+    var scroll : ScrollView? = null
+    var transparent : ImageView? = null
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         val view = inflater?.inflate(R.layout.fragment_course, container, false)
         textview = view.findViewById(R.id.text) as TextView
+        scroll = view.findViewById(R.id.snackbar_contaner) as ScrollView
+        transparent = view.findViewById(R.id.imagetrans) as ImageView
         Getinformation().execute("https://mplatform.seoul.go.kr/api/dule/courseInfo.do?course=1")
         textview?.text = str
+        val fragment2 = Fragment1()
+        val fragmentManager = fragmentManager
+        val fragmentTransaction = fragmentManager!!.beginTransaction()
+        fragmentTransaction.replace(R.id.fragmentHere, fragment2)
+        fragmentTransaction.commit()
+        transparent!!.setOnTouchListener(View.OnTouchListener { v, event ->
+            val action = event.action
+            when (action) {
+                MotionEvent.ACTION_DOWN -> {
+                    // Disallow ScrollView to intercept touch events.
+                    scroll!!.requestDisallowInterceptTouchEvent(true)
+                    // Disable touch on transparent view
+                    false
+                }
+
+                MotionEvent.ACTION_UP -> {
+                    // Allow ScrollView to intercept touch events.
+                    scroll!!.requestDisallowInterceptTouchEvent(false)
+                    true
+                }
+
+                MotionEvent.ACTION_MOVE -> {
+                    scroll!!.requestDisallowInterceptTouchEvent(true)
+                    false
+                }
+
+                else -> true
+            }
+        })
+
         str = ""
+
+
         //AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
         val bmb = view.findViewById(R.id.bmb) as BoomMenuButton
         val drawable = R.drawable::class.java
@@ -41,8 +81,13 @@ class CourseFragment : Fragment() {
                     .rotateImage(true)
                     .listener(OnBMClickListener { index ->
                         //Log.d("QWE", index.toString())
-                        var url = "https://mplatform.seoul.go.kr/api/dule/courseInfo.do?course="+(index+1).toShort()
+                        var url = "https://mplatform.seoul.go.kr/api/dule/courseInfo.do?course=" + (index + 1).toShort()
                         Getinformation().execute(url)
+                        val fragment2 = Fragment1()
+                        val fragmentManager = fragmentManager
+                        val fragmentTransaction = fragmentManager!!.beginTransaction()
+                        fragmentTransaction.replace(R.id.fragmentHere, fragment2)
+                        fragmentTransaction.commit()
                     })
             bmb.addBuilder(builder)
             //bmb.addBuilder(SimpleCircleButton.Builder().normalImageRes(R.drawable.ic_one))
@@ -71,8 +116,8 @@ class CourseFragment : Fragment() {
                         val order = tmp.getJSONObject(i)
                         var name = order.getString("COT_CONTS_NAME")
                         //var location = order.getString("COT_COORD_DATA")
-                        var location:JSONArray = order.getJSONArray("COT_COORD_DATA")
-                        Log.d("QWE",location.toString())
+                        var location: JSONArray = order.getJSONArray("COT_COORD_DATA")
+                        Log.d("QWE", location.toString())
                         str += name
                     }
                 } catch (ex: Exception) {

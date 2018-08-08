@@ -13,6 +13,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -38,6 +39,7 @@ dependencies {
     implementation 'com.google.http-client:google-http-client-gson:1.22.0'
     implementation 'nl.psdcompany:duo-navigation-drawer:2.0.8'
     implementation 'com.nightonke:boommenu:2.1.1'
+    implementation 'com.naver.maps.open:naver-map-api:2.1.2@aar'
 }
 
 apply plugin: 'com.google.gms.google-services'
