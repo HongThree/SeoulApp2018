@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -117,7 +116,7 @@ class CourseFragment : Fragment() {
                         var name = order.getString("COT_CONTS_NAME")
                         //var location = order.getString("COT_COORD_DATA")
                         var location: JSONArray = order.getJSONArray("COT_COORD_DATA")
-                        Log.d("QWE", location.toString())
+                        //Log.d("QWE", location.toString())
                         str += name
                     }
                 } catch (ex: Exception) {
