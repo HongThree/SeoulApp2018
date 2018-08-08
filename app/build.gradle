@@ -39,6 +39,7 @@ dependencies {
 
     implementation 'nl.psdcompany:duo-navigation-drawer:2.0.8'
     implementation 'com.nightonke:boommenu:2.1.1'
+    implementation 'com.github.chrisbanes:PhotoView:2.1.4'
 }
 
 apply plugin: 'com.google.gms.google-services'

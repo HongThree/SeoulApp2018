@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <RelativeLayout
+        android:layout_width="0px"
+        android:layout_height="130dp"
+        android:layout_weight="1"
+        android:padding="5dip">
+
+        <ImageView
+            android:id="@+id/stamp_01"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/stamp01_on" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="0px"
+        android:layout_height="130dp"
+        android:layout_weight="1"
+        android:padding="5dip">
+
+        <ImageView
+            android:id="@+id/stamp_02"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/stamp02_on" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="0px"
+        android:layout_height="130dp"
+        android:layout_weight="1"
+        android:padding="5dip">
+
+
+        <ImageView
+            android:id="@+id/stamp_03"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/stamp03_on" />
+    </RelativeLayout>
+</LinearLayout>
