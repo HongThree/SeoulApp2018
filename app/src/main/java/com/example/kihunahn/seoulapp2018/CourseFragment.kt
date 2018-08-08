@@ -1,5 +1,6 @@
 package com.example.kihunahn.seoulapp2018
 
+
 import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -120,4 +121,5 @@ class CourseFragment : Fragment() {
 
         return result
     }
+
 }

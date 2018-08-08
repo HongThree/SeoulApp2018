@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
+import com.example.kihunahn.seoulapp2018.R.id.drawer
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_home.*
 import nl.psdcompany.duonavigationdrawer.views.DuoDrawerLayout
@@ -99,7 +100,7 @@ class HomeActivity : AppCompatActivity(), DuoMenuView.OnMenuClickListener {
             3 ->  goToFragment(CourseFragment(), false)
             4 -> goToFragment(StampFragment(), false)
 
-        else -> goToFragment(MainFragment(), false)
+            else -> goToFragment(MainFragment(), false)
         }
 
         // Close the drawer
