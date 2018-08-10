@@ -24,8 +24,8 @@ import java.net.URL
 class CourseFragment : Fragment() {
     var scroll : ScrollView? = null
     var transparent : ImageView? = null
-    var arrayList:ArrayList<String>?=null
-    var arrayList2:ArrayList<String>?=null
+    var arrayList:ArrayList<String> = ArrayList()
+    var arrayList2:ArrayList<String> = ArrayList()
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -33,7 +33,8 @@ class CourseFragment : Fragment() {
         val view = inflater?.inflate(R.layout.fragment_course, container, false)
         scroll = view.findViewById(R.id.snackbar_contaner) as ScrollView
         transparent = view.findViewById(R.id.imagetrans) as ImageView
-        Getinformation().execute("https://mplatform.seoul.go.kr/api/dule/courseInfo.do?course=1")
+        Getinformation().execute("https://mplatform.seoul.go.kr/api/dule/courseInfo.do?course=2")
+
 
         transparent!!.setOnTouchListener(View.OnTouchListener { v, event ->
             val action = event.action
@@ -69,6 +70,8 @@ class CourseFragment : Fragment() {
                     .listener(OnBMClickListener { index ->
                         var url = "https://mplatform.seoul.go.kr/api/dule/courseInfo.do?course=" + (index + 1).toShort()
                         Getinformation().execute(url)
+                        arrayList?.clear()
+                        arrayList2?.clear()
                         /*val fragment2 = Fragment1()
                         val fragmentManager = fragmentManager
                         val fragmentTransaction = fragmentManager!!.beginTransaction()
@@ -101,7 +104,7 @@ class CourseFragment : Fragment() {
                         val order = tmp.getJSONObject(i)
                         var name = order.getString("COT_CONTS_NAME")
                         var location: String= order.getString("COT_COORD_DATA")
-                        val temp = location.replace("[","").replace("]","").split(",")
+                        parsingLocation(location)
                     }
                 } catch (ex: Exception) {
 
@@ -124,7 +127,6 @@ class CourseFragment : Fragment() {
         override fun onPostExecute(result: String?) {
             super.onPostExecute(result)
             val bundle = Bundle(2)
-            Log.d("QWEE",arrayList?.size.toString()+" "+arrayList2?.size.toString())
             bundle!!.putStringArrayList("la",arrayList)
             bundle!!.putStringArrayList("lo",arrayList2)
             val fragment2 = Fragment1()
@@ -136,12 +138,22 @@ class CourseFragment : Fragment() {
         }
     }
 
-    fun streamToString(inputStream: InputStream): String {
+    fun parsingLocation(input:String){
+        val temp = input.replace("[","").replace("]","").split(",")
+        var len = temp.size
+        Log.d("QWE",len.toString())
+        for(i in 0..len){
+            if(i%2==0)
+                arrayList.add(temp[i])
+            else
+                arrayList2.add(temp[i])
+        }
+    }
 
+    fun streamToString(inputStream: InputStream): String {
         val bufferReader = BufferedReader(InputStreamReader(inputStream))
         var line: String
         var result = ""
-
         try {
             do {
                 line = bufferReader.readLine()
@@ -151,9 +163,7 @@ class CourseFragment : Fragment() {
             } while (line != null)
             inputStream.close()
         } catch (ex: Exception) {
-
         }
-
         return result
     }
 }
