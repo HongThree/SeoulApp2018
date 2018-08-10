@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="50dp">
+
+    <TextView
+        android:id="@+id/textView_course_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="여행 이름"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="53dp" />
+
+    <TextView
+        android:id="@+id/textView_position_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="좌표 수"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="256dp" />
+</android.support.constraint.ConstraintLayout>

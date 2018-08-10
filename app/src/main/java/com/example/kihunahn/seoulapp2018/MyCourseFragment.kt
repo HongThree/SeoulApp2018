@@ -25,8 +25,16 @@ class MyCourseFragment : Fragment() {
         super.onStart()
 
         btn_start.setOnClickListener {
-            Toast.makeText(activity, "Clicked", Toast.LENGTH_LONG).show()
             val fragment2 = MakeCourseFragment()
+            val fragmentManager = fragmentManager
+            val fragmentTransaction = fragmentManager!!.beginTransaction()
+            fragmentTransaction.replace(R.id.container, fragment2)
+            fragmentTransaction.addToBackStack(null)
+            fragmentTransaction.commit()
+        }
+
+        btn_archive.setOnClickListener {
+            val fragment2 = ArchiveFragment()
             val fragmentManager = fragmentManager
             val fragmentTransaction = fragmentManager!!.beginTransaction()
             fragmentTransaction.replace(R.id.container, fragment2)
