@@ -146,7 +146,6 @@ class Fragment1 : NMapFragment(), NMapView.OnMapStateChangeListener, NMapPOIdata
         if(dlati.size>0) {
             var len = dlati.size-1
             val currentPoint = NGeoPoint(dlati[len/2], dloti[len/2])
-            mapController!!.mapCenter = currentPoint
 
             if(cnum>1) {
                 val poiData = NMapPOIdata(2, mapViewerResourceProvider)
@@ -157,6 +156,9 @@ class Fragment1 : NMapFragment(), NMapView.OnMapStateChangeListener, NMapPOIdata
                 poiDataOverlay.showAllPOIdata(0)
                 poiDataOverlay.onStateChangeListener = this
             }
+            mapController!!.mapCenter = currentPoint
+            mapController!!.setZoomEnabled(true)
+            mapController!!.zoomLevel = 8
             val pathData = NMapPathData(len)
             pathData.initPathData()
 
@@ -173,8 +175,7 @@ class Fragment1 : NMapFragment(), NMapView.OnMapStateChangeListener, NMapPOIdata
 
         if(dlati1.size>0){
             var len = dlati1.size-1
-            val pathData = NMapPathData(len)
-            pathData.initPathData()
+            val currentPoint = NGeoPoint(dlati1[len/2], dloti1[len/2])
             if(cnum==1) {
                 val poiData = NMapPOIdata(2, mapViewerResourceProvider)
                 poiData.addPOIitem(dlati1[0], dloti1[0], "", NMapPOIflagType.FROM, 0)
@@ -184,6 +185,11 @@ class Fragment1 : NMapFragment(), NMapView.OnMapStateChangeListener, NMapPOIdata
                 poiDataOverlay.showAllPOIdata(0)
                 poiDataOverlay.onStateChangeListener = this
             }
+            mapController!!.mapCenter = currentPoint
+            mapController!!.setZoomEnabled(true)
+            mapController!!.zoomLevel = 8
+            val pathData = NMapPathData(len)
+            pathData.initPathData()
             for(i in 0..len) {
                 if(i==0)
                     pathData.addPathPoint(dlati1[i], dloti1[i], NMapPathLineStyle.TYPE_SOLID)
