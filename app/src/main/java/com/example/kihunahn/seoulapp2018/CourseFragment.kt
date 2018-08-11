@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -22,10 +21,13 @@ import java.net.HttpURLConnection
 import java.net.URL
 
 class CourseFragment : Fragment() {
-    var scroll : ScrollView? = null
-    var transparent : ImageView? = null
-    var arrayList:ArrayList<String> = ArrayList()
-    var arrayList2:ArrayList<String> = ArrayList()
+    var scroll: ScrollView? = null
+    var transparent: ImageView? = null
+    var arrayList: ArrayList<String> = ArrayList()
+    var arrayList2: ArrayList<String> = ArrayList()
+    var arrayList3: ArrayList<String> = ArrayList()
+    var arrayList4: ArrayList<String> = ArrayList()
+    var num:Int=0
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -33,8 +35,8 @@ class CourseFragment : Fragment() {
         val view = inflater?.inflate(R.layout.fragment_course, container, false)
         scroll = view.findViewById(R.id.snackbar_contaner) as ScrollView
         transparent = view.findViewById(R.id.imagetrans) as ImageView
-        Getinformation().execute("https://mplatform.seoul.go.kr/api/dule/courseInfo.do?course=2")
-
+        Getinformation().execute("https://mplatform.seoul.go.kr/api/dule/courseInfo.do?course=1")
+        num = 1
 
         transparent!!.setOnTouchListener(View.OnTouchListener { v, event ->
             val action = event.action
@@ -70,13 +72,11 @@ class CourseFragment : Fragment() {
                     .listener(OnBMClickListener { index ->
                         var url = "https://mplatform.seoul.go.kr/api/dule/courseInfo.do?course=" + (index + 1).toShort()
                         Getinformation().execute(url)
+                        num = index+1
                         arrayList?.clear()
                         arrayList2?.clear()
-                        /*val fragment2 = Fragment1()
-                        val fragmentManager = fragmentManager
-                        val fragmentTransaction = fragmentManager!!.beginTransaction()
-                        fragmentTransaction.replace(R.id.fragmentHere, fragment2)
-                        fragmentTransaction.commit()*/
+                        arrayList3?.clear()
+                        arrayList4?.clear()
                     })
             bmb.addBuilder(builder)
         }
@@ -100,11 +100,13 @@ class CourseFragment : Fragment() {
                 try {
                     var json = JSONObject(inString)
                     var tmp = json.getJSONArray("body")
-                    for (i in 0..tmp.length()) {
+                    var len = tmp.length()-1
+                    for (i in 0..len) {
                         val order = tmp.getJSONObject(i)
                         var name = order.getString("COT_CONTS_NAME")
-                        var location: String= order.getString("COT_COORD_DATA")
-                        parsingLocation(location)
+                        var location: String = order.getString("COT_COORD_DATA")
+                        parsingLocation(location,i)
+
                     }
                 } catch (ex: Exception) {
 
@@ -126,9 +128,13 @@ class CourseFragment : Fragment() {
 
         override fun onPostExecute(result: String?) {
             super.onPostExecute(result)
-            val bundle = Bundle(2)
-            bundle!!.putStringArrayList("la",arrayList)
-            bundle!!.putStringArrayList("lo",arrayList2)
+            val bundle = Bundle(5)
+            bundle!!.putInt("num",num)
+            bundle!!.putStringArrayList("la", arrayList)
+            bundle!!.putStringArrayList("lo", arrayList2)
+            bundle!!.putStringArrayList("la1", arrayList3)
+            bundle!!.putStringArrayList("lo1", arrayList4)
+
             val fragment2 = Fragment1()
             fragment2?.arguments = bundle
             val fragmentManager = fragmentManager
@@ -138,15 +144,21 @@ class CourseFragment : Fragment() {
         }
     }
 
-    fun parsingLocation(input:String){
-        val temp = input.replace("[","").replace("]","").split(",")
-        var len = temp.size
-        Log.d("QWE",len.toString())
-        for(i in 0..len){
-            if(i%2==0)
+    fun parsingLocation(input: String, index:Int) {
+        val temp = input.replace("[", "").replace("]", "").split(",")
+        var len = temp.size - 1
+
+        if(index==0) {
+            for (i in 0..len step 2) {
                 arrayList.add(temp[i])
-            else
-                arrayList2.add(temp[i])
+                arrayList2.add(temp[i + 1])
+            }
+        }
+        else{
+            for (i in 0..len step 2) {
+                arrayList3.add(temp[i])
+                arrayList4.add(temp[i + 1])
+            }
         }
     }
 

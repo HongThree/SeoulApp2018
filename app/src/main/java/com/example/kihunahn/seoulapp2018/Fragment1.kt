@@ -1,18 +1,17 @@
 package com.example.kihunahn.seoulapp2018
 
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.kihunahn.seoulapp2018.NMap.NMapFragment
-import com.example.kihunahn.seoulapp2018.NMap.NMapPOIflagType
 import com.example.kihunahn.seoulapp2018.NMap.NMapViewerResourceProvider
 import com.nhn.android.maps.NMapController
 import com.nhn.android.maps.NMapView
 import com.nhn.android.maps.maplib.NGeoPoint
 import com.nhn.android.maps.nmapmodel.NMapError
-import com.nhn.android.maps.overlay.NMapPOIdata
 import com.nhn.android.maps.overlay.NMapPOIitem
 import com.nhn.android.maps.overlay.NMapPathData
 import com.nhn.android.maps.overlay.NMapPathLineStyle
@@ -27,9 +26,16 @@ class Fragment1 : NMapFragment(), NMapView.OnMapStateChangeListener, NMapPOIdata
     var mapOverlayManager: NMapOverlayManager? = null
     var lati:ArrayList<String> = ArrayList()
     var loti:ArrayList<String> = ArrayList()
+    var lati1:ArrayList<String> = ArrayList()
+    var loti1:ArrayList<String> = ArrayList()
+
     var dlati:ArrayList<Double> = ArrayList()
     var dloti:ArrayList<Double> = ArrayList()
+    var dlati1:ArrayList<Double> = ArrayList()
+    var dloti1:ArrayList<Double> = ArrayList()
+    var cnum:Int = 0
 
+    var odds = intArrayOf(0,16737280,Color.MAGENTA,Color.BLUE,Color.GREEN,13107455,Color.RED,16750080,65535)
     override fun onMapCenterChangeFine(p0: NMapView?) {
 
     }
@@ -74,10 +80,28 @@ class Fragment1 : NMapFragment(), NMapView.OnMapStateChangeListener, NMapPOIdata
         super.onCreate(savedInstanceState)
         lati = arguments?.getStringArrayList("la")!!
         loti = arguments?.getStringArrayList("lo")!!
-        var len = lati.size-1
-        for (i in 0..len) {
-            dlati.add(java.lang.Double.parseDouble(lati[i]))
-            dloti.add(java.lang.Double.parseDouble(loti[i]))
+        lati1 = arguments?.getStringArrayList("la1")!!
+        loti1 = arguments?.getStringArrayList("lo1")!!
+        cnum = arguments?.getInt("num")!!
+        Log.d("QWE",cnum.toString())
+        if(cnum==1){
+            var len = lati.size-1
+            for (i in 0..len) {
+                dlati.add(java.lang.Double.parseDouble(lati[i]))
+                dloti.add(java.lang.Double.parseDouble(loti[i]))
+            }
+            var len1 = lati1.size-1
+            for (i in 0..len1) {
+                dlati1.add(java.lang.Double.parseDouble(lati1[i]))
+                dloti1.add(java.lang.Double.parseDouble(loti1[i]))
+            }
+        }
+        else{
+            var len = lati.size-1
+            for (i in 0..len) {
+                dlati.add(java.lang.Double.parseDouble(lati[i]))
+                dloti.add(java.lang.Double.parseDouble(loti[i]))
+            }
         }
     }
 
@@ -119,36 +143,37 @@ class Fragment1 : NMapFragment(), NMapView.OnMapStateChangeListener, NMapPOIdata
     private fun moveMapCenter() {
         if(dlati.size>0) {
             var len = dlati.size-1
-            val currentPoint = NGeoPoint(dlati[0], dloti[0])
+            val currentPoint = NGeoPoint(dlati[len/2], dloti[len/2])
             mapController!!.mapCenter = currentPoint
-            val poiData = NMapPOIdata(2, mapViewerResourceProvider)
-            poiData.addPOIitem(dlati[0], dloti[0], "현재 위치", NMapPOIflagType.FROM, 0)
-            poiData.addPOIitem(dlati[len], dloti[len], "도착 위치", NMapPOIflagType.TO, 0)
-            poiData.endPOIdata()
-            val poiDataOverlay = mapOverlayManager!!.createPOIdataOverlay(poiData, null)
-            poiDataOverlay.showAllPOIdata(0)
-            poiDataOverlay.onStateChangeListener = this
 
             val pathData = NMapPathData(len)
             pathData.initPathData()
+
             for(i in 0..len) {
                 if(i==0)
                     pathData.addPathPoint(dlati[i], dloti[i], NMapPathLineStyle.TYPE_SOLID)
                 else
                     pathData.addPathPoint(dlati[i], dloti[i], 0)
-                /*
-                pathData.addPathPoint(127.108099, 37.366034, NMapPathLineStyle.TYPE_SOLID)
-                pathData.addPathPoint(127.108088, 37.366043, 0)
-                pathData.addPathPoint(127.108079, 37.365619, 0)
-                pathData.addPathPoint(127.107458, 37.365608, 0)
-                pathData.addPathPoint(127.107232, 37.365608, 0)
-                pathData.addPathPoint(127.106904, 37.365624, 0)
-                pathData.addPathPoint(127.105933, 37.365621, 0)
-                pathData.addPathPoint(127.105929, 37.366378, 0)
-                pathData.addPathPoint(127.106279, 37.366380, 0)*/
             }
             pathData.endPathData()
             val pathDataOverlay = mapOverlayManager!!.createPathDataOverlay(pathData)
+            pathDataOverlay.setLineColor(odds[cnum],1000)
+        }
+
+        if(dlati1.size>0){
+            var len = dlati1.size-1
+            val pathData = NMapPathData(len)
+            pathData.initPathData()
+
+            for(i in 0..len) {
+                if(i==0)
+                    pathData.addPathPoint(dlati1[i], dloti1[i], NMapPathLineStyle.TYPE_SOLID)
+                else
+                    pathData.addPathPoint(dlati1[i], dloti1[i], 0)
+            }
+            pathData.endPathData()
+            val pathDataOverlay = mapOverlayManager!!.createPathDataOverlay(pathData)
+            pathDataOverlay.setLineColor(odds[cnum],1000)
         }
     }
 
