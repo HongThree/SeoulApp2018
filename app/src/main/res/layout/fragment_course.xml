@@ -1,65 +1,53 @@
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/snackbar_contaner"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <ScrollView
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/snackbar_contaner">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="500dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="141dp"
+            android:layout_marginTop="3dp"
+            app:srcCompat="@android:drawable/sym_def_app_icon" />
 
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="wrap_content"
-                android:layout_height="255dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="141dp"
-                android:layout_marginTop="3dp"
-                android:src="@drawable/ic_launcher_background"
-                android:layout_alignParentLeft="true"
-                android:layout_marginLeft="141dp" />
+        <TextView
+            android:id="@+id/text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imageView"
+            android:text='"QWEqweqwe"'
+            android:textColor="@android:color/black" />
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="155dp"
+            android:layout_height="88dp"
+            android:layout_below="@+id/text"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="21dp"
+            android:layout_marginStart="101dp"
+            app:srcCompat="@drawable/googleg_standard_color_18" />
 
-            <LinearLayout
-                android:id="@+id/fragmentHere"
-                android:orientation="vertical"
-                android:layout_width="fill_parent"
-                android:layout_height="400dp"
-                android:layout_below="@+id/imageView"
-                />
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/imagetrans"
-                android:layout_alignTop="@+id/fragmentHere"
-                android:layout_alignBottom="@+id/fragmentHere"
-                android:layout_alignEnd="@+id/fragmentHere"
-                android:layout_alignRight="@+id/fragmentHere"
-                android:layout_alignLeft="@+id/fragmentHere"
-                android:layout_alignStart="@+id/fragmentHere"
-                />
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/imagetrans"
-                app:srcCompat="@android:drawable/sym_def_app_icon"
-                />
-        </RelativeLayout>
-    </ScrollView>
-    <com.nightonke.boommenu.BoomMenuButton
-        android:id="@+id/bmb"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end|bottom"
-        app:bmb_buttonEnum="simpleCircle"
-        app:bmb_buttonPlaceEnum="buttonPlace_sc_8_1"
-        app:bmb_piecePlaceEnum="piecePlace_dot_8_1" />
+        <com.nightonke.boommenu.BoomMenuButton
+            android:id="@+id/bmb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            app:bmb_buttonEnum="simpleCircle"
+            app:bmb_buttonPlaceEnum="buttonPlace_sc_8_1"
+            app:bmb_piecePlaceEnum="piecePlace_dot_8_1" />
+    </RelativeLayout>
 
-</FrameLayout>
+</ScrollView>
