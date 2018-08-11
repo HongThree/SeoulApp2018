@@ -26,6 +26,7 @@
                     android:id="@+id/img1"
                     android:layout_width="108dp"
                     android:layout_height="108dp"
+
                     android:src="@drawable/stamp01"
                     />
 
