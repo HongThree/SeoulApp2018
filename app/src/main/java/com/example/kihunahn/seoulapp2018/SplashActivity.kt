@@ -10,7 +10,7 @@ class SplashActivity : AppCompatActivity() {
 
 
         try {
-            Thread.sleep(300)
+            Thread.sleep(3000)
         } catch (e: InterruptedException) {
             e.printStackTrace()
         }
