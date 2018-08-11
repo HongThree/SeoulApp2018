@@ -108,7 +108,7 @@ class HomeActivity : AppCompatActivity(), DuoMenuView.OnMenuClickListener {
         // Navigate to the right fragment
         when (position) {
             0 -> goToFragment(MainFragment(), false)
-            1 -> goToFragment(MakeCourseFragment(), false)
+            1 -> goToFragment(MyCourseFragment(), false)
             2 -> goToFragment(InfoFragment(), false)
             3 ->  goToFragment(CourseFragment(), false)
             4 -> goToFragment(StampFragment(), false)
