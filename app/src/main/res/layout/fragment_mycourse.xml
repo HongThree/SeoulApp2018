@@ -9,18 +9,4 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="159dp"
         android:text="나만의 코스" />
-
-    <Button
-        android:id="@+id/btn_start"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="여행시작하기" />
-
-    <Button
-        android:id="@+id/btn_archive"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="저장된 여행 보기" />
 </LinearLayout>
