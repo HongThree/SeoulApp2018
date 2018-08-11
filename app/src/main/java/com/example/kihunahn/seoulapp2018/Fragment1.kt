@@ -7,11 +7,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.kihunahn.seoulapp2018.NMap.NMapFragment
+import com.example.kihunahn.seoulapp2018.NMap.NMapPOIflagType
 import com.example.kihunahn.seoulapp2018.NMap.NMapViewerResourceProvider
 import com.nhn.android.maps.NMapController
 import com.nhn.android.maps.NMapView
 import com.nhn.android.maps.maplib.NGeoPoint
 import com.nhn.android.maps.nmapmodel.NMapError
+import com.nhn.android.maps.overlay.NMapPOIdata
 import com.nhn.android.maps.overlay.NMapPOIitem
 import com.nhn.android.maps.overlay.NMapPathData
 import com.nhn.android.maps.overlay.NMapPathLineStyle
@@ -146,6 +148,15 @@ class Fragment1 : NMapFragment(), NMapView.OnMapStateChangeListener, NMapPOIdata
             val currentPoint = NGeoPoint(dlati[len/2], dloti[len/2])
             mapController!!.mapCenter = currentPoint
 
+            if(cnum>1) {
+                val poiData = NMapPOIdata(2, mapViewerResourceProvider)
+                poiData.addPOIitem(dlati[0], dloti[0], "", NMapPOIflagType.FROM, 0)
+                poiData.addPOIitem(dlati[len], dloti[len], "", NMapPOIflagType.TO, 0)
+                poiData.endPOIdata()
+                val poiDataOverlay = mapOverlayManager!!.createPOIdataOverlay(poiData, null)
+                poiDataOverlay.showAllPOIdata(0)
+                poiDataOverlay.onStateChangeListener = this
+            }
             val pathData = NMapPathData(len)
             pathData.initPathData()
 
@@ -164,7 +175,15 @@ class Fragment1 : NMapFragment(), NMapView.OnMapStateChangeListener, NMapPOIdata
             var len = dlati1.size-1
             val pathData = NMapPathData(len)
             pathData.initPathData()
-
+            if(cnum==1) {
+                val poiData = NMapPOIdata(2, mapViewerResourceProvider)
+                poiData.addPOIitem(dlati1[0], dloti1[0], "", NMapPOIflagType.FROM, 0)
+                poiData.addPOIitem(dlati1[len], dloti1[len], "", NMapPOIflagType.TO, 0)
+                poiData.endPOIdata()
+                val poiDataOverlay = mapOverlayManager!!.createPOIdataOverlay(poiData, null)
+                poiDataOverlay.showAllPOIdata(0)
+                poiDataOverlay.onStateChangeListener = this
+            }
             for(i in 0..len) {
                 if(i==0)
                     pathData.addPathPoint(dlati1[i], dloti1[i], NMapPathLineStyle.TYPE_SOLID)
