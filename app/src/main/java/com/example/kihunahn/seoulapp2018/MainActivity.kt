@@ -2,8 +2,8 @@ package com.example.kihunahn.seoulapp2018
 
 import android.app.Activity
 import android.content.Intent
-import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -44,8 +44,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
-
     override fun onResume() {
         super.onResume()
         FirebaseAuth.getInstance().addAuthStateListener(authStateListener!!)
@@ -75,7 +73,4 @@ class MainActivity : AppCompatActivity() {
                     }
         }
     }
-
-
-
 }
