@@ -20,6 +20,8 @@ class MakeCourseFragment : Fragment() {
 
     var PositionList = PositionDTO(LinkedList(), LinkedList())
     var courseName = String()
+    val cur_user = FirebaseAuth.getInstance().currentUser?.uid
+    var nameList = LinkedList<String>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -52,7 +54,6 @@ class MakeCourseFragment : Fragment() {
 
     }
     fun saveCourse() {
-        var cur_user = FirebaseAuth.getInstance().currentUser?.uid
         FirebaseFirestore.getInstance().collection(cur_user.toString()).document(courseName).set(PositionList).addOnSuccessListener {
             Toast.makeText(activity, "여행이 저장되었습니다.", Toast.LENGTH_LONG).show()
         }.addOnFailureListener { exception ->
@@ -60,6 +61,8 @@ class MakeCourseFragment : Fragment() {
         }
     }
     fun showDialog() {
+        updateNameList()
+
         val mDialogView = LayoutInflater.from(activity).inflate(R.layout.coursename_dialog, null)
         val mBuilder = AlertDialog.Builder(activity)
                 .setView(mDialogView)
@@ -68,11 +71,19 @@ class MakeCourseFragment : Fragment() {
         val mAlerDialog = mBuilder.show()
 
         mDialogView.btn_set_course_name.setOnClickListener {
-            mAlerDialog.dismiss()
-            if(!mDialogView.editText_course_name.text.toString().equals(""))
-                courseName = mDialogView.editText_course_name.text.toString()
 
-            saveCourse()
+
+            var tempName = mDialogView.editText_course_name.text.toString()
+            if(!isValid(tempName)){
+                Toast.makeText(activity, "이미 존재하는 이름입니다. 다시 입력 해주세요.", Toast.LENGTH_LONG).show()
+            }
+            else {
+                if (!tempName.equals(""))
+                    courseName = mDialogView.editText_course_name.text.toString()
+
+                saveCourse()
+                mAlerDialog.dismiss()
+            }
         }
         mDialogView.btn_defualt_course_name.setOnClickListener {
             mAlerDialog.dismiss()
@@ -81,6 +92,29 @@ class MakeCourseFragment : Fragment() {
         }
 
     }
+    fun isValid(name : String) : Boolean {
+        for( n in nameList){
+            if(name.equals(n)) return false
+        }
+        return true
+    }
+
+    fun updateNameList() {
+        FirebaseFirestore.getInstance().collection(cur_user.toString()).get().addOnSuccessListener { querySnapshot ->
+            // 이 유저에게 저장 된 여행의 개수 출력 됨!!
+            //Toast.makeText(activity, querySnapshot.documents.size.toString(), Toast.LENGTH_LONG).show()
+            //querySnapshot.documents.size
+
+            querySnapshot.forEach {
+                //[lat,lon]
+                //Toast.makeText(activity, it.data.keys.toString(), Toast.LENGTH_LONG).show()
+
+                // 이게 실제 여행명 받아오기
+                nameList.add(it.id)
+            }
+        }
+    }
+
     override fun onResume() {
         super.onResume()
     }
