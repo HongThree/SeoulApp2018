@@ -1,16 +1,17 @@
 package com.example.kihunahn.seoulapp2018
 
+
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
-import com.example.kihunahn.seoulapp2018.R.id.drawer
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_home.*
 import nl.psdcompany.duonavigationdrawer.views.DuoDrawerLayout
 import nl.psdcompany.duonavigationdrawer.views.DuoMenuView
 import nl.psdcompany.duonavigationdrawer.widgets.DuoDrawerToggle
 import java.util.*
+
 
 class HomeActivity : AppCompatActivity(), DuoMenuView.OnMenuClickListener {
     private var mMenuAdapter: MenuAdapter? = null
@@ -22,7 +23,6 @@ class HomeActivity : AppCompatActivity(), DuoMenuView.OnMenuClickListener {
         setContentView(R.layout.activity_home)
 
         mTitles = ArrayList<String>(Arrays.asList(*resources.getStringArray(R.array.menuOptions)))
-
 
         // Initialize the views
         mViewHolder = ViewHolder()
@@ -41,6 +41,19 @@ class HomeActivity : AppCompatActivity(), DuoMenuView.OnMenuClickListener {
         mMenuAdapter!!.setViewSelected(0, true)
         title = mTitles[0]
     }
+
+    private var time: Long = 0
+    override fun onBackPressed() {
+        if (System.currentTimeMillis() - time >= 2000) {
+            time = System.currentTimeMillis()
+            Toast.makeText(applicationContext, "뒤로 버튼을 한번 더 누르면 종료합니다.", Toast.LENGTH_SHORT).show()
+        } else if (System.currentTimeMillis() - time < 2000) {
+            moveTaskToBack(true)
+            finish()
+            android.os.Process.killProcess(android.os.Process.myPid())
+        }
+    }
+
 
     private fun handleToolbar() {
         setSupportActionBar(mViewHolder!!.mToolbar)
@@ -95,7 +108,7 @@ class HomeActivity : AppCompatActivity(), DuoMenuView.OnMenuClickListener {
         // Navigate to the right fragment
         when (position) {
             0 -> goToFragment(MainFragment(), false)
-            1 -> goToFragment(MyCourseFragment(), false)
+            1 -> goToFragment(MakeCourseFragment(), false)
             2 -> goToFragment(InfoFragment(), false)
             3 ->  goToFragment(CourseFragment(), false)
             4 -> goToFragment(StampFragment(), false)

@@ -24,23 +24,24 @@
                 >
                 <ImageView
                     android:id="@+id/img1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_launcher_background"
+                    android:layout_width="108dp"
+                    android:layout_height="108dp"
+                    android:src="@drawable/stamp01"
                     />
 
                 <ImageView
                     android:id="@+id/img2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_launcher_background"
+
+                    android:layout_width="108dp"
+                    android:layout_height="108dp"
+                    android:src="@drawable/stamp02"
 
                     />
                 <ImageView
                     android:id="@+id/img3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_launcher_background"
+                    android:layout_width="108dp"
+                    android:layout_height="108dp"
+                    android:src="@drawable/stamp03"
                     />
             </TableRow>
             <TableRow
@@ -51,23 +52,23 @@
                 >
                 <ImageView
                     android:id="@+id/img4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_launcher_background"
+                    android:layout_width="108dp"
+                    android:layout_height="108dp"
+                    android:src="@drawable/stamp04"
                     />
 
                 <ImageView
                     android:id="@+id/img5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_launcher_background"
+                    android:layout_width="108dp"
+                    android:layout_height="108dp"
+                    android:src="@drawable/stamp05"
 
                     />
                 <ImageView
                     android:id="@+id/img6"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_launcher_background"
+                    android:layout_width="108dp"
+                    android:layout_height="108dp"
+                    android:src="@drawable/stamp06"
                     />
             </TableRow
                 >
@@ -79,22 +80,22 @@
                 >
                 <ImageView
                     android:id="@+id/img7"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_launcher_background"
+                    android:layout_width="108dp"
+                    android:layout_height="108dp"
+                    android:src="@drawable/stamp07"
                     />
 
                 <ImageView
                     android:id="@+id/img8"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_launcher_background"
+                    android:layout_width="108dp"
+                    android:layout_height="108dp"
+                    android:src="@drawable/stamp08"
                     />
                 <ImageView
                     android:id="@+id/img9"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_launcher_background"
+                    android:layout_width="108dp"
+                    android:layout_height="108dp"
+                    android:src="@drawable/stamp09"
                     />
             </TableRow>
             <TableRow
@@ -105,22 +106,22 @@
                 >
                 <ImageView
                     android:id="@+id/img10"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_launcher_background"
+                    android:layout_width="108dp"
+                    android:layout_height="108dp"
+                    android:src="@drawable/stamp10"
                     />
 
                 <ImageView
                     android:id="@+id/img11"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_launcher_background"
+                    android:layout_width="108dp"
+                    android:layout_height="108dp"
+                    android:src="@drawable/stamp11"
                     />
                 <ImageView
                     android:id="@+id/img12"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_launcher_background"
+                    android:layout_width="108dp"
+                    android:layout_height="108dp"
+                    android:src="@drawable/stamp12"
                     />
             </TableRow>
 
@@ -131,22 +132,22 @@
                 android:layout_weight="1">
                 <ImageView
                     android:id="@+id/img13"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_launcher_background"
+                    android:layout_width="108dp"
+                    android:layout_height="108dp"
+                    android:src="@drawable/stamp13"
                     />
 
                 <ImageView
                     android:id="@+id/img14"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_launcher_background"
+                    android:layout_width="108dp"
+                    android:layout_height="108dp"
+                    android:src="@drawable/stamp14"
                     />
                 <ImageView
                     android:id="@+id/img15"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_launcher_background"
+                    android:layout_width="108dp"
+                    android:layout_height="108dp"
+                    android:src="@drawable/stamp15"
                     />
             </TableRow>
             <TableRow
@@ -157,21 +158,21 @@
                 >
                 <ImageView
                     android:id="@+id/img16"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_launcher_background"
+                    android:layout_width="108dp"
+                    android:layout_height="108dp"
+                    android:src="@drawable/stamp16"
                     />
 
                 <ImageView
                     android:id="@+id/img17"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_launcher_background" />
+                    android:layout_width="108dp"
+                    android:layout_height="108dp"
+                    android:src="@drawable/stamp17" />
                 <ImageView
                     android:id="@+id/img18"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_launcher_background"
+                    android:layout_width="108dp"
+                    android:layout_height="108dp"
+                    android:src="@drawable/stamp18"
                     />
             </TableRow>
             <TableRow
@@ -182,21 +183,21 @@
                 >
                 <ImageView
                     android:id="@+id/img19"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_launcher_background"
+                    android:layout_width="108dp"
+                    android:layout_height="108dp"
+                    android:src="@drawable/stamp19"
                     />
 
                 <ImageView
                     android:id="@+id/img20"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_launcher_background" />
+                    android:layout_width="108dp"
+                    android:layout_height="108dp"
+                    android:src="@drawable/stamp20" />
                 <ImageView
                     android:id="@+id/img21"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_launcher_background"
+                    android:layout_width="108dp"
+                    android:layout_height="108dp"
+                    android:src="@drawable/stamp21"
                     />
             </TableRow>
             <TableRow
@@ -207,21 +208,21 @@
                 >
                 <ImageView
                     android:id="@+id/img22"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_launcher_background"
+                    android:layout_width="108dp"
+                    android:layout_height="108dp"
+                    android:src="@drawable/stamp22"
                     />
 
                 <ImageView
                     android:id="@+id/img23"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_launcher_background" />
+                    android:layout_width="108dp"
+                    android:layout_height="108dp"
+                    android:src="@drawable/stamp23" />
                 <ImageView
                     android:id="@+id/img24"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_launcher_background"
+                    android:layout_width="108dp"
+                    android:layout_height="108dp"
+                    android:src="@drawable/stamp24"
                     />
             </TableRow>
             <TableRow
@@ -232,21 +233,21 @@
                 >
                 <ImageView
                     android:id="@+id/img25"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_launcher_background"
+                    android:layout_width="108dp"
+                    android:layout_height="108dp"
+                    android:src="@drawable/stamp25"
                     />
 
                 <ImageView
                     android:id="@+id/img26"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_launcher_background" />
+                    android:layout_width="108dp"
+                    android:layout_height="108dp"
+                    android:src="@drawable/stamp26" />
                 <ImageView
                     android:id="@+id/img27"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_launcher_background"
+                    android:layout_width="108dp"
+                    android:layout_height="108dp"
+                    android:src="@drawable/stamp27"
                     />
             </TableRow>
             <TableRow
@@ -257,22 +258,22 @@
                 >
                 <ImageView
                     android:id="@+id/img28"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_launcher_background"
+                    android:layout_width="108dp"
+                    android:layout_height="108dp"
+                    android:src="@drawable/stamp28"
                     />
 
-                <ImageView
-                    android:id="@+id/img29"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_launcher_background" />
-                <ImageView
-                    android:id="@+id/img30"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_launcher_background"
-                    />
+                <!--<ImageView-->
+                    <!--android:id="@+id/img29"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:src="@drawable/ic_launcher_background" />-->
+                <!--<ImageView-->
+                    <!--android:id="@+id/img30"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:src="@drawable/ic_launcher_background"-->
+                    <!--/>-->
             </TableRow>
         </TableLayout>
 

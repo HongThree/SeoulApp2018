@@ -1,7 +1,6 @@
 package com.example.kihunahn.seoulapp2018
 
 import android.app.AlertDialog
-import android.content.DialogInterface
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -12,7 +11,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.coursename_dialog.view.*
 import kotlinx.android.synthetic.main.fragment_makecourse.*
-import kotlinx.android.synthetic.main.fragment_mycourse.*
 import java.text.SimpleDateFormat
 import java.util.*
 
