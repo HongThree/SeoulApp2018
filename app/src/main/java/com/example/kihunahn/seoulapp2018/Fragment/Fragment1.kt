@@ -1,4 +1,4 @@
-package com.example.kihunahn.seoulapp2018
+package com.example.kihunahn.seoulapp2018.Fragment
 
 import android.graphics.Color
 import android.os.Bundle
@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import com.example.kihunahn.seoulapp2018.NMap.NMapFragment
 import com.example.kihunahn.seoulapp2018.NMap.NMapPOIflagType
 import com.example.kihunahn.seoulapp2018.NMap.NMapViewerResourceProvider
+import com.example.kihunahn.seoulapp2018.R
 import com.nhn.android.maps.NMapController
 import com.nhn.android.maps.NMapView
 import com.nhn.android.maps.maplib.NGeoPoint
@@ -75,6 +76,10 @@ class Fragment1 : NMapFragment(), NMapView.OnMapStateChangeListener, NMapPOIdata
         mapView = (v.findViewById(R.id.mapView) as NMapView)
         mapView!!.setClientId(CLIENT_ID)
         mapView!!.isClickable = true
+        mapView!!.isEnabled=true
+        mapView!!.isFocusable=true
+        mapView!!.isFocusableInTouchMode=true
+        mapView!!.requestFocus()
         return v
     }
 
@@ -119,7 +124,6 @@ class Fragment1 : NMapFragment(), NMapView.OnMapStateChangeListener, NMapPOIdata
         mapViewerResourceProvider = NMapViewerResourceProvider(activity)
         mapOverlayManager = NMapOverlayManager(activity!!, mapView, mapViewerResourceProvider)
         moveMapCenter()
-        //mMapContext?.onStart()
     }
 
     override fun onResume() {
@@ -158,7 +162,7 @@ class Fragment1 : NMapFragment(), NMapView.OnMapStateChangeListener, NMapPOIdata
             }
             mapController!!.mapCenter = currentPoint
             mapController!!.setZoomEnabled(true)
-            mapController!!.zoomLevel = 8
+            mapController!!.zoomLevel = 7
             val pathData = NMapPathData(len)
             pathData.initPathData()
 

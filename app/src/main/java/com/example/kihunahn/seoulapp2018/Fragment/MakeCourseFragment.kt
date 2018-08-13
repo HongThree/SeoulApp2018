@@ -1,4 +1,4 @@
-package com.example.kihunahn.seoulapp2018
+package com.example.kihunahn.seoulapp2018.Fragment
 
 import android.app.AlertDialog
 import android.os.Bundle
@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import com.example.kihunahn.seoulapp2018.PositionDTO
+import com.example.kihunahn.seoulapp2018.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.coursename_dialog.view.*
@@ -25,6 +27,11 @@ class MakeCourseFragment : Fragment() {
 
         val view = inflater?.inflate(R.layout.fragment_makecourse, container, false)
 
+        val fragment2 = Fragment2()
+        val fragmentManager = fragmentManager
+        val fragmentTransaction = fragmentManager!!.beginTransaction()
+        fragmentTransaction.replace(R.id.fragmentHere, fragment2)
+        fragmentTransaction.commit()
         return view
     }
 
@@ -47,7 +54,7 @@ class MakeCourseFragment : Fragment() {
         btn_add.setOnClickListener {
             PositionList.lat?.add(editText_lat.text.toString().toDouble())
             PositionList.lon?.add(editText_lon.text.toString().toDouble())
-            state.setText(PositionList.toString())
+            //state.setText(PositionList.toString())
         }
 
     }

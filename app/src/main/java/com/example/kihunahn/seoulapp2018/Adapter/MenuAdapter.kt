@@ -1,4 +1,4 @@
-package com.example.kihunahn.seoulapp2018
+package com.example.kihunahn.seoulapp2018.Adapter
 
 import android.view.View
 import nl.psdcompany.duonavigationdrawer.views.DuoOptionView

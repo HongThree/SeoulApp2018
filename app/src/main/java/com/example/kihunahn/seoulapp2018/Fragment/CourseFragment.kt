@@ -1,4 +1,4 @@
-package com.example.kihunahn.seoulapp2018
+package com.example.kihunahn.seoulapp2018.Fragment
 
 import android.annotation.SuppressLint
 import android.os.AsyncTask
@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.ScrollView
+import com.example.kihunahn.seoulapp2018.R
 import com.nightonke.boommenu.BoomButtons.OnBMClickListener
 import com.nightonke.boommenu.BoomButtons.SimpleCircleButton
 import com.nightonke.boommenu.BoomMenuButton
