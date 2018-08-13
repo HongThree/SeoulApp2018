@@ -1,4 +1,4 @@
-package com.example.kihunahn.seoulapp2018
+package com.example.kihunahn.seoulapp2018.Fragment
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -8,6 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import com.example.kihunahn.seoulapp2018.PositionDTO
+import com.example.kihunahn.seoulapp2018.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 

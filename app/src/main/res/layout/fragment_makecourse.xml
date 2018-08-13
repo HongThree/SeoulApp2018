@@ -52,14 +52,14 @@
         app:layout_constraintBaseline_toBaselineOf="@+id/btn_add"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <TextView
-        android:id="@+id/state"
+    <LinearLayout
+        android:id="@+id/fragmentHere"
         android:layout_width="match_parent"
         android:layout_height="250dp"
         android:layout_marginBottom="44dp"
-        android:text="저장된 위치 정보가 없습니다."
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:orientation="horizontal" />
 </android.support.constraint.ConstraintLayout>

@@ -1,10 +1,11 @@
-package com.example.kihunahn.seoulapp2018
+package com.example.kihunahn.seoulapp2018.Fragment
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.kihunahn.seoulapp2018.R
 import kotlinx.android.synthetic.main.fragment_mycourse.*
 
 
