@@ -4,6 +4,8 @@ package com.example.kihunahn.seoulapp2018
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import com.example.kihunahn.seoulapp2018.Adapter.MenuAdapter
 import com.example.kihunahn.seoulapp2018.Fragment.*
@@ -11,7 +13,9 @@ import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_home.*
 import nl.psdcompany.duonavigationdrawer.views.DuoDrawerLayout
 import nl.psdcompany.duonavigationdrawer.views.DuoMenuView
+import nl.psdcompany.duonavigationdrawer.views.DuoOptionView
 import nl.psdcompany.duonavigationdrawer.widgets.DuoDrawerToggle
+import java.security.AccessController.getContext
 import java.util.*
 
 
@@ -132,7 +136,9 @@ class HomeActivity : AppCompatActivity(), DuoMenuView.OnMenuClickListener {
     private inner class ViewHolder internal constructor() {
         val mDuoDrawerLayout: DuoDrawerLayout
         val mDuoMenuView: DuoMenuView
+//        val mDuoOptionView : DuoOptionView
         val mToolbar : android.support.v7.widget.Toolbar
+
 
         init {
             mDuoDrawerLayout = drawer
