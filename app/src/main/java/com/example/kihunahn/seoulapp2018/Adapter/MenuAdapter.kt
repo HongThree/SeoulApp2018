@@ -44,6 +44,7 @@ internal class MenuAdapter(options: ArrayList<String>) : BaseAdapter() {
 
         // Using the DuoOptionView to easily recreate the demo
         val optionView: DuoOptionView
+
         if (convertView == null) {
             optionView = DuoOptionView(parent.context)
         } else {

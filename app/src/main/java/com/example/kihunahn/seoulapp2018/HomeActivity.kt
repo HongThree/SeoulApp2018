@@ -25,27 +25,31 @@ class HomeActivity : AppCompatActivity(), DuoMenuView.OnMenuClickListener {
         setContentView(R.layout.activity_home)
 
         mTitles = ArrayList<String>(Arrays.asList(*resources.getStringArray(R.array.menuOptions)))
-
         // Initialize the views
         mViewHolder = ViewHolder()
-
         // Handle toolbar actions
         handleToolbar()
-
         // Handle menu actions
         handleMenu()
-
         // Handle drawer actions
         handleDrawer()
-
         // Show main fragment in container
         goToFragment(MainFragment(), false)
         mMenuAdapter!!.setViewSelected(0, true)
         title = mTitles[0]
+
     }
 
+
+
+
+
+    //뒤로가기
     private var time: Long = 0
     override fun onBackPressed() {
+
+        onOptionClicked(0,true)
+
         if (System.currentTimeMillis() - time >= 2000) {
             time = System.currentTimeMillis()
             Toast.makeText(applicationContext, "뒤로 버튼을 한번 더 누르면 종료합니다.", Toast.LENGTH_SHORT).show()
@@ -115,6 +119,8 @@ class HomeActivity : AppCompatActivity(), DuoMenuView.OnMenuClickListener {
             3 ->  goToFragment(CourseFragment(), false)
             4 -> goToFragment(StampFragment(), false)
 
+            6 -> goToFragment(AboutAppFragment(), false)
+
             else -> goToFragment(MainFragment(), false)
         }
 
@@ -131,6 +137,9 @@ class HomeActivity : AppCompatActivity(), DuoMenuView.OnMenuClickListener {
         init {
             mDuoDrawerLayout = drawer
             mDuoMenuView = mDuoDrawerLayout.menuView as DuoMenuView
+
+            mDuoMenuView.setBackground(R.drawable.example)
+
             mToolbar = toolbar
         }
     }
