@@ -1,8 +1,12 @@
 package com.example.kihunahn.seoulapp2018
 
 
+import android.Manifest.permission.ACCESS_FINE_LOCATION
+import android.content.pm.PackageManager
 import android.os.Bundle
+import android.support.v4.app.ActivityCompat
 import android.support.v4.app.Fragment
+import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
 import com.example.kihunahn.seoulapp2018.Adapter.MenuAdapter
@@ -13,7 +17,6 @@ import nl.psdcompany.duonavigationdrawer.views.DuoDrawerLayout
 import nl.psdcompany.duonavigationdrawer.views.DuoMenuView
 import nl.psdcompany.duonavigationdrawer.widgets.DuoDrawerToggle
 import java.util.*
-
 
 class HomeActivity : AppCompatActivity(), DuoMenuView.OnMenuClickListener {
     private var mMenuAdapter: MenuAdapter? = null
@@ -42,7 +45,38 @@ class HomeActivity : AppCompatActivity(), DuoMenuView.OnMenuClickListener {
         goToFragment(MainFragment(), false)
         mMenuAdapter!!.setViewSelected(0, true)
         title = mTitles[0]
+
+        if (ContextCompat.checkSelfPermission(this, ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            //Manifest.permission.READ_CALENDAR이 접근 승낙 상태 일때
+        } else {
+            //Manifest.permission.READ_CALENDAR이 접근 거절 상태 일때
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, ACCESS_FINE_LOCATION)) {
+                //사용자가 다시 보지 않기에 체크를 하지 않고, 권한 설정을 거절한 이력이 있는 경우
+            } else {
+                //사용자가 다시 보지 않기에 체크하고, 권한 설정을 거절한 이력이 있는 경우
+            }
+
+            //사용자에게 접근권한 설정을 요구하는 다이얼로그를 띄운다.
+            //만약 사용자가 다시 보지 않기에 체크를 했을 경우엔 권한 설정 다이얼로그가 뜨지 않고,
+            //곧바로 OnRequestPermissionResult가 실행된다.
+            ActivityCompat.requestPermissions(this, arrayOf(ACCESS_FINE_LOCATION), 0)
+
+        }
     }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if(requestCode == 0){
+            // requestPermission의 두번째 매개변수는 배열이므로 아이템이 여러개 있을 수 있기 때문에 결과를 배열로 받는다.
+            // 해당 예시는 요청 퍼미션이 한개 이므로 i=0 만 호출한다.
+            if(grantResults[0] == 0){
+                //해당 권한이 승낙된 경우.
+            }else{
+                //해당 권한이 거절된 경우.
+            }
+        }
+    }
+
 
     private var time: Long = 0
     override fun onBackPressed() {

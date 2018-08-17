@@ -9,6 +9,8 @@ import com.example.kihunahn.seoulapp2018.R
 import kotlinx.android.synthetic.main.fragment_mycourse.*
 
 
+
+
 class MyCourseFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
