@@ -12,7 +12,7 @@
         android:layout_marginTop="32dp"
         android:text="안기훈띠"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@android:color/white"
+        android:textColor="@android:color/black"
         android:textSize="24sp"
         android:textStyle="bold"/>
 
@@ -24,7 +24,7 @@
         android:layout_marginLeft="32dp"
         android:text="코기"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="@android:color/white"
+        android:textColor="@android:color/black"
         android:textStyle="italic"/>
 
     <View

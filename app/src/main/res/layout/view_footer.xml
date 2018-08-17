@@ -11,7 +11,7 @@
         android:layout_centerVertical="true"
         android:layout_marginBottom="32dp"
         android:layout_marginLeft="32dp"
-        android:background="@drawable/duo_shape_rectangled_rounded_color_accent"
+        android:background="@drawable/bg_toolbar"
         android:gravity="center"
         android:minWidth="@android:dimen/thumbnail_width"
         android:padding="8dp"

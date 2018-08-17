@@ -4,11 +4,13 @@ import android.view.View
 import nl.psdcompany.duonavigationdrawer.views.DuoOptionView
 import android.view.ViewGroup
 import android.widget.BaseAdapter
+import com.example.kihunahn.seoulapp2018.OptionView
+import kotlinx.android.synthetic.main.view_option.view.*
 
 
 internal class MenuAdapter(options: ArrayList<String>) : BaseAdapter() {
     private var mOptions : ArrayList<String> = ArrayList()
-    private val mOptionViews : ArrayList<DuoOptionView> = ArrayList()
+    private val mOptionViews : ArrayList<OptionView> = ArrayList()
 
     init {
         mOptions = options
@@ -43,11 +45,13 @@ internal class MenuAdapter(options: ArrayList<String>) : BaseAdapter() {
         val option = mOptions.get(position)
 
         // Using the DuoOptionView to easily recreate the demo
-        val optionView: DuoOptionView
+        val optionView: OptionView
+
         if (convertView == null) {
-            optionView = DuoOptionView(parent.context)
+
+            optionView = OptionView(parent.context)
         } else {
-            optionView = convertView as DuoOptionView
+            optionView = convertView as OptionView
         }
 
         // Using the DuoOptionView's default selectors
