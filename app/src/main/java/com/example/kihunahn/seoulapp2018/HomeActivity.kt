@@ -9,7 +9,6 @@ import android.support.v4.app.ActivityCompat
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.widget.Toast
 import com.example.kihunahn.seoulapp2018.Adapter.MenuAdapter
 import com.example.kihunahn.seoulapp2018.Fragment.*
@@ -172,7 +171,6 @@ class HomeActivity : AppCompatActivity(), DuoMenuView.OnMenuClickListener {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         val frg = supportFragmentManager.findFragmentById(R.id.container)
-        Log.d("result",frg.toString())
         frg?.onActivityResult(requestCode, resultCode, data)
     }
 

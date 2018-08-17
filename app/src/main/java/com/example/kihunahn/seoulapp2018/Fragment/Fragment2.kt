@@ -32,8 +32,8 @@ class Fragment2 : NMapFragment(), NMapView.OnMapStateChangeListener, NMapPOIdata
     var mMyLocationOverlay: NMapMyLocationOverlay? = null
     var mMapCompassManager: NMapCompassManager? = null
 
-    var dlati:ArrayList<Double> = ArrayList()
-    var dloti:ArrayList<Double> = ArrayList()
+    var dlati: ArrayList<Double> = ArrayList()
+    var dloti: ArrayList<Double> = ArrayList()
 
     override fun onMapCenterChangeFine(p0: NMapView?) {
 
@@ -91,38 +91,19 @@ class Fragment2 : NMapFragment(), NMapView.OnMapStateChangeListener, NMapPOIdata
         mapController = mapView?.mapController
         mapViewerResourceProvider = NMapViewerResourceProvider(activity)
         mapOverlayManager = NMapOverlayManager(activity!!, mapView, mapViewerResourceProvider)
-        moveMapCenter()
+        //moveMapCenter()
     }
 
     private val onMyLocationChangeListener = object : NMapLocationManager.OnLocationChangeListener {
         override fun onLocationChanged(locationManager: NMapLocationManager, myLocation: NGeoPoint): Boolean {
-            Log.d("QWE", "wlsdlq")
             if (mapController != null) {
                 mapController!!.animateTo(myLocation)
-
+                var lati = myLocation.getLongitude()
+                var loti = myLocation.getLatitude()
+                dlati.add(lati)
+                dloti.add(loti)
+                drawline()
             }
-            var lati = myLocation.getLatitude()
-            var loti = myLocation.getLongitude()
-            dlati.add(lati)
-            dloti.add(loti)
-            //val currentPoint = NGeoPoint(lati, loti)
-            //mapController!!.mapCenter = currentPoint
-            mapController!!.setZoomEnabled(true)
-            mapController!!.zoomLevel = 100
-            var len = dlati.size - 1
-            val pathData = NMapPathData(len)
-            pathData.initPathData()
-            for (i in 0..len) {
-                Log.d("ASD", dlati[i].toString() + " " + dloti[i].toString())
-                if (i == 0)
-                    pathData.addPathPoint(dlati[i], dloti[i], NMapPathLineStyle.TYPE_SOLID)
-                else
-                    pathData.addPathPoint(dlati[i], dloti[i], 0)
-            }
-            pathData.endPathData()
-            val pathDataOverlay = mapOverlayManager!!.createPathDataOverlay(pathData)
-            pathDataOverlay.setLineColor(Color.RED, 1000)
-            //drawline()
             return true
         }
 
@@ -138,27 +119,32 @@ class Fragment2 : NMapFragment(), NMapView.OnMapStateChangeListener, NMapPOIdata
         mMapLocationManager?.setOnLocationChangeListener(onMyLocationChangeListener)
         mMapLocationManager!!.enableMyLocation(true)
         mMyLocationOverlay = mapOverlayManager!!.createMyLocationOverlay(mMapLocationManager, mMapCompassManager)
-
     }
 
-    private fun drawline(){
-        if(dlati.size>0) {
-            var len = dlati.size-1
-            val currentPoint = NGeoPoint(dlati[0], dloti[0])
+    private fun drawline() {
+        Log.d("QWE","draw")
+        if (dlati.size > 0) {
+            var len = dlati.size - 1
+            val currentPoint = NGeoPoint(dlati[len], dloti[len])
+            val pathData = NMapPathData(len)
             mapController!!.mapCenter = currentPoint
             mapController!!.setZoomEnabled(true)
-            val pathData = NMapPathData(len)
+            mapController!!.zoomLevel = 100
             pathData.initPathData()
-            for(i in 0..len) {
-                if(i==0)
+            for (i in 0..len) {
+                Log.d("QWE",dlati[i].toString()+" "+dloti[i].toString())
+                if (i == 0)
                     pathData.addPathPoint(dlati[i], dloti[i], NMapPathLineStyle.TYPE_SOLID)
                 else
                     pathData.addPathPoint(dlati[i], dloti[i], 0)
             }
             pathData.endPathData()
+
             val pathDataOverlay = mapOverlayManager!!.createPathDataOverlay(pathData)
+            pathDataOverlay.setLineColor(Color.RED, 1000)
         }
     }
+
     companion object {
         private val CLIENT_ID = "XrPrMsRtFpXGFaq_Az1I"// 애플리케이션 클라이언트 아이디 값
     }
