@@ -47,7 +47,6 @@ class Fragment2 : NMapFragment(), NMapView.OnMapStateChangeListener, NMapPOIdata
     var mGoogleApiClient: GoogleApiClient? = null
     private val BROADCAST_ACTION = "android.location.PROVIDERS_CHANGED"
     override fun onMapCenterChangeFine(p0: NMapView?) {
-
     }
 
     override fun onAnimationStateChange(p0: NMapView?, p1: Int, p2: Int) {
