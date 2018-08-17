@@ -2,12 +2,14 @@ package com.example.kihunahn.seoulapp2018
 
 
 import android.Manifest.permission.ACCESS_FINE_LOCATION
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.widget.Toast
 import com.example.kihunahn.seoulapp2018.Adapter.MenuAdapter
 import com.example.kihunahn.seoulapp2018.Fragment.*
@@ -17,6 +19,10 @@ import nl.psdcompany.duonavigationdrawer.views.DuoDrawerLayout
 import nl.psdcompany.duonavigationdrawer.views.DuoMenuView
 import nl.psdcompany.duonavigationdrawer.widgets.DuoDrawerToggle
 import java.util.*
+
+
+
+
 
 
 class HomeActivity : AppCompatActivity(), DuoMenuView.OnMenuClickListener {
@@ -156,11 +162,17 @@ class HomeActivity : AppCompatActivity(), DuoMenuView.OnMenuClickListener {
         mViewHolder!!.mDuoDrawerLayout.closeDrawer()
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        val frg = supportFragmentManager.findFragmentById(R.id.container)
+        Log.d("result",frg.toString())
+        frg?.onActivityResult(requestCode, resultCode, data)
+    }
 
     private inner class ViewHolder internal constructor() {
         val mDuoDrawerLayout: DuoDrawerLayout
         val mDuoMenuView: DuoMenuView
-//        val mDuoOptionView : DuoOptionView
+//      val mDuoOptionView : DuoOptionView
         val mToolbar : android.support.v7.widget.Toolbar
 
 
