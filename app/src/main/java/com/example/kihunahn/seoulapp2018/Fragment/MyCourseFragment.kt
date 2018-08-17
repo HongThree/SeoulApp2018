@@ -80,7 +80,7 @@ class MyCourseFragment : Fragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         Log.d("result1","QWEQWE")
         when (requestCode) {
-            // Check for the integer request code originally supplied to startResolutionForResult().
+        // Check for the integer request code originally supplied to startResolutionForResult().
             REQUEST_CHECK_SETTINGS -> when (resultCode) {
                 Activity.RESULT_OK -> {
                     val fragment2 = MakeCourseFragment()

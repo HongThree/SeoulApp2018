@@ -81,8 +81,15 @@ class HomeActivity : AppCompatActivity(), DuoMenuView.OnMenuClickListener {
     //뒤로가기
     private var time: Long = 0
     override fun onBackPressed() {
-
-        onOptionClicked(0,true)
+//
+//        val count = supportFragmentManager.backStackEntryCount
+//        if (count == 0) {
+//
+//            super.onBackPressed()
+//            onOptionClicked(0,false)
+//        } else {
+//            supportFragmentManager.popBackStack()
+//        }
 
         if (System.currentTimeMillis() - time >= 2000) {
             time = System.currentTimeMillis()
@@ -172,7 +179,7 @@ class HomeActivity : AppCompatActivity(), DuoMenuView.OnMenuClickListener {
     private inner class ViewHolder internal constructor() {
         val mDuoDrawerLayout: DuoDrawerLayout
         val mDuoMenuView: DuoMenuView
-//      val mDuoOptionView : DuoOptionView
+        //      val mDuoOptionView : DuoOptionView
         val mToolbar : android.support.v7.widget.Toolbar
 
 
