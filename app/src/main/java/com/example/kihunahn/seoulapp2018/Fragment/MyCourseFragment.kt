@@ -64,7 +64,12 @@ class MyCourseFragment : Fragment() {
             var state = result.locationSettingsStates
             when (status.statusCode) {
                 LocationSettingsStatusCodes.SUCCESS -> {
-
+                    val fragment2 = MakeCourseFragment()
+                    val fragmentManager = fragmentManager
+                    val fragmentTransaction = fragmentManager!!.beginTransaction()
+                    fragmentTransaction.replace(R.id.container, fragment2)
+                    fragmentTransaction.addToBackStack(null)
+                    fragmentTransaction.commit()
                 }
                 LocationSettingsStatusCodes.RESOLUTION_REQUIRED -> {
                     this.startIntentSenderForResult(status.resolution.intentSender, REQUEST_CHECK_SETTINGS, null, 0, 0, 0, null)
@@ -78,7 +83,6 @@ class MyCourseFragment : Fragment() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        Log.d("result1","QWEQWE")
         when (requestCode) {
             // Check for the integer request code originally supplied to startResolutionForResult().
             REQUEST_CHECK_SETTINGS -> when (resultCode) {
