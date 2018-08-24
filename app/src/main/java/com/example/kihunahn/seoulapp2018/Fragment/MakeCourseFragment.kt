@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.fragment_makecourse.*
 import java.text.SimpleDateFormat
 import java.util.*
 
-class MakeCourseFragment : Fragment() {
+class MakeCourseFragment : Fragment(){
 
     var PositionList = PositionDTO(LinkedList(), LinkedList())
     var courseName = String()
@@ -30,10 +30,12 @@ class MakeCourseFragment : Fragment() {
         val fragment2 = Fragment2()
         val fragmentManager = fragmentManager
         val fragmentTransaction = fragmentManager!!.beginTransaction()
+
         fragmentTransaction.replace(R.id.fragmentHere, fragment2)
         fragmentTransaction.commit()
         return view
     }
+
 
     override fun onStart() {
         super.onStart()
@@ -137,4 +139,3 @@ class MakeCourseFragment : Fragment() {
     }
 
 }
-
