@@ -1,6 +1,7 @@
 package com.example.kihunahn.seoulapp2018.Fragment
 
 import android.annotation.SuppressLint
+import android.app.ProgressDialog
 import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -20,6 +21,8 @@ import java.io.InputStream
 import java.io.InputStreamReader
 import java.net.HttpURLConnection
 import java.net.URL
+
+
 
 class CourseFragment : Fragment() {
     var scroll: ScrollView? = null
@@ -85,9 +88,14 @@ class CourseFragment : Fragment() {
     }
 
     inner class Getinformation : AsyncTask<String, String, String>() {
-
+        var asyncDialog: ProgressDialog = ProgressDialog(activity)
         override fun onPreExecute() {
             // Before doInBackground
+            asyncDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER)
+            asyncDialog.setMessage("로딩중입니다..")
+
+            // show dialog
+            asyncDialog.show()
         }
 
         override fun doInBackground(vararg urls: String?): String {
@@ -142,6 +150,7 @@ class CourseFragment : Fragment() {
             val fragmentTransaction = fragmentManager!!.beginTransaction()
             fragmentTransaction.replace(R.id.fragmentHere, fragment2)
             fragmentTransaction.commit()
+            asyncDialog.dismiss()
         }
     }
 
