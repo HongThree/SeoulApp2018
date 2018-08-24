@@ -1,6 +1,5 @@
 package com.example.kihunahn.seoulapp2018
 
-
 import android.Manifest.permission.ACCESS_FINE_LOCATION
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -18,10 +17,6 @@ import nl.psdcompany.duonavigationdrawer.views.DuoDrawerLayout
 import nl.psdcompany.duonavigationdrawer.views.DuoMenuView
 import nl.psdcompany.duonavigationdrawer.widgets.DuoDrawerToggle
 import java.util.*
-
-
-
-
 
 
 class HomeActivity : AppCompatActivity(), DuoMenuView.OnMenuClickListener {
@@ -77,20 +72,29 @@ class HomeActivity : AppCompatActivity(), DuoMenuView.OnMenuClickListener {
 
 
 
+    fun removeCurrentFragment() {
+        val transaction = supportFragmentManager.beginTransaction()
+
+        val currentFrag = supportFragmentManager.findFragmentById(R.id.fragmentHere)
+
+
+        var fragName = "NONE"
+
+        if (currentFrag != null)
+            fragName = currentFrag.javaClass.simpleName
+
+
+        if (currentFrag != null)
+            transaction.remove(currentFrag)
+
+        transaction.commit()
+
+    }
     //뒤로가기
     private var time: Long = 0
     override fun onBackPressed() {
-//
-//        val count = supportFragmentManager.backStackEntryCount
-//        if (count == 0) {
-//
-//            super.onBackPressed()
-//            onOptionClicked(0,false)
-//        } else {
-//            supportFragmentManager.popBackStack()
-//        }
-
         if (System.currentTimeMillis() - time >= 2000) {
+
             time = System.currentTimeMillis()
             Toast.makeText(applicationContext, "뒤로 버튼을 한번 더 누르면 종료합니다.", Toast.LENGTH_SHORT).show()
         } else if (System.currentTimeMillis() - time < 2000) {
@@ -98,8 +102,19 @@ class HomeActivity : AppCompatActivity(), DuoMenuView.OnMenuClickListener {
             finish()
             android.os.Process.killProcess(android.os.Process.myPid())
         }
-    }
 
+        if (getSupportFragmentManager().getBackStackEntryCount() == 0)
+        {
+
+
+        }
+        else
+        {
+            getSupportFragmentManager().popBackStack()
+            removeCurrentFragment()
+        }
+
+    }
 
     private fun handleToolbar() {
         setSupportActionBar(mViewHolder!!.mToolbar)
@@ -177,16 +192,12 @@ class HomeActivity : AppCompatActivity(), DuoMenuView.OnMenuClickListener {
     private inner class ViewHolder internal constructor() {
         val mDuoDrawerLayout: DuoDrawerLayout
         val mDuoMenuView: DuoMenuView
-        //      val mDuoOptionView : DuoOptionView
         val mToolbar : android.support.v7.widget.Toolbar
-
 
         init {
             mDuoDrawerLayout = drawer
             mDuoMenuView = mDuoDrawerLayout.menuView as DuoMenuView
-
             mDuoMenuView.setBackground(R.drawable.example)
-
             mToolbar = toolbar
         }
     }
