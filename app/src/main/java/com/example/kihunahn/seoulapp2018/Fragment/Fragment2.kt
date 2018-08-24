@@ -1,11 +1,17 @@
 package com.example.kihunahn.seoulapp2018.Fragment
 
+import android.annotation.SuppressLint
+import android.content.Context
 import android.graphics.Color
+import android.location.Location
+import android.location.LocationListener
+import android.location.LocationManager
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.example.kihunahn.seoulapp2018.NMap.NMapFragment
 import com.example.kihunahn.seoulapp2018.NMap.NMapViewerResourceProvider
 import com.example.kihunahn.seoulapp2018.R
@@ -34,6 +40,8 @@ class Fragment2 : NMapFragment(), NMapView.OnMapStateChangeListener, NMapPOIdata
 
     var dlati: ArrayList<Double> = ArrayList()
     var dloti: ArrayList<Double> = ArrayList()
+
+    var mLocationManager: LocationManager? = null
 
     override fun onMapCenterChangeFine(p0: NMapView?) {
 
@@ -91,30 +99,69 @@ class Fragment2 : NMapFragment(), NMapView.OnMapStateChangeListener, NMapPOIdata
         mapController = mapView?.mapController
         mapViewerResourceProvider = NMapViewerResourceProvider(activity)
         mapOverlayManager = NMapOverlayManager(activity!!, mapView, mapViewerResourceProvider)
-        //moveMapCenter()
+        mLocationManager = activity!!.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+    }
+
+    private val mLocationListener: LocationListener = object : LocationListener {
+        override fun onLocationChanged(location: Location?) {
+            var lati:Double = location?.longitude!!
+            var loti:Double = location?.latitude
+            dlati.add(lati)
+            dloti.add(loti)
+            drawline()
+        }
+
+        override fun onStatusChanged(p0: String?, p1: Int, p2: Bundle?) {
+
+        }
+
+        override fun onProviderEnabled(p0: String?) {
+
+        }
+
+        override fun onProviderDisabled(p0: String?) {
+
+        }
+
     }
 
     private val onMyLocationChangeListener = object : NMapLocationManager.OnLocationChangeListener {
         override fun onLocationChanged(locationManager: NMapLocationManager, myLocation: NGeoPoint): Boolean {
             if (mapController != null) {
                 mapController!!.animateTo(myLocation)
-                var lati = myLocation.getLongitude()
-                var loti = myLocation.getLatitude()
-                dlati.add(lati)
-                dloti.add(loti)
-                drawline()
+//                var lati = myLocation.getLongitude()
+//                var loti = myLocation.getLatitude()
+//                if (dlati.size == 0) {
+//                    dlati.add(lati)
+//                    dloti.add(loti)
+//                }
+//                if (dlati.size > 0) {
+//                    var tx: Double = dlati[dlati.size - 1]
+//                    var ty: Double = dloti[dloti.size - 1]
+//                    Log.d("ASD", tx.toString() + " " + ty.toString())
+//
+//                }
+//                dlati.add(lati)
+//                dloti.add(loti)
+//                drawline()
             }
             return true
         }
 
-        override fun onLocationUpdateTimeout(locationManager: NMapLocationManager) {}
+        override fun onLocationUpdateTimeout(locationManager: NMapLocationManager) {
+
+        }
 
         override fun onLocationUnavailableArea(locationManager: NMapLocationManager, myLocation: NGeoPoint) {
-
+            Toast.makeText(activity!!, "QWEQWE", Toast.LENGTH_SHORT).show()
         }
     }
 
+    @SuppressLint("MissingPermission")
     private fun moveMapCenter() {
+        var sizel: Float = 1.0F
+        mLocationManager!!.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, sizel, mLocationListener)
+        mLocationManager!!.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, sizel, mLocationListener)
         mMapLocationManager = NMapLocationManager(activity!!)
         mMapLocationManager?.setOnLocationChangeListener(onMyLocationChangeListener)
         mMapLocationManager!!.enableMyLocation(true)
@@ -122,17 +169,17 @@ class Fragment2 : NMapFragment(), NMapView.OnMapStateChangeListener, NMapPOIdata
     }
 
     private fun drawline() {
-        Log.d("QWE","draw")
+        Log.d("QWE", "draw")
         if (dlati.size > 0) {
             var len = dlati.size - 1
             val currentPoint = NGeoPoint(dlati[len], dloti[len])
             val pathData = NMapPathData(len)
             mapController!!.mapCenter = currentPoint
             mapController!!.setZoomEnabled(true)
-            mapController!!.zoomLevel = 100
+            mapController!!.zoomLevel = 50
             pathData.initPathData()
             for (i in 0..len) {
-                Log.d("QWE",dlati[i].toString()+" "+dloti[i].toString())
+                Log.d("QWE", dlati[i].toString() + " " + dloti[i].toString())
                 if (i == 0)
                     pathData.addPathPoint(dlati[i], dloti[i], NMapPathLineStyle.TYPE_SOLID)
                 else
