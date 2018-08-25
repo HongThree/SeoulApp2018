@@ -24,8 +24,6 @@ class ArchiveFragment : Fragment() {
     lateinit private var staggeredLayoutManager: StaggeredGridLayoutManager
     lateinit private var adapter: TravelListAdapter
 
-    private var isListView: Boolean = false
-
     override fun onStart() {
         super.onStart()
     }
@@ -67,8 +65,6 @@ class ArchiveFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater!!.inflate(R.layout.fragment_archive, container, false)
-
-        isListView = true
 
         staggeredLayoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
 
