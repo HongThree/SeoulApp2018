@@ -8,6 +8,10 @@
     <!--WIFI 상태활용시 추가--><uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <!--WIFI 상태활용시 추가--><uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
 
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <!--<uses-permission android:name="android.permission.CAMERA"/>-->
+
 
     <application
         android:allowBackup="true"
@@ -31,6 +35,19 @@
         <activity android:name=".MainActivity"></activity>
         <activity android:name=".HomeActivity"></activity>
 
+        <provider
+            android:authorities="com.example.kihunahn.seoulapp2018.Fragment"
+            android:name="android.support.v4.content.FileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths"></meta-data>
+        </provider>
+
     </application>
+
+
+    <uses-feature android:name="android.hardware.camera2" android:required="true" />
 
 </manifest>

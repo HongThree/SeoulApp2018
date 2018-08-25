@@ -1,28 +1,52 @@
 package com.example.kihunahn.seoulapp2018.Fragment
 
+
+//import com.google.firebase.storage.FirebaseStorage
+//import io.realm.Realm
+//import io.realm.RealmConfiguration
+//import io.realm.RealmObject
+//import io.realm.RealmResults
+import android.app.Activity
 import android.app.AlertDialog
+import android.content.Intent
+import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
+import android.provider.MediaStore
 import android.support.v4.app.Fragment
+import android.support.v4.content.FileProvider
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import com.example.kihunahn.seoulapp2018.PictureDTO
 import com.example.kihunahn.seoulapp2018.PositionDTO
 import com.example.kihunahn.seoulapp2018.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.coursename_dialog.view.*
 import kotlinx.android.synthetic.main.fragment_makecourse.*
+import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 
+
 class MakeCourseFragment : Fragment(){
 
+
     var PositionList = PositionDTO(LinkedList(), LinkedList())
+    var PictureList = PictureDTO(LinkedList(), LinkedList(), LinkedList())
+    var lat_list = String()
+    var lon_list = String()
+
     var courseName = String()
     val cur_user = FirebaseAuth.getInstance().currentUser?.uid
     var nameList = LinkedList<String>()
-
+    var currentPath: String? = null
+    val TAKE_PICTURE = 3
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         val view = inflater?.inflate(R.layout.fragment_makecourse, container, false)
@@ -56,13 +80,103 @@ class MakeCourseFragment : Fragment(){
         btn_add.setOnClickListener {
             PositionList.lat?.add(editText_lat.text.toString().toDouble())
             PositionList.lon?.add(editText_lon.text.toString().toDouble())
+            Toast.makeText(activity, "현재 위치 저~장~", Toast.LENGTH_LONG).show()
+            //lat_list.add(editText_lat.text.toString().toDouble())
+            //lon_list.add(editText_lat.text.toString().toDouble())
+
+            //lat_list += editText_lat.text.toString() + " "
+            //lon_list += editText_lon.text.toString() + " "
+            //Toast.makeText(activity, lat_list, Toast.LENGTH_LONG).show()
             //state.setText(PositionList.toString())
         }
 
+        btn_takePicture.setOnClickListener {
+            dispatchCameraIntent()
+        }
     }
+
+
+    fun uploadImage(bitmap : Bitmap) {
+        var baos = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos)
+        var data = baos.toByteArray()
+        // FirebaseFirestore.getInstance().collection(cur_user.toString()).document(courseName).set(PositionList)
+//        FirebaseStorage.getInstance().reference.child(cur_user.toString()).child(courseName+"_pic").putBytes(data)
+//                .addOnCompleteListener { task->
+//                    if(task.isSuccessful) {
+//                        Toast.makeText(activity, "업로드에 성공하였습니다.", Toast.LENGTH_LONG).show()
+//                    }
+//                }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode == TAKE_PICTURE && resultCode == Activity.RESULT_OK){
+            var file = File(currentPath)
+            val uri = Uri.fromFile(file)
+            var bitmap = MediaStore.Images.Media.getBitmap(activity!!.contentResolver, uri)
+
+            //uploadImage(bitmap)
+            PictureList.lat?.add(editText_lat.text.toString().toDouble())
+            PictureList.lon?.add(editText_lon.text.toString().toDouble())
+            PictureList.uri?.add(uri.toString())
+            Toast.makeText(activity, PictureList.uri.toString(), Toast.LENGTH_LONG).show()
+            //Toast.makeText(activity, "사진 위치 저~장~", Toast.LENGTH_LONG).show()
+//            imageView.setImageURI(uri)
+        }
+    }
+
+    fun dispatchCameraIntent() {
+        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        if(intent.resolveActivity(activity!!.packageManager) != null) {
+            var photoFile: File? = null
+            try {
+                photoFile = createImage()
+            } catch (e : IOException){
+                e.printStackTrace()
+            }
+
+            if(photoFile != null) {
+                var photoUri = FileProvider.getUriForFile(activity!!, "com.example.kihunahn.seoulapp2018.Fragment", photoFile)
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri)
+                startActivityForResult(intent, TAKE_PICTURE)
+            }
+        }
+    }
+
+    fun createImage(): File {
+        val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+        val imageName = "JPEG_"+timeStamp+"_"
+        var storageDir = activity!!.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        var image = File.createTempFile(imageName, ".jpg", storageDir)
+        currentPath = image.absolutePath
+        return image
+    }
+
     fun saveCourse() {
+        /*
+         Realm.init(activity)
+         var mRealm = Realm.getDefaultInstance()
+         mRealm.beginTransaction()
+         var mCourse = mRealm.createObject(Course::class.java)
+         mCourse.course_name = courseName
+         mCourse.lats = lat_list
+         mCourse.lons = lon_list
+
+         mRealm.commitTransaction()
+
+         var courses = mRealm.where(Course::class.java)
+         Toast.makeText(activity, courses.count().toString(), Toast.LENGTH_LONG).show()
+         */
+
         FirebaseFirestore.getInstance().collection(cur_user.toString()).document(courseName).set(PositionList).addOnSuccessListener {
-            Toast.makeText(activity, "여행이 저장되었습니다.", Toast.LENGTH_LONG).show()
+            Toast.makeText(activity, "여행이 저장되었습니다(위치).", Toast.LENGTH_LONG).show()
+        }.addOnFailureListener { exception ->
+            Toast.makeText(activity, exception.toString(), Toast.LENGTH_LONG).show()
+        }
+
+        FirebaseFirestore.getInstance().collection(cur_user.toString()).document(courseName+"_pic").set(PictureList).addOnSuccessListener {
+            Toast.makeText(activity, "여행이 저장되었습니다(사진).", Toast.LENGTH_LONG).show()
         }.addOnFailureListener { exception ->
             Toast.makeText(activity, exception.toString(), Toast.LENGTH_LONG).show()
         }
@@ -137,5 +251,10 @@ class MakeCourseFragment : Fragment(){
     override fun onDetach() {
         super.onDetach()
     }
-
 }
+
+//open class Course : RealmObject() {
+//    var course_name : String? = null
+//    var lats : String? = null
+//    var lons : String? = null
+//}
