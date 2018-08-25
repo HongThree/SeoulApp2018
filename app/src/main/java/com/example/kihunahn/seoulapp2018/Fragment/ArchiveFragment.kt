@@ -2,20 +2,89 @@ package com.example.kihunahn.seoulapp2018.Fragment
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.util.Pair
 import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.StaggeredGridLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import com.example.kihunahn.seoulapp2018.Adapter.TravelListAdapter
 import com.example.kihunahn.seoulapp2018.PositionDTO
 import com.example.kihunahn.seoulapp2018.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.android.synthetic.main.fragment_archive.view.*
 
 class ArchiveFragment : Fragment() {
+
+    lateinit private var staggeredLayoutManager: StaggeredGridLayoutManager
+    lateinit private var adapter: TravelListAdapter
+
+    private var isListView: Boolean = false
+
+    override fun onStart() {
+        super.onStart()
+    }
+
+    private val onItemClickListener = object : TravelListAdapter.OnItemClickListener {
+        override fun onItemClick(view: View, position: Int) {
+        Toast.makeText(activity, "Clicked " + position, Toast.LENGTH_SHORT).show()
+        //val transitionIntent = DetailActivity.newIntent(this@MainActivity, position)
+        val placeImage = view.findViewById<ImageView>(R.id.placeImage)
+        val placeNameHolder = view.findViewById<LinearLayout>(R.id.placeNameHolder)
+
+
+        //val navigationBar = findViewById<View>(android.R.id.navigationBarBackground)
+        ///val statusBar = findViewById<View>(android.R.id.statusBarBackground)
+
+        val imagePair = Pair.create(placeImage as View, "tImage")
+        val holderPair = Pair.create(placeNameHolder as View, "tNameHolder")
+
+        //val navPair = Pair.create(navigationBar, Window.NAVIGATION_BAR_BACKGROUND_TRANSITION_NAME)
+        //val statusPair = Pair.create(statusBar, Window.STATUS_BAR_BACKGROUND_TRANSITION_NAME)
+
+
+        //val pairs = mutableListOf(imagePair, holderPair, statusPair, toolbarPair)
+        val pairs = mutableListOf(imagePair, holderPair)
+        /*
+        if (navigationBar != null && navPair != null) {
+            pairs += navPair
+        }
+        */
+        /*
+        val options = ActivityOptionsCompat.makeSceneTransitionAnimation(this@MainActivity,
+                *pairs.toTypedArray())
+        ActivityCompat.startActivity(this@MainActivity, transitionIntent, options.toBundle())
+        */
+
+
+    }
+}
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater!!.inflate(R.layout.fragment_archive, container, false)
+
+        isListView = true
+
+        staggeredLayoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
+
+        if(view.list_view == null){
+            Toast.makeText(activity, "널이야 시발", Toast.LENGTH_LONG).show()
+        }
+
+        view.list_view.layoutManager = staggeredLayoutManager
+
+        adapter = TravelListAdapter(activity!!)
+        adapter.setOnItemClickListener(onItemClickListener)
+
+        Toast.makeText(activity, "Clicked " + adapter.itemCount, Toast.LENGTH_SHORT).show()
+
+        view.list_view.adapter = adapter
+
         return view
     }
 
