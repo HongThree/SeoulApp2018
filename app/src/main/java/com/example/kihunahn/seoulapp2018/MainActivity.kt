@@ -1,10 +1,15 @@
 package com.example.kihunahn.seoulapp2018
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
+import android.annotation.TargetApi
 import android.app.Activity
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -19,10 +24,13 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+
         // 로그인 세션을 체크하는 부분
         authStateListener = FirebaseAuth.AuthStateListener { firebaseAuth ->
             var user = firebaseAuth.currentUser
             if(user != null){
+                showProgress(false)
+
                 startActivity(Intent(this, HomeActivity::class.java))
             }
             else{
@@ -38,9 +46,10 @@ class MainActivity : AppCompatActivity() {
         // 구글 로그인 클래스를 만듦
         var googleSignInClient = GoogleSignIn.getClient(this, gso)
 
-        google_login.setOnClickListener {
+        login_button.setOnClickListener {
             var signInIntent = googleSignInClient.signInIntent
             startActivityForResult(signInIntent, 1)
+            showProgress(true)
         }
     }
 
@@ -76,6 +85,26 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
+    private fun showProgress(show: Boolean) {
+        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
+        // for very easy animations. If available, use these APIs to fade-in
+        // the progress spinner.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
+            val shortAnimTime = resources.getInteger(android.R.integer.config_shortAnimTime)
 
+            loginProgress.setVisibility(if (show) View.VISIBLE else View.GONE)
+            loginProgress.animate().setDuration(shortAnimTime.toLong()).alpha(
+                    (if (show) 1 else 0).toFloat()).setListener(object : AnimatorListenerAdapter() {
+                override fun onAnimationEnd(animation: Animator) {
+                    loginProgress.setVisibility(if (show) View.VISIBLE else View.GONE)
+                }
+            })
+        } else {
+            // The ViewPropertyAnimator APIs are not available, so simply show
+            // and hide the relevant UI components.
+            loginProgress.setVisibility(if (show) View.VISIBLE else View.GONE)
+        }
+    }
 
 }
