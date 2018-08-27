@@ -2,6 +2,7 @@ package com.example.kihunahn.seoulapp2018.Fragment
 
 import android.annotation.SuppressLint
 import android.app.ProgressDialog
+import android.graphics.Color
 import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -68,11 +69,12 @@ class CourseFragment : Fragment() {
 
         val bmb = view.findViewById(R.id.bmb) as BoomMenuButton
         val drawable = R.drawable::class.java
+
         for (i in 0 until bmb.buttonPlaceEnum.buttonNumber()) {
             var builder: SimpleCircleButton.Builder = SimpleCircleButton.Builder()
             var field = drawable.getField("road" + i)
             builder.normalImageRes(field.getInt(null))
-                    .rotateImage(true)
+                    .rotateImage(true).shadowColor(Color.parseColor("#ee000000"))
                     .listener(OnBMClickListener { index ->
                         var url = "https://mplatform.seoul.go.kr/api/dule/courseInfo.do?course=" + (index + 1).toShort()
                         Getinformation().execute(url)
@@ -84,6 +86,14 @@ class CourseFragment : Fragment() {
                     })
             bmb.addBuilder(builder)
         }
+        bmb.builders[0].normalColor(Color.parseColor("#EB5919"))
+        bmb.builders[1].normalColor(Color.parseColor("#ED62A7"))
+        bmb.builders[2].normalColor(Color.parseColor("#0D6FB8"))
+        bmb.builders[3].normalColor(Color.parseColor("#07913A"))
+        bmb.builders[4].normalColor(Color.parseColor("#920783"))
+        bmb.builders[5].normalColor(Color.parseColor("#C30D23"))
+        bmb.builders[6].normalColor(Color.parseColor("#A57225"))
+        bmb.builders[7].normalColor(Color.parseColor("#14195F"))
         return view
     }
 
