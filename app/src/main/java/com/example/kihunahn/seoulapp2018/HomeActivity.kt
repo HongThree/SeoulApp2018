@@ -11,7 +11,6 @@ import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
 import com.example.kihunahn.seoulapp2018.Adapter.MenuAdapter
 import com.example.kihunahn.seoulapp2018.Fragment.*
-import com.example.kihunahn.seoulapp2018.R.id.drawer
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_home.*
 import nl.psdcompany.duonavigationdrawer.views.DuoDrawerLayout
@@ -104,14 +103,12 @@ class HomeActivity : AppCompatActivity(), DuoMenuView.OnMenuClickListener {
             android.os.Process.killProcess(android.os.Process.myPid())
         }
 
-        if (getSupportFragmentManager().getBackStackEntryCount() == 0)
-        {
+        if (supportFragmentManager.backStackEntryCount == 0) {
 
 
         }
-        else
-        {
-            getSupportFragmentManager().popBackStack()
+        else {
+            supportFragmentManager.popBackStack()
             removeCurrentFragment()
         }
 
