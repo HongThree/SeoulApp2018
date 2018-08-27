@@ -129,21 +129,6 @@ class Fragment2 : NMapFragment(), NMapView.OnMapStateChangeListener, NMapPOIdata
         override fun onLocationChanged(locationManager: NMapLocationManager, myLocation: NGeoPoint): Boolean {
             if (mapController != null) {
                 mapController!!.animateTo(myLocation)
-//                var lati = myLocation.getLongitude()
-//                var loti = myLocation.getLatitude()
-//                if (dlati.size == 0) {
-//                    dlati.add(lati)
-//                    dloti.add(loti)
-//                }
-//                if (dlati.size > 0) {
-//                    var tx: Double = dlati[dlati.size - 1]
-//                    var ty: Double = dloti[dloti.size - 1]
-//                    Log.d("ASD", tx.toString() + " " + ty.toString())
-//
-//                }
-//                dlati.add(lati)
-//                dloti.add(loti)
-//                drawline()
             }
             return true
         }
@@ -159,9 +144,9 @@ class Fragment2 : NMapFragment(), NMapView.OnMapStateChangeListener, NMapPOIdata
 
     @SuppressLint("MissingPermission")
     private fun moveMapCenter() {
-        var sizel: Float = 1.0F
-        mLocationManager!!.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, sizel, mLocationListener)
-        mLocationManager!!.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, sizel, mLocationListener)
+        Log.e("move","move")
+        mLocationManager!!.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0.0f, mLocationListener)
+        mLocationManager!!.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0.0f, mLocationListener)
         mMapLocationManager = NMapLocationManager(activity!!)
         mMapLocationManager?.setOnLocationChangeListener(onMyLocationChangeListener)
         mMapLocationManager!!.enableMyLocation(true)
