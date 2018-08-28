@@ -171,8 +171,7 @@ class HomeActivity : AppCompatActivity(), DuoMenuView.OnMenuClickListener {
             2 -> goToFragment(InfoFragment(), false)
             3 ->  goToFragment(CourseFragment(), false)
             4 -> goToFragment(StampFragment(), false)
-
-            6 -> goToFragment(AboutAppFragment(), false)
+            5 -> goToFragment(AboutAppFragment(), false)
 
             else -> goToFragment(MainFragment(), false)
         }

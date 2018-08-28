@@ -4,13 +4,12 @@
     <string name="hello_blank_fragment">This is the main fragment</string>
 
     <array name="menuOptions">
-        <item>홈</item>
+        <item>Home</item>
         <item>나만의 코스</item>
         <item>둘레길 소개</item>
         <item>둘레길 코스정보</item>
         <item>나의 스탬프 북</item>
-        <item>설정</item>
-        <item>앱 소개</item>
+        <item>About</item>
     </array>
 
     <string name="appinfo">"옛말에서 '혜윰'은 '헤아리다', '생각하다'라는 뜻을 가진 '혜다'의 어간 '혜-'에 어미 '-움'이 결합한 명사형입니다.\n"
