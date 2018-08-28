@@ -102,6 +102,13 @@ class Fragment2 : NMapFragment(), NMapView.OnMapStateChangeListener, NMapPOIdata
         mLocationManager = activity!!.getSystemService(Context.LOCATION_SERVICE) as LocationManager
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+    }
     private val mLocationListener: LocationListener = object : LocationListener {
         override fun onLocationChanged(location: Location?) {
             var lati:Double = location?.longitude!!
