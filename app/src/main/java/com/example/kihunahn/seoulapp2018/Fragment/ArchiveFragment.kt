@@ -1,10 +1,13 @@
 package com.example.kihunahn.seoulapp2018.Fragment
 
 import android.os.Bundle
+import android.support.v4.app.ActivityCompat
+import android.support.v4.app.ActivityOptionsCompat
 import android.support.v4.app.Fragment
 import android.support.v4.util.Pair
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.StaggeredGridLayoutManager
+import android.transition.TransitionInflater
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,7 +34,31 @@ class ArchiveFragment : Fragment() {
     private val onItemClickListener = object : TravelListAdapter.OnItemClickListener {
         override fun onItemClick(view: View, position: Int) {
         Toast.makeText(activity, "Clicked " + position, Toast.LENGTH_SHORT).show()
+
+        val nextFragment = DetailFragment()
+        val bundle = Bundle()
+        bundle.putSerializable("position", position)
+        nextFragment.arguments = bundle
+
+            val placeImage = view.findViewById<ImageView>(R.id.placeImage)
+            val placeNameHolder = view.findViewById<LinearLayout>(R.id.placeNameHolder)
+
+            val imagePair = Pair.create(placeImage as View, "tImage")
+            val holderPair = Pair.create(placeNameHolder as View, "tNameHolder")
+
+            val pairs = mutableListOf(imagePair, holderPair)
+
+        val fragmentManager = fragmentManager
+        val fragmentTransaction = fragmentManager!!.beginTransaction()
+
+        fragmentTransaction.replace(R.id.container, nextFragment)
+        fragmentTransaction.addToBackStack(null)
+        fragmentTransaction.addSharedElement(placeImage, "shared_image")
+        fragmentTransaction.commit()
+        /*
+
         //val transitionIntent = DetailActivity.newIntent(this@MainActivity, position)
+
         val placeImage = view.findViewById<ImageView>(R.id.placeImage)
         val placeNameHolder = view.findViewById<LinearLayout>(R.id.placeNameHolder)
 
@@ -48,6 +75,7 @@ class ArchiveFragment : Fragment() {
 
         //val pairs = mutableListOf(imagePair, holderPair, statusPair, toolbarPair)
         val pairs = mutableListOf(imagePair, holderPair)
+        */
         /*
         if (navigationBar != null && navPair != null) {
             pairs += navPair
@@ -58,8 +86,6 @@ class ArchiveFragment : Fragment() {
                 *pairs.toTypedArray())
         ActivityCompat.startActivity(this@MainActivity, transitionIntent, options.toBundle())
         */
-
-
     }
 }
 
@@ -76,8 +102,6 @@ class ArchiveFragment : Fragment() {
 
         adapter = TravelListAdapter(activity!!)
         adapter.setOnItemClickListener(onItemClickListener)
-
-        Toast.makeText(activity, "Clicked " + adapter.itemCount, Toast.LENGTH_SHORT).show()
 
         view.list_view.adapter = adapter
 
