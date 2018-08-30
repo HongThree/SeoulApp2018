@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.example.kihunahn.seoulapp2018.R
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.common.api.ResultCallback
@@ -28,13 +29,21 @@ class MyCourseFragment : Fragment() {
     override fun onStart() {
         super.onStart()
 
-
+        Toast.makeText(activity, fragmentManager!!.backStackEntryCount.toString(), Toast.LENGTH_SHORT).show()
         btn_start.setOnClickListener {
+            /*
             mGoogleApiClient = GoogleApiClient.Builder(activity!!)
                     .addApi(LocationServices.API)
                     .build()
             mGoogleApiClient!!.connect()
             showSettingDialog()
+            */
+            val fragment2 = MakeCourseFragment()
+            val fragmentManager = fragmentManager
+            val fragmentTransaction = fragmentManager!!.beginTransaction()
+            fragmentTransaction.replace(R.id.container, fragment2)
+            fragmentTransaction.addToBackStack(null)
+            fragmentTransaction.commit()
         }
 
         btn_archive.setOnClickListener {
@@ -48,7 +57,7 @@ class MyCourseFragment : Fragment() {
 
 
     }
-
+    /*
     private fun showSettingDialog() {
         val locationRequest = LocationRequest.create()
         locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY //Setting priotity of Location request to high
@@ -57,6 +66,8 @@ class MyCourseFragment : Fragment() {
         val builder = LocationSettingsRequest.Builder()
                 .addLocationRequest(locationRequest)
         builder.setAlwaysShow(true) //this is the key ingredient to show dialog always when GPS is off
+
+        Toast.makeText(activity, "showSettingDialog", Toast.LENGTH_SHORT).show()
 
         val result = LocationServices.SettingsApi.checkLocationSettings(mGoogleApiClient, builder.build())
         result.setResultCallback(ResultCallback<LocationSettingsResult> { result ->
@@ -83,6 +94,7 @@ class MyCourseFragment : Fragment() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        Toast.makeText(activity, "onActivityResult", Toast.LENGTH_SHORT).show()
         when (requestCode) {
         // Check for the integer request code originally supplied to startResolutionForResult().
             REQUEST_CHECK_SETTINGS -> when (resultCode) {
@@ -100,6 +112,7 @@ class MyCourseFragment : Fragment() {
             }
         }
     }
+    */
 
     override fun onResume() {
         super.onResume()

@@ -94,27 +94,20 @@ class HomeActivity : AppCompatActivity(), DuoMenuView.OnMenuClickListener {
     //뒤로가기
     private var time: Long = 0
     override fun onBackPressed() {
-        if (System.currentTimeMillis() - time >= 2000) {
-
-            time = System.currentTimeMillis()
-            Toast.makeText(applicationContext, "뒤로 버튼을 한번 더 누르면 종료합니다.", Toast.LENGTH_SHORT).show()
-        } else if (System.currentTimeMillis() - time < 2000) {
-            moveTaskToBack(true)
-            finish()
-            android.os.Process.killProcess(android.os.Process.myPid())
+        if(supportFragmentManager.backStackEntryCount != 0) {
+            supportFragmentManager.popBackStack()
         }
+        else {
+            if (System.currentTimeMillis() - time >= 2000) {
+                time = System.currentTimeMillis()
+                Toast.makeText(applicationContext, "뒤로 버튼을 한번 더 누르면 종료합니다.", Toast.LENGTH_SHORT).show()
+            } else if (System.currentTimeMillis() - time < 2000) {
 
-        if (getSupportFragmentManager().getBackStackEntryCount() == 0)
-        {
-
-
+                moveTaskToBack(true)
+                finish()
+                android.os.Process.killProcess(android.os.Process.myPid())
+            }
         }
-        else
-        {
-            getSupportFragmentManager().popBackStack()
-            removeCurrentFragment()
-        }
-
     }
 
     private fun handleToolbar() {

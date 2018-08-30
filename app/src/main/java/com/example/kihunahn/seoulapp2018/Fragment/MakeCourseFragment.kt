@@ -16,6 +16,7 @@ import android.os.Environment
 import android.provider.MediaStore
 import android.support.v4.app.Fragment
 import android.support.v4.content.FileProvider
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -63,18 +64,24 @@ class MakeCourseFragment : Fragment(){
 
     override fun onStart() {
         super.onStart()
+        Toast.makeText(activity, fragmentManager!!.backStackEntryCount.toString(), Toast.LENGTH_LONG).show()
+
         var dateFormat = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault())
         var date = Date()
         courseName = dateFormat.format(date).toString()
 
         btn_exit.setOnClickListener {
-            showDialog()
+            showDialog(courseName)
+            fragmentManager!!.popBackStack()
+
+            /*
             val fragment = MyCourseFragment()
             val fragmentManager = fragmentManager
             val fragmentTransaction = fragmentManager!!.beginTransaction()
             fragmentTransaction.replace(R.id.container, fragment)
-            fragmentTransaction.addToBackStack(null)
+            //fragmentTransaction.addToBackStack(null)
             fragmentTransaction.commit()
+            */
         }
 
         btn_add.setOnClickListener {
@@ -153,7 +160,7 @@ class MakeCourseFragment : Fragment(){
         return image
     }
 
-    fun saveCourse() {
+    fun saveCourse(courseName : String) {
         /*
          Realm.init(activity)
          var mRealm = Realm.getDefaultInstance()
@@ -168,20 +175,20 @@ class MakeCourseFragment : Fragment(){
          var courses = mRealm.where(Course::class.java)
          Toast.makeText(activity, courses.count().toString(), Toast.LENGTH_LONG).show()
          */
-
+        //Toast.makeText(activity, isValid(courseName).toString(), Toast.LENGTH_SHORT).show()
         FirebaseFirestore.getInstance().collection(cur_user.toString()).document(courseName).set(PositionList).addOnSuccessListener {
-            Toast.makeText(activity, "여행이 저장되었습니다(위치).", Toast.LENGTH_LONG).show()
+            //Toast.makeText(activity, "여행이 저장되었습니다(위치).", Toast.LENGTH_LONG).show()
         }.addOnFailureListener { exception ->
-            Toast.makeText(activity, exception.toString(), Toast.LENGTH_LONG).show()
+            //Toast.makeText(activity, exception.toString(), Toast.LENGTH_LONG).show()
         }
 
         FirebaseFirestore.getInstance().collection(cur_user.toString()).document(courseName+"_pic").set(PictureList).addOnSuccessListener {
-            Toast.makeText(activity, "여행이 저장되었습니다(사진).", Toast.LENGTH_LONG).show()
+            //Toast.makeText(activity, "여행이 저장되었습니다(사진).", Toast.LENGTH_LONG).show()
         }.addOnFailureListener { exception ->
-            Toast.makeText(activity, exception.toString(), Toast.LENGTH_LONG).show()
+            //Toast.makeText(activity, exception.toString(), Toast.LENGTH_LONG).show()
         }
     }
-    fun showDialog() {
+    fun showDialog(defaultName : String) {
         updateNameList()
 
         val mDialogView = LayoutInflater.from(activity).inflate(R.layout.coursename_dialog, null)
@@ -202,15 +209,16 @@ class MakeCourseFragment : Fragment(){
                 if (!tempName.equals(""))
                     courseName = mDialogView.editText_course_name.text.toString()
 
-                saveCourse()
+                saveCourse(courseName)
                 mAlerDialog.dismiss()
             }
         }
         mDialogView.btn_defualt_course_name.setOnClickListener {
             mAlerDialog.dismiss()
-            Toast.makeText(activity, courseName, Toast.LENGTH_LONG).show()
-            saveCourse()
+            //Toast.makeText(activity, defaultName + "가 저장 되었습니다.", Toast.LENGTH_LONG).show()
+            saveCourse(defaultName)
         }
+
 
     }
     fun isValid(name : String) : Boolean {
