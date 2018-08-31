@@ -58,6 +58,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
+        app:bmb_normalColor="@color/light_green"
         app:bmb_buttonEnum="simpleCircle"
         app:bmb_buttonPlaceEnum="buttonPlace_sc_8_1"
         app:bmb_piecePlaceEnum="piecePlace_dot_8_1" />
