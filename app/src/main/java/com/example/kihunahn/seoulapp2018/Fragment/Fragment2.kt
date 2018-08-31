@@ -106,10 +106,21 @@ class Fragment2 : NMapFragment(), NMapView.OnMapStateChangeListener, NMapPOIdata
 
     val mLocationListener: LocationListener = object : LocationListener {
         override fun onLocationChanged(location: Location?) {
-            var lati:Double = location?.longitude!!
-            var loti:Double = location?.latitude
-            dlati.add(lati)
-            dloti.add(loti)
+            var lati: Double = location?.longitude!!
+            var loti: Double = location?.latitude
+            var dsize = dlati.size
+            if (dsize == 0) {
+                dlati.add(lati)
+                dloti.add(loti)
+            } else {
+                var tlati = dlati[dsize - 1]
+                var tloti = dloti[dsize - 1]
+                var dis = (tlati - lati) * (tlati - lati) + (tloti - loti) * (tloti - loti)
+                if(dis <= 100){
+                    dlati.add(lati)
+                    dloti.add(loti)
+                }
+            }
             drawline()
         }
 
@@ -127,7 +138,7 @@ class Fragment2 : NMapFragment(), NMapView.OnMapStateChangeListener, NMapPOIdata
 
     }
 
-    private val onMyLocationChangeListener = object : NMapLocationManager.OnLocationChangeListener {
+    val onMyLocationChangeListener = object : NMapLocationManager.OnLocationChangeListener {
         override fun onLocationChanged(locationManager: NMapLocationManager, myLocation: NGeoPoint): Boolean {
             if (mapController != null) {
                 mapController!!.animateTo(myLocation)
@@ -146,9 +157,9 @@ class Fragment2 : NMapFragment(), NMapView.OnMapStateChangeListener, NMapPOIdata
 
     @SuppressLint("MissingPermission")
     private fun moveMapCenter() {
-        Log.e("move","move")
-        mLocationManager!!.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0.0f, mLocationListener)
-        mLocationManager!!.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0.0f, mLocationListener)
+        Log.e("move", "move")
+        mLocationManager!!.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 10000, 0.0f, mLocationListener)
+        mLocationManager!!.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 0.0f, mLocationListener)
         mMapLocationManager = NMapLocationManager(activity!!)
         mMapLocationManager?.setOnLocationChangeListener(onMyLocationChangeListener)
         mMapLocationManager!!.enableMyLocation(true)
@@ -158,7 +169,7 @@ class Fragment2 : NMapFragment(), NMapView.OnMapStateChangeListener, NMapPOIdata
     private fun drawline() {
         Log.d("QWE", "draw")
         if (dlati.size > 0) {
-            Log.d("size",dlati.size.toString())
+            Log.d("size", dlati.size.toString())
             val len = dlati.size - 1
             val currentPoint = NGeoPoint(dlati[len], dloti[len])
             val pathData = NMapPathData(len)
@@ -181,28 +192,29 @@ class Fragment2 : NMapFragment(), NMapView.OnMapStateChangeListener, NMapPOIdata
     }
 
     override fun onPause() {
-        Log.e("onPause","onPause")
+        Log.e("onPause", "onPause")
         mLocationManager!!.removeUpdates(mLocationListener)
         mMapLocationManager!!.removeOnLocationChangeListener(onMyLocationChangeListener)
         super.onPause()
     }
 
     override fun onStop() {
-        Log.e("onPause","onStop")
+        Log.e("onPause", "onStop")
         super.onStop()
     }
 
     override fun onDestroyView() {
-        Log.e("onPause","onDestroyView")
+        Log.e("onPause", "onDestroyView")
         super.onDestroyView()
     }
 
     override fun onDestroy() {
-        Log.e("onPause","onDestroy")
+        Log.e("onPause", "onDestroy")
         mLocationManager!!.removeUpdates(mLocationListener)
         mMapLocationManager!!.removeOnLocationChangeListener(onMyLocationChangeListener)
         super.onDestroy()
     }
+
     companion object {
         private const val CLIENT_ID = "XrPrMsRtFpXGFaq_Az1I"// 애플리케이션 클라이언트 아이디 값
     }
