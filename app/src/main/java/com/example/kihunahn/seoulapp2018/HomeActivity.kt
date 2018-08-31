@@ -101,8 +101,8 @@ class HomeActivity : AppCompatActivity(), DuoMenuView.OnMenuClickListener {
         }
         else {
             if(curFragment != 0) {
-                goToFragment(MainFragment(), false)
                 curFragment = 0
+                onOptionClicked(curFragment, false)
             }
             else {
                 if (System.currentTimeMillis() - time >= 2000) {
@@ -176,8 +176,7 @@ class HomeActivity : AppCompatActivity(), DuoMenuView.OnMenuClickListener {
             2 -> goToFragment(InfoFragment(), false)
             3 ->  goToFragment(CourseFragment(), false)
             4 -> goToFragment(StampFragment(), false)
-
-            6 -> goToFragment(AboutAppFragment(), false)
+            5 -> goToFragment(AboutAppFragment(), false)
 
             else -> goToFragment(MainFragment(), false)
         }
