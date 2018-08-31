@@ -122,7 +122,7 @@ class ArchiveFragment : Fragment() {
                 //Toast.makeText(activity, it.data.keys.toString(), Toast.LENGTH_LONG).show()
 
                 // 이게 실제 여행명 받아오기
-                Toast.makeText(activity, it.id, Toast.LENGTH_LONG).show()
+                //Toast.makeText(activity, it.id, Toast.LENGTH_LONG).show()
             }
         }
     }
