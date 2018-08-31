@@ -76,7 +76,7 @@ class Fragment2 : NMapFragment(), NMapView.OnMapStateChangeListener, NMapPOIdata
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val v = inflater.inflate(R.layout.fragment1, container, false)
+        val v = inflater.inflate(R.layout.fragment2, container, false)
         mapView = (v.findViewById(R.id.mapView) as NMapView)
         mapView!!.setClientId(CLIENT_ID)
         mapView!!.isClickable = true
@@ -97,19 +97,14 @@ class Fragment2 : NMapFragment(), NMapView.OnMapStateChangeListener, NMapPOIdata
         mapView?.setBuiltInZoomControls(true, null)
         mapView?.setOnMapStateChangeListener(this)
         mapController = mapView?.mapController
+        mapController!!.reload()
         mapViewerResourceProvider = NMapViewerResourceProvider(activity)
         mapOverlayManager = NMapOverlayManager(activity!!, mapView, mapViewerResourceProvider)
         mLocationManager = activity!!.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        moveMapCenter()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-    }
-    private val mLocationListener: LocationListener = object : LocationListener {
+    val mLocationListener: LocationListener = object : LocationListener {
         override fun onLocationChanged(location: Location?) {
             var lati:Double = location?.longitude!!
             var loti:Double = location?.latitude
@@ -163,7 +158,8 @@ class Fragment2 : NMapFragment(), NMapView.OnMapStateChangeListener, NMapPOIdata
     private fun drawline() {
         Log.d("QWE", "draw")
         if (dlati.size > 0) {
-            var len = dlati.size - 1
+            Log.d("size",dlati.size.toString())
+            val len = dlati.size - 1
             val currentPoint = NGeoPoint(dlati[len], dloti[len])
             val pathData = NMapPathData(len)
             mapController!!.mapCenter = currentPoint
@@ -184,7 +180,30 @@ class Fragment2 : NMapFragment(), NMapView.OnMapStateChangeListener, NMapPOIdata
         }
     }
 
+    override fun onPause() {
+        Log.e("onPause","onPause")
+        mLocationManager!!.removeUpdates(mLocationListener)
+        mMapLocationManager!!.removeOnLocationChangeListener(onMyLocationChangeListener)
+        super.onPause()
+    }
+
+    override fun onStop() {
+        Log.e("onPause","onStop")
+        super.onStop()
+    }
+
+    override fun onDestroyView() {
+        Log.e("onPause","onDestroyView")
+        super.onDestroyView()
+    }
+
+    override fun onDestroy() {
+        Log.e("onPause","onDestroy")
+        mLocationManager!!.removeUpdates(mLocationListener)
+        mMapLocationManager!!.removeOnLocationChangeListener(onMyLocationChangeListener)
+        super.onDestroy()
+    }
     companion object {
-        private val CLIENT_ID = "XrPrMsRtFpXGFaq_Az1I"// 애플리케이션 클라이언트 아이디 값
+        private const val CLIENT_ID = "XrPrMsRtFpXGFaq_Az1I"// 애플리케이션 클라이언트 아이디 값
     }
 }

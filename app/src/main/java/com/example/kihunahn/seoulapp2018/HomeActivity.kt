@@ -1,18 +1,18 @@
 package com.example.kihunahn.seoulapp2018
 
 import android.Manifest.permission.ACCESS_FINE_LOCATION
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
 import com.example.kihunahn.seoulapp2018.Adapter.MenuAdapter
 import com.example.kihunahn.seoulapp2018.Fragment.*
-import com.example.kihunahn.seoulapp2018.R.id.drawer
-import com.example.kihunahn.seoulapp2018.R.id.fragmentHere
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_home.*
 import nl.psdcompany.duonavigationdrawer.views.DuoDrawerLayout
@@ -97,7 +97,18 @@ class HomeActivity : AppCompatActivity(), DuoMenuView.OnMenuClickListener {
     override fun onBackPressed() {
 
         if(supportFragmentManager.backStackEntryCount != 0) {
-            supportFragmentManager.popBackStack()
+            var temp:String = supportFragmentManager.fragments.toString().substring(1,5)
+            if(temp=="Make"){
+                val builder = AlertDialog.Builder(this)
+                builder.setMessage("저장하실?")
+                builder.setPositiveButton("예", DialogInterface.OnClickListener(){ DialogInterface, which ->
+                    supportFragmentManager.popBackStack()
+                })
+                builder.show()
+            }
+            else{
+                supportFragmentManager.popBackStack()
+            }
         }
         else {
             if(curFragment != 0) {
