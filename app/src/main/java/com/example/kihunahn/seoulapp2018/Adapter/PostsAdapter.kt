@@ -9,7 +9,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.example.kihunahn.seoulapp2018.R
 import com.example.kihunahn.seoulapp2018.model.Post
+import com.rd.PageIndicatorView
+import kotlinx.android.synthetic.main.post_row.*
 import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.post_row.view.*
 
 class PostsAdapter(val posts: ArrayList<Post>, val context: FragmentActivity?) : RecyclerView.Adapter<PostsAdapter.ViewHolder>() {
 
@@ -23,12 +26,15 @@ class PostsAdapter(val posts: ArrayList<Post>, val context: FragmentActivity?) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.username.text = posts[position].username
         holder.textfeed.text = posts[position].text
-        Picasso.get().load(posts[position].photo).into(holder.photo)
+//        Picasso.get().load(posts[position].photo).into(holder.photo)
+        holder.photo.setViewPager(holder.imageVP)
+
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val username: TextView = itemView.findViewById(R.id.username)
         val textfeed: TextView = itemView.findViewById(R.id.textfeed)
-        val photo: ImageView = itemView.findViewById(R.id.photofeed)
+        val photo :PageIndicatorView = itemView.findViewById(R.id.photofeed)
+        val imageVP = itemView.imageVP
     }
 }
