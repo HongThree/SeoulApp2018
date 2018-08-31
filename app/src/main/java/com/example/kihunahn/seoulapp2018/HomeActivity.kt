@@ -110,7 +110,7 @@ class HomeActivity : AppCompatActivity(), DuoMenuView.OnMenuClickListener {
             var temp:String = supportFragmentManager.fragments.toString().substring(1,5)
             if(temp=="Make"){
                 val builder = AlertDialog.Builder(this)
-                builder.setMessage("저장하실?")
+                builder.setMessage("저장 안 할꺼야?")
                 builder.setPositiveButton("예", DialogInterface.OnClickListener(){ DialogInterface, which ->
                     supportFragmentManager.popBackStack()
                 })

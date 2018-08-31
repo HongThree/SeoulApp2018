@@ -13,7 +13,7 @@ import android.widget.TextView;
 public class OptionView extends RelativeLayout {
     private OptionViewHolder mOptionViewHolder;
 
-    Typeface typefaceMiSaeng = Typeface.createFromAsset(getContext().getAssets(), "SDMiSaeng.ttf");
+    Typeface typefaceMiSaeng = Typeface.createFromAsset(getContext().getAssets(), "nanum.ttf");
 
     private static final float ALPHA_CHECKED = 1f;
     private static final float ALPHA_UNCHECKED = 0.5f;

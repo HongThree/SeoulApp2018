@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import com.example.kihunahn.seoulapp2018.Adapter.PostsAdapter
 import com.example.kihunahn.seoulapp2018.R
 import com.example.kihunahn.seoulapp2018.model.Post
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.fragment_main.*
 
 
@@ -21,6 +22,12 @@ class MainFragment : Fragment(){
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         val view = inflater?.inflate(R.layout.fragment_main, container, false)
+
+        //Firebase 로그인한 사용자 정보
+        val mAuth = FirebaseAuth.getInstance()
+        val user = mAuth.getCurrentUser()
+
+
 
         return view
     }

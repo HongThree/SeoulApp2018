@@ -1,13 +1,10 @@
 package com.example.kihunahn.seoulapp2018.Fragment
 
 import android.os.Bundle
-import android.support.v4.app.ActivityCompat
-import android.support.v4.app.ActivityOptionsCompat
 import android.support.v4.app.Fragment
 import android.support.v4.util.Pair
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.StaggeredGridLayoutManager
-import android.transition.TransitionInflater
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,18 +24,14 @@ class ArchiveFragment : Fragment() {
     lateinit private var staggeredLayoutManager: StaggeredGridLayoutManager
     lateinit private var adapter: TravelListAdapter
 
-    override fun onStart() {
-        super.onStart()
-    }
-
     private val onItemClickListener = object : TravelListAdapter.OnItemClickListener {
         override fun onItemClick(view: View, position: Int) {
-        Toast.makeText(activity, "Clicked " + position, Toast.LENGTH_SHORT).show()
+            Toast.makeText(activity, "Clicked " + position, Toast.LENGTH_SHORT).show()
 
-        val nextFragment = DetailFragment()
-        val bundle = Bundle()
-        bundle.putSerializable("position", position)
-        nextFragment.arguments = bundle
+            val nextFragment = DetailFragment()
+            val bundle = Bundle()
+            bundle.putSerializable("position", position)
+            nextFragment.arguments = bundle
 
             val placeImage = view.findViewById<ImageView>(R.id.placeImage)
             val placeNameHolder = view.findViewById<LinearLayout>(R.id.placeNameHolder)
@@ -48,53 +41,54 @@ class ArchiveFragment : Fragment() {
 
             val pairs = mutableListOf(imagePair, holderPair)
 
-        val fragmentManager = fragmentManager
-        val fragmentTransaction = fragmentManager!!.beginTransaction()
+            val fragmentManager = fragmentManager
+            val fragmentTransaction = fragmentManager!!.beginTransaction()
 
-        fragmentTransaction.replace(R.id.container, nextFragment)
-        fragmentTransaction.addToBackStack(null)
-        fragmentTransaction.addSharedElement(placeImage, "shared_image")
-        fragmentTransaction.commit()
-        /*
+            fragmentTransaction.addSharedElement(placeImage, "shared_image")
+            fragmentTransaction.setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
+            fragmentTransaction.replace(R.id.container, nextFragment)
+            fragmentTransaction.addToBackStack(null)
+            fragmentTransaction.commit()
+            /*
 
-        //val transitionIntent = DetailActivity.newIntent(this@MainActivity, position)
+            //val transitionIntent = DetailActivity.newIntent(this@MainActivity, position)
 
-        val placeImage = view.findViewById<ImageView>(R.id.placeImage)
-        val placeNameHolder = view.findViewById<LinearLayout>(R.id.placeNameHolder)
-
-
-        //val navigationBar = findViewById<View>(android.R.id.navigationBarBackground)
-        ///val statusBar = findViewById<View>(android.R.id.statusBarBackground)
-
-        val imagePair = Pair.create(placeImage as View, "tImage")
-        val holderPair = Pair.create(placeNameHolder as View, "tNameHolder")
-
-        //val navPair = Pair.create(navigationBar, Window.NAVIGATION_BAR_BACKGROUND_TRANSITION_NAME)
-        //val statusPair = Pair.create(statusBar, Window.STATUS_BAR_BACKGROUND_TRANSITION_NAME)
+            val placeImage = view.findViewById<ImageView>(R.id.placeImage)
+            val placeNameHolder = view.findViewById<LinearLayout>(R.id.placeNameHolder)
 
 
-        //val pairs = mutableListOf(imagePair, holderPair, statusPair, toolbarPair)
-        val pairs = mutableListOf(imagePair, holderPair)
-        */
-        /*
-        if (navigationBar != null && navPair != null) {
-            pairs += navPair
+            //val navigationBar = findViewById<View>(android.R.id.navigationBarBackground)
+            ///val statusBar = findViewById<View>(android.R.id.statusBarBackground)
+
+            val imagePair = Pair.create(placeImage as View, "tImage")
+            val holderPair = Pair.create(placeNameHolder as View, "tNameHolder")
+
+            //val navPair = Pair.create(navigationBar, Window.NAVIGATION_BAR_BACKGROUND_TRANSITION_NAME)
+            //val statusPair = Pair.create(statusBar, Window.STATUS_BAR_BACKGROUND_TRANSITION_NAME)
+
+
+            //val pairs = mutableListOf(imagePair, holderPair, statusPair, toolbarPair)
+            val pairs = mutableListOf(imagePair, holderPair)
+            */
+            /*
+            if (navigationBar != null && navPair != null) {
+                pairs += navPair
+            }
+            */
+            /*
+            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(this@MainActivity,
+                    *pairs.toTypedArray())
+            ActivityCompat.startActivity(this@MainActivity, transitionIntent, options.toBundle())
+            */
         }
-        */
-        /*
-        val options = ActivityOptionsCompat.makeSceneTransitionAnimation(this@MainActivity,
-                *pairs.toTypedArray())
-        ActivityCompat.startActivity(this@MainActivity, transitionIntent, options.toBundle())
-        */
     }
-}
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater!!.inflate(R.layout.fragment_archive, container, false)
 
         staggeredLayoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
 
-        if(view.list_view == null){
+        if (view.list_view == null) {
             Toast.makeText(activity, "널이야 시발", Toast.LENGTH_LONG).show()
         }
 
@@ -152,5 +146,8 @@ class ArchiveFragment : Fragment() {
             customViewHolder.textview_position_count.text = list!!.get(position).lat!!.size.toString()
         }
 
+    }
+    override fun onStart() {
+        super.onStart()
     }
 }
