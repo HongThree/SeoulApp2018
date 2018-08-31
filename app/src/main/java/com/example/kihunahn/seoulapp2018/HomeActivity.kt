@@ -12,6 +12,7 @@ import android.widget.Toast
 import com.example.kihunahn.seoulapp2018.Adapter.MenuAdapter
 import com.example.kihunahn.seoulapp2018.Fragment.*
 import com.example.kihunahn.seoulapp2018.R.id.drawer
+import com.example.kihunahn.seoulapp2018.R.id.fragmentHere
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_home.*
 import nl.psdcompany.duonavigationdrawer.views.DuoDrawerLayout
@@ -24,7 +25,7 @@ class HomeActivity : AppCompatActivity(), DuoMenuView.OnMenuClickListener {
     private var mMenuAdapter: MenuAdapter? = null
     private var mViewHolder: ViewHolder? = null
     private var mTitles: ArrayList<String> = ArrayList()
-
+    private var curFragment : Int = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
@@ -94,18 +95,25 @@ class HomeActivity : AppCompatActivity(), DuoMenuView.OnMenuClickListener {
     //뒤로가기
     private var time: Long = 0
     override fun onBackPressed() {
+
         if(supportFragmentManager.backStackEntryCount != 0) {
             supportFragmentManager.popBackStack()
         }
         else {
-            if (System.currentTimeMillis() - time >= 2000) {
-                time = System.currentTimeMillis()
-                Toast.makeText(applicationContext, "뒤로 버튼을 한번 더 누르면 종료합니다.", Toast.LENGTH_SHORT).show()
-            } else if (System.currentTimeMillis() - time < 2000) {
+            if(curFragment != 0) {
+                goToFragment(MainFragment(), false)
+                curFragment = 0
+            }
+            else {
+                if (System.currentTimeMillis() - time >= 2000) {
+                    time = System.currentTimeMillis()
+                    Toast.makeText(applicationContext, "뒤로 버튼을 한번 더 누르면 종료합니다.", Toast.LENGTH_SHORT).show()
+                } else if (System.currentTimeMillis() - time < 2000) {
 
-                moveTaskToBack(true)
-                finish()
-                android.os.Process.killProcess(android.os.Process.myPid())
+                    moveTaskToBack(true)
+                    finish()
+                    android.os.Process.killProcess(android.os.Process.myPid())
+                }
             }
         }
     }
@@ -154,14 +162,15 @@ class HomeActivity : AppCompatActivity(), DuoMenuView.OnMenuClickListener {
     }
 
     override fun onOptionClicked(position: Int, objectClicked: Any) {
+        curFragment = position
         // Set the toolbar title
-        title = mTitles[position]
+        title = mTitles[curFragment]
 
         // Set the right options selected
-        mMenuAdapter!!.setViewSelected(position, true)
+        mMenuAdapter!!.setViewSelected(curFragment, true)
 
         // Navigate to the right fragment
-        when (position) {
+        when (curFragment) {
             0 -> goToFragment(MainFragment(), false)
             1 -> goToFragment(MyCourseFragment(), false)
             2 -> goToFragment(InfoFragment(), false)
