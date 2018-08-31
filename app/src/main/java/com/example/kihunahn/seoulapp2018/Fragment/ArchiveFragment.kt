@@ -123,6 +123,7 @@ class ArchiveFragment : Fragment() {
 
                 // 이게 실제 여행명 받아오기
                 //Toast.makeText(activity, it.id, Toast.LENGTH_LONG).show()
+
             }
         }
     }
