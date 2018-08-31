@@ -1,6 +1,7 @@
 package com.example.kihunahn.seoulapp2018;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
@@ -11,6 +12,8 @@ import android.widget.TextView;
 
 public class OptionView extends RelativeLayout {
     private OptionViewHolder mOptionViewHolder;
+
+    Typeface typefaceMiSaeng = Typeface.createFromAsset(getContext().getAssets(), "SDMiSaeng.ttf");
 
     private static final float ALPHA_CHECKED = 1f;
     private static final float ALPHA_UNCHECKED = 0.5f;
@@ -196,6 +199,7 @@ public class OptionView extends RelativeLayout {
             mImageViewSelector = (ImageView) rootView.findViewById(R.id.duo_view_option_selector);
             mImageViewSelectorSide = (ImageView) rootView.findViewById(R.id.duo_view_option_selector_side);
 
+            mTextViewOption.setTypeface(typefaceMiSaeng);
             hideSelectorsByDefault();
         }
 
