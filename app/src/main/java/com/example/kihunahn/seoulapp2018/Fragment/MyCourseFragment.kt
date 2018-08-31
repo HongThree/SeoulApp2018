@@ -28,22 +28,12 @@ class MyCourseFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-
-        Toast.makeText(activity, fragmentManager!!.backStackEntryCount.toString(), Toast.LENGTH_SHORT).show()
         btn_start.setOnClickListener {
-            /*
             mGoogleApiClient = GoogleApiClient.Builder(activity!!)
                     .addApi(LocationServices.API)
                     .build()
             mGoogleApiClient!!.connect()
             showSettingDialog()
-            */
-            val fragment2 = MakeCourseFragment()
-            val fragmentManager = fragmentManager
-            val fragmentTransaction = fragmentManager!!.beginTransaction()
-            fragmentTransaction.replace(R.id.container, fragment2)
-            fragmentTransaction.addToBackStack(null)
-            fragmentTransaction.commit()
         }
 
         btn_archive.setOnClickListener {
@@ -57,7 +47,7 @@ class MyCourseFragment : Fragment() {
 
 
     }
-    /*
+
     private fun showSettingDialog() {
         val locationRequest = LocationRequest.create()
         locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY //Setting priotity of Location request to high
@@ -112,7 +102,7 @@ class MyCourseFragment : Fragment() {
             }
         }
     }
-    */
+
 
     override fun onResume() {
         super.onResume()
