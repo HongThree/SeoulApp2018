@@ -38,7 +38,8 @@
             android:layout_toRightOf="@+id/duo_view_option_selector"
             android:gravity="center_vertical|start"
             android:text="@string/app_name"
-            android:textSize="45sp"
+            android:textSize="25sp"
+            android:padding="10dp"
             android:textColor="@android:color/black" />
     </RelativeLayout>
 </RelativeLayout>
