@@ -14,14 +14,12 @@ import android.widget.Toast
 import com.example.kihunahn.seoulapp2018.Adapter.MenuAdapter
 import com.example.kihunahn.seoulapp2018.Fragment.*
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.UserInfo
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_home.*
 import nl.psdcompany.duonavigationdrawer.views.DuoDrawerLayout
 import nl.psdcompany.duonavigationdrawer.views.DuoMenuView
 import nl.psdcompany.duonavigationdrawer.widgets.DuoDrawerToggle
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 class HomeActivity : AppCompatActivity(), DuoMenuView.OnMenuClickListener {
@@ -34,6 +32,7 @@ class HomeActivity : AppCompatActivity(), DuoMenuView.OnMenuClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
+
         updateCourseList()
         mTitles = ArrayList<String>(Arrays.asList(*resources.getStringArray(R.array.menuOptions)))
         // Initialize the views
@@ -77,31 +76,13 @@ class HomeActivity : AppCompatActivity(), DuoMenuView.OnMenuClickListener {
         }
     }
 
+
     fun getUserId() : String {
         var userEmail = FirebaseAuth.getInstance().currentUser!!.email
         var ret = userEmail!!.substring(0, userEmail!!.indexOf('@'))
-
         return ret
     }
 
-    fun removeCurrentFragment() {
-        val transaction = supportFragmentManager.beginTransaction()
-
-        val currentFrag = supportFragmentManager.findFragmentById(R.id.fragmentHere)
-
-
-        var fragName = "NONE"
-
-        if (currentFrag != null)
-            fragName = currentFrag.javaClass.simpleName
-
-
-        if (currentFrag != null)
-            transaction.remove(currentFrag)
-
-        transaction.commit()
-
-    }
     //뒤로가기
     private var time: Long = 0
     override fun onBackPressed() {
@@ -134,6 +115,33 @@ class HomeActivity : AppCompatActivity(), DuoMenuView.OnMenuClickListener {
                     moveTaskToBack(true)
                     finish()
                     android.os.Process.killProcess(android.os.Process.myPid())
+                }
+            }
+        }
+    }
+
+    fun updateCourseList() {
+        var id = userInfo.id
+        FirebaseFirestore.getInstance().collection(id).get().addOnSuccessListener { querySnapshot ->
+            // 이 유저에게 저장 된 여행의 개수 출력 됨!!
+            //Toast.makeText(activity, querySnapshot.documents.size.toString(), Toast.LENGTH_LONG).show()
+            //querySnapshot.documents.size
+            querySnapshot.forEach {
+                //[lat,lon]
+                //Toast.makeText(activity, it.data.keys.toString(), Toast.LENGTH_LONG).show()
+                // 이게 실제 여행명 받아오기
+                //Toast.makeText(this, it.id, Toast.LENGTH_SHORT).show()
+                var title = it.id
+                if(title[title.length-1] == '_') {
+                    userInfo.courseList.get(userInfo.courseList.size-1).pictures!!.lat = it.data.get("lat") as ArrayList<Double>
+                    userInfo.courseList.get(userInfo.courseList.size-1).pictures!!.lon = it.data.get("lon") as ArrayList<Double>
+                    userInfo.courseList.get(userInfo.courseList.size-1).pictures!!.uri = it.data.get("uri") as ArrayList<String>
+                }
+                else {
+                    var course = CourseDTO(title)
+                    course.positions.lat = it.data.get("lat") as ArrayList<Double>
+                    course.positions.lon = it.data.get("lon") as ArrayList<Double>
+                    userInfo.courseList.add(course)
                 }
             }
         }
@@ -190,8 +198,6 @@ class HomeActivity : AppCompatActivity(), DuoMenuView.OnMenuClickListener {
         // Set the right options selected
         mMenuAdapter!!.setViewSelected(curFragment, true)
 
-        Toast.makeText(this, userInfo.courseList.toString(), Toast.LENGTH_SHORT).show()
-        Toast.makeText(this, userInfo.courseList.size.toString(), Toast.LENGTH_SHORT).show()
         // Navigate to the right fragment
         when (curFragment) {
             0 -> goToFragment(MainFragment(), false)
@@ -225,39 +231,5 @@ class HomeActivity : AppCompatActivity(), DuoMenuView.OnMenuClickListener {
             mDuoMenuView.setBackground(R.drawable.example)
             mToolbar = toolbar
         }
-    }
-
-    fun updateCourseList() {
-        var id = userInfo.id
-        FirebaseFirestore.getInstance().collection(id).get().addOnSuccessListener { querySnapshot ->
-            // 이 유저에게 저장 된 여행의 개수 출력 됨!!
-            //Toast.makeText(activity, querySnapshot.documents.size.toString(), Toast.LENGTH_LONG).show()
-            //querySnapshot.documents.size
-            querySnapshot.forEach {
-                //[lat,lon]
-                //Toast.makeText(activity, it.data.keys.toString(), Toast.LENGTH_LONG).show()
-
-                // 이게 실제 여행명 받아오기
-                //Toast.makeText(this, it.id, Toast.LENGTH_SHORT).show()
-
-
-                var title = it.id
-                if(title[title.length-1] == '_') {
-                    userInfo.courseList.get(userInfo.courseList.size-1).pictures!!.lat = it.data.get("lat") as ArrayList<Double>
-                    userInfo.courseList.get(userInfo.courseList.size-1).pictures!!.lon = it.data.get("lon") as ArrayList<Double>
-                    userInfo.courseList.get(userInfo.courseList.size-1).pictures!!.uri = it.data.get("uri") as ArrayList<String>
-                }
-                else {
-                    var course = CourseDTO(title)
-                    course.positions.lat = it.data.get("lat") as ArrayList<Double>
-                    course.positions.lon = it.data.get("lon") as ArrayList<Double>
-                    userInfo.courseList.add(course)
-                }
-
-            }
-
-        }
-
-
     }
 }

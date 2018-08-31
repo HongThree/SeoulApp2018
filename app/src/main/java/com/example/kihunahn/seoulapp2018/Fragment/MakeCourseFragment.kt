@@ -16,7 +16,6 @@ import android.os.Environment
 import android.provider.MediaStore
 import android.support.v4.app.Fragment
 import android.support.v4.content.FileProvider
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -46,26 +45,39 @@ class MakeCourseFragment : Fragment(){
     var nameList = LinkedList<String>()
     var currentPath: String? = null
     val TAKE_PICTURE = 3
+    var mapfragment:Fragment2?=null
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         val view = inflater?.inflate(R.layout.fragment_makecourse, container, false)
 
-        val fragment2 = Fragment2()
+        mapfragment = Fragment2()
         val fragmentManager = fragmentManager
         val fragmentTransaction = fragmentManager!!.beginTransaction()
-        fragmentTransaction.replace(R.id.fragmentHere, fragment2)
+
+        fragmentTransaction.replace(R.id.fragmentHere, mapfragment!!)
         fragmentTransaction.commit()
         return view
     }
 
+
     override fun onStart() {
         super.onStart()
+        Toast.makeText(activity, fragmentManager!!.backStackEntryCount.toString(), Toast.LENGTH_LONG).show()
 
         var dateFormat = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault())
         var date = Date()
         courseName = dateFormat.format(date).toString()
 
         btn_exit.setOnClickListener {
+            var size = mapfragment!!.dlati.size-1
+            var dlati:ArrayList<Double> = mapfragment!!.dlati
+            var dloti:ArrayList<Double> = mapfragment!!.dloti
+            for (i in size downTo 0){
+                PositionList.lat?.add(dlati[i])
+                PositionList.lon?.add(dloti[i])
+            }
+            mapfragment!!.mLocationManager!!.removeUpdates(mapfragment!!.mLocationListener)
+            mapfragment!!.mMapLocationManager!!.removeOnLocationChangeListener(mapfragment!!.onMyLocationChangeListener)
             showDialog(courseName)
             fragmentManager!!.popBackStack()
 
@@ -80,8 +92,8 @@ class MakeCourseFragment : Fragment(){
         }
 
         btn_add.setOnClickListener {
-            PositionList.lat?.add(editText_lat.text.toString().toDouble())
-            PositionList.lon?.add(editText_lon.text.toString().toDouble())
+            //PositionList.lat?.add(editText_lat.text.toString().toDouble())
+            //PositionList.lon?.add(editText_lon.text.toString().toDouble())
             Toast.makeText(activity, "현재 위치 저~장~", Toast.LENGTH_LONG).show()
             //lat_list.add(editText_lat.text.toString().toDouble())
             //lon_list.add(editText_lat.text.toString().toDouble())
@@ -176,13 +188,13 @@ class MakeCourseFragment : Fragment(){
          Toast.makeText(activity, courses.count().toString(), Toast.LENGTH_LONG).show()
          */
         //Toast.makeText(activity, isValid(courseName).toString(), Toast.LENGTH_SHORT).show()
-        FirebaseFirestore.getInstance().collection(cur_user).document(courseName).set(PositionList).addOnSuccessListener {
+        FirebaseFirestore.getInstance().collection(cur_user.toString()).document(courseName).set(PositionList).addOnSuccessListener {
             //Toast.makeText(activity, "여행이 저장되었습니다(위치).", Toast.LENGTH_LONG).show()
         }.addOnFailureListener { exception ->
             //Toast.makeText(activity, exception.toString(), Toast.LENGTH_LONG).show()
         }
 
-        FirebaseFirestore.getInstance().collection(cur_user).document(courseName+"_").set(PictureList).addOnSuccessListener {
+        FirebaseFirestore.getInstance().collection(cur_user.toString()).document(courseName+"_pic").set(PictureList).addOnSuccessListener {
             //Toast.makeText(activity, "여행이 저장되었습니다(사진).", Toast.LENGTH_LONG).show()
         }.addOnFailureListener { exception ->
             //Toast.makeText(activity, exception.toString(), Toast.LENGTH_LONG).show()
