@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:clickable="false"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:clickable="false"
     android:paddingBottom="10dp">
 
     <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
@@ -13,38 +13,13 @@
         android:layout_height="wrap_content"
         android:clickable="false"
         android:elevation="50dp"
-        android:foreground="?android:attr/selectableItemBackground"
-        card_view:cardBackgroundColor="@color/colorPrimary">
+
+        android:foreground="?android:attr/selectableItemBackground">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:background="#ffffff"
-                android:orientation="horizontal"
-                android:padding="4dp">
-
-                <ImageView
-                    android:id="@+id/profile_img"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src="@mipmap/ic_launcher_round" />
-
-                <TextView
-                    android:id="@+id/username"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="10dp"
-                    android:textColor="#000000"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
 
             <RelativeLayout
                 android:layout_width="wrap_content"
@@ -69,56 +44,53 @@
 
             </RelativeLayout>
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
                 android:orientation="vertical">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/username"
+                    android:paddingTop="20dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:orientation="horizontal"
-                    android:weightSum="7">
-
-                    <ImageView
-                        android:layout_width="27dp"
-                        android:layout_height="27dp"
-                        android:layout_gravity="left"
-                        android:layout_weight="1"
-                        android:src="@drawable/star" />
-
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:background="@android:color/darker_gray" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:padding="10dp">
+                    android:layout_marginLeft="10dp"
+                    android:textColor="#000000"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/textfeed"
+                    android:paddingTop="20dp"
+                    android:layout_marginLeft="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:layout_below="@+id/username"
                     android:text="여행 이름 : "
                     android:textStyle="bold" />
+
+                <com.like.LikeButton
+                    android:id="@+id/like_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/username"
+                    android:layout_gravity="right"
+                    app:icon_size="20dp"
+                    app:icon_type="heart">
+                </com.like.LikeButton>
 
                 <TextView
                     android:id="@+id/rate"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="스탬프     : 5개"
+                    android:layout_below="@id/like_button"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentEnd="true"
+                    android:text="좋아요 5개"
                     android:textStyle="bold" />
-            </LinearLayout>
+
+            </RelativeLayout>
         </LinearLayout>
     </android.support.v7.widget.CardView>
 
