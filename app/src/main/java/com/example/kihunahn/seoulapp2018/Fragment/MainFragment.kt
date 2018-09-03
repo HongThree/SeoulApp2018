@@ -36,7 +36,7 @@ class MainFragment : Fragment(){
         super.onViewCreated(view, savedInstanceState)
         val posts: ArrayList<Post> = ArrayList()
         for(i in 1..100){
-            posts.add(Post("sangwon" + i, "text here","https://picsum.photos/600/300?random&" + i))
+            posts.add(Post("sangwon" + i + " 의 여행", "이곳에 여행에 대해 한줄 요약","https://picsum.photos/600/300?random&" + i))
         }
 
         newsfeed?.layoutManager = LinearLayoutManager(activity)
