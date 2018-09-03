@@ -112,16 +112,17 @@ class Fragment2 : NMapFragment(), NMapView.OnMapStateChangeListener, NMapPOIdata
             if (dsize == 0) {
                 dlati.add(lati)
                 dloti.add(loti)
+                drawline()
             } else {
                 var tlati = dlati[dsize - 1]
                 var tloti = dloti[dsize - 1]
                 var dis = (tlati - lati) * (tlati - lati) + (tloti - loti) * (tloti - loti)
-                if(dis <= 100){
+                if (dis <= 100 && dis > 0.0) {
                     dlati.add(lati)
                     dloti.add(loti)
+                    drawline()
                 }
             }
-            drawline()
         }
 
         override fun onStatusChanged(p0: String?, p1: Int, p2: Bundle?) {
@@ -158,12 +159,12 @@ class Fragment2 : NMapFragment(), NMapView.OnMapStateChangeListener, NMapPOIdata
     @SuppressLint("MissingPermission")
     private fun moveMapCenter() {
         Log.e("move", "move")
-        mLocationManager!!.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 10000, 0.0f, mLocationListener)
-        mLocationManager!!.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 0.0f, mLocationListener)
-        mMapLocationManager = NMapLocationManager(activity!!)
-        mMapLocationManager?.setOnLocationChangeListener(onMyLocationChangeListener)
-        mMapLocationManager!!.enableMyLocation(true)
-        mMyLocationOverlay = mapOverlayManager!!.createMyLocationOverlay(mMapLocationManager, mMapCompassManager)
+        mLocationManager!!.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0.0f, mLocationListener)
+        mLocationManager!!.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0.0f, mLocationListener)
+//        mMapLocationManager = NMapLocationManager(activity!!)
+//        mMapLocationManager?.setOnLocationChangeListener(onMyLocationChangeListener)
+//        mMapLocationManager!!.enableMyLocation(true)
+//        mMyLocationOverlay = mapOverlayManager!!.createMyLocationOverlay(mMapLocationManager, mMapCompassManager)
     }
 
     private fun drawline() {
@@ -194,7 +195,7 @@ class Fragment2 : NMapFragment(), NMapView.OnMapStateChangeListener, NMapPOIdata
     override fun onPause() {
         Log.e("onPause", "onPause")
         mLocationManager!!.removeUpdates(mLocationListener)
-        mMapLocationManager!!.removeOnLocationChangeListener(onMyLocationChangeListener)
+        //mMapLocationManager!!.removeOnLocationChangeListener(onMyLocationChangeListener)
         super.onPause()
     }
 
@@ -211,7 +212,7 @@ class Fragment2 : NMapFragment(), NMapView.OnMapStateChangeListener, NMapPOIdata
     override fun onDestroy() {
         Log.e("onPause", "onDestroy")
         mLocationManager!!.removeUpdates(mLocationListener)
-        mMapLocationManager!!.removeOnLocationChangeListener(onMyLocationChangeListener)
+        //mMapLocationManager!!.removeOnLocationChangeListener(onMyLocationChangeListener)
         super.onDestroy()
     }
 
