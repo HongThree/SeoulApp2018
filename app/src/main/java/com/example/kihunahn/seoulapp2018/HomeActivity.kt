@@ -7,6 +7,7 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
 import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentManager
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
@@ -198,6 +199,7 @@ class HomeActivity : AppCompatActivity(), DuoMenuView.OnMenuClickListener {
         // Set the right options selected
         mMenuAdapter!!.setViewSelected(curFragment, true)
 
+        supportFragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
         // Navigate to the right fragment
         when (curFragment) {
             0 -> goToFragment(MainFragment(), false)
