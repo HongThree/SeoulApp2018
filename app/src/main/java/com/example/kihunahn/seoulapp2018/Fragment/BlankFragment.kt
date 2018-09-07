@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import com.example.kihunahn.seoulapp2018.HomeActivity
 import com.example.kihunahn.seoulapp2018.R
 
 
@@ -26,6 +27,7 @@ class BlankFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         val imageView = view.findViewById<View>(R.id.viewpager_image) as ImageView
 
         val o = BitmapFactory.Options()
@@ -33,7 +35,21 @@ class BlankFragment : Fragment() {
         //o.inDither = false
         bitmap = BitmapFactory.decodeResource(resources, imageResource, o)
         imageView.setImageBitmap(bitmap)
+
+
+        imageView.setOnClickListener {
+            val savedTrip = AboutAppFragment()
+            val fragmentManager = activity!!.supportFragmentManager
+            val fragmentTransaction = fragmentManager!!.beginTransaction()
+            fragmentTransaction.replace(R.id.container, savedTrip)
+            HomeActivity.curFragment=1
+
+            fragmentTransaction.commit()
+
+        }
     }
+
+
     override fun onDestroy() {
         super.onDestroy()
         bitmap!!.recycle()
