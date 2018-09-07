@@ -106,8 +106,9 @@ class Fragment2 : NMapFragment(), NMapView.OnMapStateChangeListener, NMapPOIdata
 
     val mLocationListener: LocationListener = object : LocationListener {
         override fun onLocationChanged(location: Location?) {
-            var lati: Double = location?.longitude!!
-            var loti: Double = location.latitude
+
+            var lati: Double = java.lang.Double.parseDouble(String.format("%.6f", location?.longitude!!))
+            var loti: Double = java.lang.Double.parseDouble(String.format("%.6f", location.latitude))
             Log.d("Listener",lati.toString()+" "+loti.toString())
             var dsize = dlati.size
             if (dsize == 0) {
