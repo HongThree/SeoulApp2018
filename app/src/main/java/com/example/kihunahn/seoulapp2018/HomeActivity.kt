@@ -27,7 +27,9 @@ class HomeActivity : AppCompatActivity(), DuoMenuView.OnMenuClickListener {
     private var mMenuAdapter: MenuAdapter? = null
     private var mViewHolder: ViewHolder? = null
     private var mTitles: ArrayList<String> = ArrayList()
-    private var curFragment : Int = 0
+    companion object {
+        var curFragment : Int = 0
+    }
     private var userInfo = UserInfoDTO(getUserId())
 
     override fun onCreate(savedInstanceState: Bundle?) {
