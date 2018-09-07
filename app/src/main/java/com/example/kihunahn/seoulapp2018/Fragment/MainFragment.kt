@@ -40,15 +40,14 @@ class MainFragment : Fragment(){
         super.onViewCreated(view, savedInstanceState)
         val posts: ArrayList<Post> = ArrayList()
         val resourceIDs = intArrayOf(R.drawable.stamp01, R.drawable.stamp02, R.drawable.stamp03, R.drawable.stamp04, R.drawable.stamp05)
-        for(i in 1..2){
-            posts.add(Post(cur_user!!.substringBeforeLast("@") + " 의 여행", "이곳에 여행에 대해 한줄 요약","https://picsum.photos/600/300?random&" + i, resourceIDs))
+        for(i in 1..5){
+            posts.add(Post(cur_user!!.substringBeforeLast("@") + " 의 여행", "이곳에 여행에 대해 한줄 요약", resourceIDs))
         }
 
         newsfeed?.layoutManager = LinearLayoutManager(activity)
         newsfeed?.adapter = PostsAdapter(posts,fragmentManager!!)
 
     }
-
 
 
 }

@@ -46,6 +46,20 @@ class PostsAdapter(val posts: ArrayList<Post>, val fragmentmanager : FragmentMan
             holder.imageviewpager.currentItem = mViewPagerState[position]!!
         }
 
+        holder.imageviewpager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {/*empty*/
+            }
+
+            override fun onPageSelected(position: Int) {
+                holder.pageindicator.setSelection(position)
+            }
+
+            override fun onPageScrollStateChanged(state: Int) {/*empty*/
+            }
+        })
+        holder.pageindicator!!.setCount(5)
+        holder.pageindicator!!.setSelection(0)
+
         holder.username.text = posts[position].username
         holder.textfeed.text = posts[position].text
 

@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
     android:clickable="false"
     android:paddingBottom="10dp">
 
@@ -13,7 +14,6 @@
         android:layout_height="wrap_content"
         android:clickable="false"
         android:elevation="50dp"
-
         android:foreground="?android:attr/selectableItemBackground">
 
         <LinearLayout
@@ -30,18 +30,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="300dp" />
 
-                <com.rd.PageIndicatorView xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:id="@+id/photofeed"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBottom="@id/imageVP"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginBottom="5dp"
-                    app:piv_radius="3dp"
-                    app:piv_selectedColor="@color/light_green"
-                    app:piv_unselectedColor="@android:color/darker_gray"
-                    app:piv_viewPager="@id/imageVP" />
-
             </RelativeLayout>
 
             <RelativeLayout
@@ -49,22 +37,35 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
+                <com.rd.PageIndicatorView xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:id="@+id/photofeed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    app:piv_animationType="thinWorm"
+                    app:piv_radius="5dp"
+                    app:piv_selectedColor="@color/light_green"
+                    app:piv_unselectedColor="@android:color/darker_gray"
+                    app:piv_viewPager="@id/imageVP" />
+
                 <TextView
                     android:id="@+id/username"
-                    android:paddingTop="20dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
+                    android:paddingTop="20dp"
                     android:textColor="#000000"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/textfeed"
-                    android:paddingTop="20dp"
-                    android:layout_marginLeft="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_below="@+id/username"
+                    android:layout_marginLeft="10dp"
+                    android:paddingTop="20dp"
                     android:text="여행 이름 : "
                     android:textStyle="bold" />
 
@@ -72,8 +73,8 @@
                     android:id="@+id/like_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
                     android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
                     android:layout_below="@+id/username"
                     android:layout_gravity="right"
                     app:icon_size="20dp"
@@ -84,9 +85,9 @@
                     android:id="@+id/rate"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_below="@id/like_button"
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentEnd="true"
+                    android:layout_below="@id/like_button"
                     android:text="좋아요 5개"
                     android:textStyle="bold" />
 
