@@ -77,7 +77,7 @@ class MakeCourseFragment : Fragment(){
                 PositionList.lon?.add(dloti[i])
             }
             mapfragment!!.mLocationManager!!.removeUpdates(mapfragment!!.mLocationListener)
-            mapfragment!!.mMapLocationManager!!.removeOnLocationChangeListener(mapfragment!!.onMyLocationChangeListener)
+            //mapfragment!!.mMapLocationManager!!.removeOnLocationChangeListener(mapfragment!!.onMyLocationChangeListener)
             showDialog(courseName)
             fragmentManager!!.popBackStack()
 

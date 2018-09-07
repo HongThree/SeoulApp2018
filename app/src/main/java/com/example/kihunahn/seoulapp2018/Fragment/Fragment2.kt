@@ -107,20 +107,26 @@ class Fragment2 : NMapFragment(), NMapView.OnMapStateChangeListener, NMapPOIdata
     val mLocationListener: LocationListener = object : LocationListener {
         override fun onLocationChanged(location: Location?) {
             var lati: Double = location?.longitude!!
-            var loti: Double = location?.latitude
+            var loti: Double = location.latitude
+            Log.d("Listener",lati.toString()+" "+loti.toString())
             var dsize = dlati.size
             if (dsize == 0) {
+                dlati.add(lati)
+                dloti.add(loti)
                 dlati.add(lati)
                 dloti.add(loti)
                 drawline()
             } else {
                 var tlati = dlati[dsize - 1]
                 var tloti = dloti[dsize - 1]
-                var dis = (tlati - lati) * (tlati - lati) + (tloti - loti) * (tloti - loti)
-                if (dis <= 100 && dis > 0.0) {
-                    dlati.add(lati)
-                    dloti.add(loti)
-                    drawline()
+                if (!dlati.contains(lati) && !dloti.contains(loti)) {
+                    var dis = (tlati - lati) * (tlati - lati) + (tloti - loti) * (tloti - loti)
+                    Log.d("distance",dis.toString())
+                    if (dis <= 100 && dis > 0.0) {
+                        dlati.add(lati)
+                        dloti.add(loti)
+                        drawline()
+                    }
                 }
             }
         }
@@ -168,7 +174,7 @@ class Fragment2 : NMapFragment(), NMapView.OnMapStateChangeListener, NMapPOIdata
     }
 
     private fun drawline() {
-        Log.d("QWE", "draw")
+        Log.d("QWE", "draw"+dlati.size.toString())
         if (dlati.size > 0) {
             Log.d("size", dlati.size.toString())
             val len = dlati.size - 1
