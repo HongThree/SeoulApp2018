@@ -62,8 +62,7 @@ dependencies {
     implementation 'com.github.chrisbanes:PhotoView:2.1.4'
 
     implementation 'com.romandanylyk:pageindicatorview:1.0.1'
-    
-    implementation 'com.github.jd-alexander:LikeButton:0.2.3'
+
 }
 
 apply plugin: 'com.google.gms.google-services'
