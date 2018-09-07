@@ -34,6 +34,7 @@ class HomeActivity : AppCompatActivity(), DuoMenuView.OnMenuClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
+        Server(this).setting()
         updateCourseList()
         mTitles = ArrayList<String>(Arrays.asList(*resources.getStringArray(R.array.menuOptions)))
         // Initialize the views
@@ -48,6 +49,7 @@ class HomeActivity : AppCompatActivity(), DuoMenuView.OnMenuClickListener {
         goToFragment(MainFragment(), false)
         mMenuAdapter!!.setViewSelected(0, true)
         title = mTitles[0]
+
         if (ContextCompat.checkSelfPermission(this, ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             //Manifest.permission.READ_CALENDAR이 접근 승낙 상태 일때
         } else {
