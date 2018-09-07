@@ -3,6 +3,7 @@ package com.example.kihunahn.seoulapp2018
 import android.app.Activity
 import android.app.ProgressDialog
 import android.os.AsyncTask
+import android.util.Log
 import org.json.JSONObject
 import java.io.BufferedReader
 import java.io.InputStream
@@ -107,17 +108,17 @@ class Server(val context: Activity?) {
     fun parsingLocation(input: String, index: Int, cnt: Int) {
         val temp = input.replace("[", "").replace("]", "").split(",")
         var len = temp.size - 1
-
+        Log.e("Server",len.toString())
         if (cnt == 1) {
             if (index == 0) {
                 for (i in 0..len step 2) {
-                    course_lo1.add(java.lang.Double.parseDouble(String.format("%.6f", temp[i])))
-                    course_la1.add(java.lang.Double.parseDouble(String.format("%.6f", temp[i + 1])))
+                    course_la1.add(java.lang.Double.parseDouble(String.format("%.6f", java.lang.Double.parseDouble(temp[i]))))
+                    course_lo1.add(java.lang.Double.parseDouble(String.format("%.6f", java.lang.Double.parseDouble(temp[i+1]))))
                 }
             } else {
                 for (i in 0..len step 2) {
-                    course_lo1.add(java.lang.Double.parseDouble(String.format("%.6f", temp[i])))
-                    course_la1.add(java.lang.Double.parseDouble(String.format("%.6f", temp[i + 1])))
+                    course_la1.add(java.lang.Double.parseDouble(String.format("%.6f", java.lang.Double.parseDouble(temp[i]))))
+                    course_lo1.add(java.lang.Double.parseDouble(String.format("%.6f", java.lang.Double.parseDouble(temp[i+1]))))
                 }
             }
         }
