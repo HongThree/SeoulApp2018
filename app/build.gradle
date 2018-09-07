@@ -62,6 +62,7 @@ dependencies {
     implementation 'com.github.chrisbanes:PhotoView:2.1.4'
 
     implementation 'com.romandanylyk:pageindicatorview:1.0.1'
+
 }
 
 apply plugin: 'com.google.gms.google-services'

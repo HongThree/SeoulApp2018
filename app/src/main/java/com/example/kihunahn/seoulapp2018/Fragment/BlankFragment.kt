@@ -29,8 +29,8 @@ class BlankFragment : Fragment() {
         val imageView = view.findViewById<View>(R.id.viewpager_image) as ImageView
 
         val o = BitmapFactory.Options()
-        o.inSampleSize = 4
-        o.inDither = false
+        o.inSampleSize = 1
+        //o.inDither = false
         bitmap = BitmapFactory.decodeResource(resources, imageResource, o)
         imageView.setImageBitmap(bitmap)
     }

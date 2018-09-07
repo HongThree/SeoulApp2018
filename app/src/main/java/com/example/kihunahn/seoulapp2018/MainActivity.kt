@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity() {
 
         // 구글 로그인 클래스를 만듦
         var googleSignInClient = GoogleSignIn.getClient(this, gso)
-        login_button.setSize(1);
+        login_button.setSize(1)
         login_button.setOnClickListener {
             var signInIntent = googleSignInClient.signInIntent
             startActivityForResult(signInIntent, 1)

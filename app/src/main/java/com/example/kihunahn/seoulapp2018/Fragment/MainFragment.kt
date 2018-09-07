@@ -31,7 +31,6 @@ class MainFragment : Fragment(){
         val mAuth = FirebaseAuth.getInstance()
         val user = mAuth.getCurrentUser()
 
-        //Log.e("check", Server.course_la1.toString())
 
         return view
     }
@@ -45,7 +44,7 @@ class MainFragment : Fragment(){
         }
 
         newsfeed?.layoutManager = LinearLayoutManager(activity)
-        newsfeed?.adapter = PostsAdapter(posts,fragmentManager!!)
+        newsfeed?.adapter = PostsAdapter(posts,childFragmentManager!!)
 
     }
 
