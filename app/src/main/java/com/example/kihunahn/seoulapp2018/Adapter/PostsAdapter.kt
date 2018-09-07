@@ -20,6 +20,8 @@ import kotlinx.android.synthetic.main.post_row.view.*
 import java.util.*
 
 
+
+
 class PostsAdapter(val posts: ArrayList<Post>, val fragmentmanager : FragmentManager) : RecyclerView.Adapter<PostsAdapter.ViewHolder>() {
 
     internal var mViewPagerState = HashMap<Int, Int>()
@@ -29,6 +31,7 @@ class PostsAdapter(val posts: ArrayList<Post>, val fragmentmanager : FragmentMan
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder{
         val view : View = LayoutInflater.from(parent.context).inflate(R.layout.post_row, parent, false)
         return ViewHolder(view)
+
     }
 
     override fun onViewRecycled(holder: ViewHolder) {
@@ -46,19 +49,20 @@ class PostsAdapter(val posts: ArrayList<Post>, val fragmentmanager : FragmentMan
             holder.imageviewpager.currentItem = mViewPagerState[position]!!
         }
 
+
         holder.imageviewpager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {/*empty*/
             }
 
             override fun onPageSelected(position: Int) {
-                holder.pageindicator.setSelection(position)
+                holder.pageindicator.selection = position
             }
 
             override fun onPageScrollStateChanged(state: Int) {/*empty*/
             }
         })
-        holder.pageindicator!!.setCount(5)
-        holder.pageindicator!!.setSelection(0)
+        holder.pageindicator!!.count = 5
+        holder.pageindicator!!.selection = 0
 
         holder.username.text = posts[position].username
         holder.textfeed.text = posts[position].text
