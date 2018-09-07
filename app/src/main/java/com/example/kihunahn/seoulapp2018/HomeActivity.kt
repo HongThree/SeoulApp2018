@@ -7,6 +7,7 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
 import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentManager
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
@@ -33,6 +34,7 @@ class HomeActivity : AppCompatActivity(), DuoMenuView.OnMenuClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
+        Server(this).setting()
         updateCourseList()
         mTitles = ArrayList<String>(Arrays.asList(*resources.getStringArray(R.array.menuOptions)))
         // Initialize the views
@@ -47,6 +49,7 @@ class HomeActivity : AppCompatActivity(), DuoMenuView.OnMenuClickListener {
         goToFragment(MainFragment(), false)
         mMenuAdapter!!.setViewSelected(0, true)
         title = mTitles[0]
+
         if (ContextCompat.checkSelfPermission(this, ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             //Manifest.permission.READ_CALENDAR이 접근 승낙 상태 일때
         } else {
@@ -198,6 +201,7 @@ class HomeActivity : AppCompatActivity(), DuoMenuView.OnMenuClickListener {
         // Set the right options selected
         mMenuAdapter!!.setViewSelected(curFragment, true)
 
+        supportFragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
         // Navigate to the right fragment
         when (curFragment) {
             0 -> goToFragment(MainFragment(), false)
