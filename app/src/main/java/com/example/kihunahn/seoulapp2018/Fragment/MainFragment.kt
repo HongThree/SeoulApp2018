@@ -2,7 +2,6 @@ package com.example.kihunahn.seoulapp2018.Fragment
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
-
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
@@ -27,7 +26,7 @@ class MainFragment : Fragment(){
         val mAuth = FirebaseAuth.getInstance()
         val user = mAuth.getCurrentUser()
 
-
+        //Log.e("check", Server.course_la1.toString())
 
         return view
     }
@@ -35,12 +34,13 @@ class MainFragment : Fragment(){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val posts: ArrayList<Post> = ArrayList()
-        for(i in 1..100){
-            posts.add(Post("sangwon" + i + " 의 여행", "이곳에 여행에 대해 한줄 요약","https://picsum.photos/600/300?random&" + i))
+        val resourceIDs = intArrayOf(R.drawable.stamp01, R.drawable.stamp02, R.drawable.stamp03, R.drawable.stamp04, R.drawable.stamp05)
+        for(i in 1..2){
+            posts.add(Post("sangwon" + i + " 의 여행", "이곳에 여행에 대해 한줄 요약","https://picsum.photos/600/300?random&" + i, resourceIDs))
         }
 
         newsfeed?.layoutManager = LinearLayoutManager(activity)
-        newsfeed?.adapter = PostsAdapter(posts, activity)
+        newsfeed?.adapter = PostsAdapter(posts,fragmentManager!!)
 
     }
 
