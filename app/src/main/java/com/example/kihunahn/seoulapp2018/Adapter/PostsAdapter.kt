@@ -1,5 +1,6 @@
 package com.example.kihunahn.seoulapp2018.Adapter
 
+
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
@@ -41,7 +42,7 @@ class PostsAdapter(val posts: ArrayList<Post>, val fragmentmanager : FragmentMan
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         Log.e("position",position.toString())
-        val bannerPagerAdapter = BannerPagerAdapter(fragmentmanager, posts[position].images)
+        val bannerPagerAdapter = BannerPagerAdapter(fragmentmanager, posts[position].images, position)
         holder.imageviewpager.adapter = bannerPagerAdapter
         holder.imageviewpager.id = position +1
 
@@ -61,8 +62,8 @@ class PostsAdapter(val posts: ArrayList<Post>, val fragmentmanager : FragmentMan
             override fun onPageScrollStateChanged(state: Int) {/*empty*/
             }
         })
-        holder.pageindicator!!.count = 5
-        holder.pageindicator!!.selection = 0
+        holder.pageindicator.count = 5
+        holder.pageindicator.selection = 0
 
         holder.username.text = posts[position].username
         holder.textfeed.text = posts[position].text
@@ -88,10 +89,10 @@ class PostsAdapter(val posts: ArrayList<Post>, val fragmentmanager : FragmentMan
         val count_like : TextView = itemView.rate
     }
 
-    inner class BannerPagerAdapter(var fm: FragmentManager, var imagesList: IntArray) : FragmentPagerAdapter(fm) {
+    inner class BannerPagerAdapter(var fm: FragmentManager, var imagesList: IntArray, var Position:Int) : FragmentPagerAdapter(fm) {
 
         override fun getItem(position: Int): Fragment {
-            return BlankFragment.getInstance(imagesList[position])
+            return BlankFragment.getInstance(imagesList[position],Position)
         }
 
         override fun getCount(): Int {
