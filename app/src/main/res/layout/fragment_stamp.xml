@@ -2,150 +2,57 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    >
+    android:orientation="vertical">
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="5dp"
-        >
+        android:padding="5dp">
+
         <TableLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:padding="5dp"
-            android:stretchColumns="*"
-            >
+            android:stretchColumns="*">
+
             <TableRow
-                android:layout_width="wrap_content"
+                android:layout_width="178dp"
                 android:layout_height="0dp"
-                android:layout_weight="1"
                 android:layout_marginBottom="5dp"
-                >
-                <ImageView
-                    android:id="@+id/img1"
-                    android:layout_width="108dp"
-                    android:layout_height="108dp"
-                    android:src="@drawable/stamp01"
-                    android:scaleType="centerInside"
-                    android:adjustViewBounds="true"
-                    />
+                android:layout_weight="1">
 
                 <ImageView
-                    android:id="@+id/img2"
-                    android:layout_width="108dp"
-                    android:layout_height="108dp"
-                    android:src="@drawable/stamp02"
-                    android:scaleType="centerInside"
-                    android:adjustViewBounds="true"
-
-                    />
-                <ImageView
-                    android:id="@+id/img3"
-                    android:layout_width="108dp"
-                    android:layout_height="108dp"
-                    android:src="@drawable/stamp03"
-                    android:scaleType="centerInside"
-                    android:adjustViewBounds="true"
-                    />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:src="@drawable/forest" />
+                <TextView
+                    android:layout_gravity="center"
+                    android:text="1 코스"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
             </TableRow>
+
             <TableRow
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1"
                 android:layout_marginBottom="5dp"
-                >
-                <ImageView
-                    android:id="@+id/img4"
-                    android:layout_width="108dp"
-                    android:layout_height="108dp"
-                    android:src="@drawable/stamp04"
-                    android:scaleType="centerInside"
-                    android:adjustViewBounds="true"
-                    />
+                android:layout_weight="1">
 
                 <ImageView
-                    android:id="@+id/img5"
-                    android:layout_width="108dp"
-                    android:layout_height="108dp"
-                    android:src="@drawable/stamp05"
-                    android:scaleType="centerInside"
-                    android:adjustViewBounds="true"
-
-                    />
-                <ImageView
-                    android:id="@+id/img6"
-                    android:layout_width="108dp"
-                    android:layout_height="108dp"
-                    android:src="@drawable/stamp06"
-                    android:scaleType="centerInside"
-                    android:adjustViewBounds="true"
-                    />
-            </TableRow
-                >
-            <TableRow
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:layout_marginBottom="5dp"
-                >
-                <ImageView
-                    android:id="@+id/img7"
-                    android:layout_width="108dp"
-                    android:layout_height="108dp"
-                    android:src="@drawable/stamp07"
-                    android:scaleType="centerInside"
-                    android:adjustViewBounds="true"
-                    />
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp"
+                    android:src="#315726" />
 
                 <ImageView
-                    android:id="@+id/img8"
-                    android:layout_width="108dp"
-                    android:layout_height="108dp"
-                    android:src="@drawable/stamp08"
-                    android:scaleType="centerInside"
-                    android:adjustViewBounds="true"
-                    />
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp"
+                    android:src="#315726" />
                 <ImageView
-                    android:id="@+id/img9"
-                    android:layout_width="108dp"
-                    android:layout_height="108dp"
-                    android:src="@drawable/stamp09"
-                    android:scaleType="centerInside"
-                    android:adjustViewBounds="true"
-                    />
-            </TableRow>
-            <TableRow
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:layout_marginBottom="5dp"
-                >
-                <ImageView
-                    android:id="@+id/img10"
-                    android:layout_width="108dp"
-                    android:layout_height="108dp"
-                    android:src="@drawable/stamp10"
-                    android:scaleType="centerInside"
-                    android:adjustViewBounds="true"
-                    />
-
-                <ImageView
-                    android:id="@+id/img11"
-                    android:layout_width="108dp"
-                    android:layout_height="108dp"
-                    android:src="@drawable/stamp11"
-                    android:scaleType="centerInside"
-                    android:adjustViewBounds="true"
-                    />
-                <ImageView
-                    android:id="@+id/img12"
-                    android:layout_width="108dp"
-                    android:layout_height="108dp"
-                    android:src="@drawable/stamp12"
-                    android:scaleType="centerInside"
-                    android:adjustViewBounds="true"
-                    />
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp"
+                    android:src="#315726" />
             </TableRow>
 
             <TableRow
@@ -153,187 +60,597 @@
                 android:layout_height="0dp"
                 android:layout_marginBottom="5dp"
                 android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/img1"
+                    android:clickable="true"
+                    android:layout_width="108dp"
+                    android:layout_height="108dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/stamp01" />
+
+                <ImageView
+                    android:id="@+id/img2"
+                    android:layout_width="108dp"
+                    android:layout_height="108dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/stamp02"
+
+                    />
+
+                <ImageView
+                    android:id="@+id/img3"
+                    android:layout_width="108dp"
+                    android:layout_height="108dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/stamp03" />
+            </TableRow>
+
+
+            <TableRow
+                android:layout_width="178dp"
+                android:layout_height="0dp"
+                android:paddingTop="15dp"
+                android:layout_marginBottom="5dp"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:src="@drawable/forest" />
+                <TextView
+                    android:layout_gravity="center"
+                    android:text="2 코스"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginBottom="5dp"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp"
+                    android:src="#315726" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp"
+                    android:src="#315726" />
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp"
+                    android:src="#315726" />
+            </TableRow>
+
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginBottom="5dp"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/img4"
+                    android:layout_width="108dp"
+                    android:layout_height="108dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/stamp04" />
+
+                <ImageView
+                    android:id="@+id/img5"
+                    android:layout_width="108dp"
+                    android:layout_height="108dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/stamp05"
+
+                    />
+
+                <ImageView
+                    android:id="@+id/img6"
+                    android:layout_width="108dp"
+                    android:layout_height="108dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/stamp06" />
+            </TableRow>
+
+
+            <TableRow
+                android:layout_width="178dp"
+                android:layout_height="0dp"
+
+                android:paddingTop="15dp"
+                android:layout_marginBottom="5dp"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:src="@drawable/forest" />
+                <TextView
+                    android:layout_gravity="center"
+                    android:text="3 코스"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginBottom="5dp"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp"
+                    android:src="#315726" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp"
+                    android:src="#315726" />
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp"
+                    android:src="#315726" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginBottom="5dp"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/img7"
+                    android:layout_width="108dp"
+                    android:layout_height="108dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/stamp07" />
+
+                <ImageView
+                    android:id="@+id/img8"
+                    android:layout_width="108dp"
+                    android:layout_height="108dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/stamp08" />
+
+                <ImageView
+                    android:id="@+id/img9"
+                    android:layout_width="108dp"
+                    android:layout_height="108dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/stamp09" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginBottom="5dp"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/img10"
+                    android:layout_width="108dp"
+                    android:layout_height="108dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/stamp10" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="178dp"
+                android:layout_height="0dp"
+                android:layout_marginBottom="5dp"
+
+                android:paddingTop="15dp"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:src="@drawable/forest" />
+                <TextView
+                    android:layout_gravity="center"
+                    android:text="4 코스"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginBottom="5dp"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp"
+                    android:src="#315726" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp"
+                    android:src="#315726" />
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp"
+                    android:src="#315726" />
+            </TableRow>
+
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginBottom="5dp"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/img11"
+                    android:layout_width="108dp"
+                    android:layout_height="108dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/stamp11" />
+
+                <ImageView
+                    android:id="@+id/img12"
+                    android:layout_width="108dp"
+                    android:layout_height="108dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/stamp12" />
+
                 <ImageView
                     android:id="@+id/img13"
                     android:layout_width="108dp"
                     android:layout_height="108dp"
-                    android:src="@drawable/stamp13"
-                    android:scaleType="centerInside"
                     android:adjustViewBounds="true"
-                    />
+                    android:scaleType="centerInside"
+                    android:src="@drawable/stamp13" />
+            </TableRow>
+            <TableRow
+                android:layout_width="178dp"
+                android:layout_height="0dp"
+                android:layout_marginBottom="5dp"
+
+                android:paddingTop="15dp"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:src="@drawable/forest" />
+                <TextView
+                    android:layout_gravity="center"
+                    android:text="5 코스"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginBottom="5dp"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp"
+                    android:src="#315726" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp"
+                    android:src="#315726" />
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp"
+                    android:src="#315726" />
+            </TableRow>
+
+
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginBottom="5dp"
+                android:layout_weight="1">
+
 
                 <ImageView
                     android:id="@+id/img14"
                     android:layout_width="108dp"
                     android:layout_height="108dp"
-                    android:src="@drawable/stamp14"
-                    android:scaleType="centerInside"
                     android:adjustViewBounds="true"
-                    />
+                    android:scaleType="centerInside"
+                    android:src="@drawable/stamp14" />
+
                 <ImageView
                     android:id="@+id/img15"
                     android:layout_width="108dp"
                     android:layout_height="108dp"
-                    android:src="@drawable/stamp15"
-                    android:scaleType="centerInside"
                     android:adjustViewBounds="true"
-                    />
-            </TableRow>
-            <TableRow
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:layout_marginBottom="5dp"
-                >
+                    android:scaleType="centerInside"
+                    android:src="@drawable/stamp15" />
+
                 <ImageView
                     android:id="@+id/img16"
                     android:layout_width="108dp"
                     android:layout_height="108dp"
-                    android:src="@drawable/stamp16"
-                    android:scaleType="centerInside"
                     android:adjustViewBounds="true"
-                    />
+                    android:scaleType="centerInside"
+                    android:src="@drawable/stamp16" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="178dp"
+                android:layout_height="0dp"
+                android:layout_marginBottom="5dp"
+
+                android:paddingTop="15dp"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:src="@drawable/forest" />
+                <TextView
+                    android:layout_gravity="center"
+                    android:text="6 코스"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginBottom="5dp"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp"
+                    android:src="#315726" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp"
+                    android:src="#315726" />
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp"
+                    android:src="#315726" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginBottom="5dp"
+                android:layout_weight="1">
 
                 <ImageView
                     android:id="@+id/img17"
                     android:layout_width="108dp"
                     android:layout_height="108dp"
-                    android:src="@drawable/stamp17"
+                    android:adjustViewBounds="true"
                     android:scaleType="centerInside"
-                    android:adjustViewBounds="true"/>
+                    android:src="@drawable/stamp17" />
+
                 <ImageView
                     android:id="@+id/img18"
                     android:layout_width="108dp"
                     android:layout_height="108dp"
-                    android:src="@drawable/stamp18"
-                    android:scaleType="centerInside"
                     android:adjustViewBounds="true"
-                    />
-            </TableRow>
-            <TableRow
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:layout_marginBottom="5dp"
-                >
+                    android:scaleType="centerInside"
+                    android:src="@drawable/stamp18" />
+
                 <ImageView
                     android:id="@+id/img19"
                     android:layout_width="108dp"
                     android:layout_height="108dp"
-                    android:src="@drawable/stamp19"
-                    android:scaleType="centerInside"
                     android:adjustViewBounds="true"
-                    />
+                    android:scaleType="centerInside"
+                    android:src="@drawable/stamp19" />
+            </TableRow>
+
+
+            <TableRow
+                android:layout_width="178dp"
+                android:layout_height="0dp"
+                android:layout_marginBottom="5dp"
+
+                android:paddingTop="15dp"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:src="@drawable/forest" />
+                <TextView
+                    android:layout_gravity="center"
+                    android:text="7 코스"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginBottom="5dp"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp"
+                    android:src="#315726" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp"
+                    android:src="#315726" />
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp"
+                    android:src="#315726" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginBottom="5dp"
+                android:layout_weight="1">
 
                 <ImageView
                     android:id="@+id/img20"
                     android:layout_width="108dp"
                     android:layout_height="108dp"
-                    android:src="@drawable/stamp20"
+                    android:adjustViewBounds="true"
                     android:scaleType="centerInside"
-                    android:adjustViewBounds="true"/>
+                    android:src="@drawable/stamp20" />
+
                 <ImageView
                     android:id="@+id/img21"
                     android:layout_width="108dp"
                     android:layout_height="108dp"
-                    android:src="@drawable/stamp21"
-                    android:scaleType="centerInside"
                     android:adjustViewBounds="true"
-                    />
-            </TableRow>
-            <TableRow
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:layout_marginBottom="5dp"
-                >
+                    android:scaleType="centerInside"
+                    android:src="@drawable/stamp21" />
+
                 <ImageView
                     android:id="@+id/img22"
                     android:layout_width="108dp"
                     android:layout_height="108dp"
-                    android:src="@drawable/stamp22"
-                    android:scaleType="centerInside"
                     android:adjustViewBounds="true"
-                    />
+                    android:scaleType="centerInside"
+                    android:src="@drawable/stamp22" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="178dp"
+                android:layout_height="0dp"
+                android:layout_marginBottom="5dp"
+
+                android:paddingTop="15dp"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:src="@drawable/forest" />
+                <TextView
+                    android:layout_gravity="center"
+                    android:text="8 코스"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginBottom="5dp"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp"
+                    android:src="#315726" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp"
+                    android:src="#315726" />
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp"
+                    android:src="#315726" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginBottom="5dp"
+                android:layout_weight="1">
 
                 <ImageView
                     android:id="@+id/img23"
                     android:layout_width="108dp"
                     android:layout_height="108dp"
-                    android:src="@drawable/stamp23"
+                    android:adjustViewBounds="true"
                     android:scaleType="centerInside"
-                    android:adjustViewBounds="true"/>
+                    android:src="@drawable/stamp23" />
+
                 <ImageView
                     android:id="@+id/img24"
                     android:layout_width="108dp"
                     android:layout_height="108dp"
-                    android:src="@drawable/stamp24"
-                    android:scaleType="centerInside"
                     android:adjustViewBounds="true"
-                    />
-            </TableRow>
-            <TableRow
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:layout_marginBottom="5dp"
-                >
+                    android:scaleType="centerInside"
+                    android:src="@drawable/stamp24" />
+
                 <ImageView
                     android:id="@+id/img25"
                     android:layout_width="108dp"
                     android:layout_height="108dp"
-                    android:src="@drawable/stamp25"
-                    android:scaleType="centerInside"
                     android:adjustViewBounds="true"
-                    />
+                    android:scaleType="centerInside"
+                    android:src="@drawable/stamp25" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginBottom="5dp"
+                android:layout_weight="1">
 
                 <ImageView
                     android:id="@+id/img26"
                     android:layout_width="108dp"
                     android:layout_height="108dp"
-                    android:src="@drawable/stamp26"
+                    android:adjustViewBounds="true"
                     android:scaleType="centerInside"
-                    android:adjustViewBounds="true"/>
+                    android:src="@drawable/stamp26" />
+
                 <ImageView
                     android:id="@+id/img27"
                     android:layout_width="108dp"
                     android:layout_height="108dp"
-                    android:src="@drawable/stamp27"
-                    android:scaleType="centerInside"
                     android:adjustViewBounds="true"
-                    />
-            </TableRow>
-            <TableRow
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:layout_marginBottom="5dp"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/stamp27" />
 
-                >
                 <ImageView
                     android:id="@+id/img28"
                     android:layout_width="108dp"
                     android:layout_height="108dp"
-                    android:src="@drawable/stamp28"
-                    android:scaleType="centerInside"
                     android:adjustViewBounds="true"
-                    />
-
-                <!--<ImageView-->
-                <!--android:id="@+id/img29"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:src="@drawable/ic_launcher_background" />-->
-                <!--<ImageView-->
-                <!--android:id="@+id/img30"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:src="@drawable/ic_launcher_background"-->
-                <!--/>-->
+                    android:scaleType="centerInside"
+                    android:src="@drawable/stamp28" />
             </TableRow>
+
         </TableLayout>
 
     </ScrollView>
-
 
 </LinearLayout>
