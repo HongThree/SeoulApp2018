@@ -69,12 +69,15 @@ class PostsAdapter(val posts: ArrayList<Post>, val fragmentmanager : FragmentMan
         holder.textfeed.text = posts[position].text
 
         holder.like.setOnLikeListener(object : OnLikeListener {
+            var cnt = 0
             override fun liked(likeButton: LikeButton) {
-                //Toast.makeText(, "Liked!", Toast.LENGTH_SHORT).show()
+                cnt++
+                holder.count_like.text = "좋아요 $cnt"+"개"
             }
 
             override fun unLiked(likeButton: LikeButton) {
-                //Toast.makeText(context, "Disliked!", Toast.LENGTH_SHORT).show()
+                cnt--
+                holder.count_like.text = "좋아요 $cnt"+"개"
             }
         })
 

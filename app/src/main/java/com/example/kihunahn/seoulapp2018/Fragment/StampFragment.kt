@@ -520,7 +520,6 @@ class StampFragment : Fragment() {
 //            builder.show()
         }
 
-
         return view
     }
 

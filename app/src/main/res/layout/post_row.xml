@@ -88,7 +88,7 @@
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentEnd="true"
                     android:layout_below="@id/like_button"
-                    android:text="좋아요 5개"
+                    android:text="좋아요 0개"
                     android:textStyle="bold" />
 
             </RelativeLayout>
