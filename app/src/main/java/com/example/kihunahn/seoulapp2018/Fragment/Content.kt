@@ -31,21 +31,21 @@ class Content : Fragment() {
         pageindicator = view.findViewById(R.id.feed) as PageIndicatorView
         imageviewpager!!.adapter = bannerPagerAdapter
         imageviewpager!!.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
-            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {/*empty*/
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
             }
 
             override fun onPageSelected(position: Int) {
                 pageindicator!!.selection = position
             }
 
-            override fun onPageScrollStateChanged(state: Int) {/*empty*/
+            override fun onPageScrollStateChanged(state: Int) {
             }
         })
 
         var fragment = Fragment3()
         var args = Bundle()
-        args.putDoubleArray("lati",lati)
-        args.putDoubleArray("loti",loti)
+        args.putDoubleArray("lati", lati)
+        args.putDoubleArray("loti", loti)
         fragment.arguments = args
         val fragmentManager = fragmentManager
         val fragmentTransaction = fragmentManager!!.beginTransaction()
