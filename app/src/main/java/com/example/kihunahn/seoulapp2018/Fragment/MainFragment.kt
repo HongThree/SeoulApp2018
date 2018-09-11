@@ -14,7 +14,9 @@ import kotlinx.android.synthetic.main.fragment_main.*
 
 
 class MainFragment : Fragment(){
-
+    companion object {
+        val posts: ArrayList<Post> = ArrayList()
+    }
 
     //Firebase 로그인한 사용자 정보
     var cur_user = FirebaseAuth.getInstance().currentUser?.email
@@ -33,24 +35,17 @@ class MainFragment : Fragment(){
         val mAuth = FirebaseAuth.getInstance()
         val user = mAuth.getCurrentUser()
 
-
         return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val posts: ArrayList<Post> = ArrayList()
         val resourceIDs = intArrayOf(R.drawable.stamp01, R.drawable.stamp02, R.drawable.stamp03, R.drawable.stamp04, R.drawable.stamp05)
-        for(i in 1..5){
+        for(i in 1..5)
             posts.add(Post(cur_user!!.substringBeforeLast("@") + " 의 여행", "이곳에 여행에 대해 한줄 요약", resourceIDs))
-        }
 
         newsfeed?.layoutManager = LinearLayoutManager(activity)
-        newsfeed?.adapter = PostsAdapter(posts,childFragmentManager!!)
-
-
-
+        newsfeed?.adapter = PostsAdapter(posts,childFragmentManager)
     }
-
 
 }
