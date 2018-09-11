@@ -106,27 +106,30 @@ class Fragment2 : NMapFragment(), NMapView.OnMapStateChangeListener, NMapPOIdata
 
     val mLocationListener: LocationListener = object : LocationListener {
         override fun onLocationChanged(location: Location?) {
-
-            var lati: Double = java.lang.Double.parseDouble(String.format("%.6f", location?.longitude!!))
-            var loti: Double = java.lang.Double.parseDouble(String.format("%.6f", location.latitude))
-            Log.d("Listener",lati.toString()+" "+loti.toString())
-            var dsize = dlati.size
-            if (dsize == 0) {
-                dlati.add(lati)
-                dloti.add(loti)
-                dlati.add(lati)
-                dloti.add(loti)
-                drawline()
-            } else {
-                var tlati = dlati[dsize - 1]
-                var tloti = dloti[dsize - 1]
-                if (!dlati.contains(lati) && !dloti.contains(loti)) {
-                    var dis = (tlati - lati) * (tlati - lati) + (tloti - loti) * (tloti - loti)
-                    Log.d("distance",dis.toString())
-                    if (dis <= 100 && dis > 0.0) {
-                        dlati.add(lati)
-                        dloti.add(loti)
-                        drawline()
+            Log.d("accuracy",location!!.accuracy.toString())
+            Toast.makeText(activity,location.accuracy.toString(),Toast.LENGTH_SHORT).show()
+            if(location!!.accuracy < 20) {
+                var lati: Double = java.lang.Double.parseDouble(String.format("%.6f", location?.longitude!!))
+                var loti: Double = java.lang.Double.parseDouble(String.format("%.6f", location.latitude))
+                Log.d("Listener",lati.toString()+" "+loti.toString())
+                var dsize = dlati.size
+                if (dsize == 0) {
+                    dlati.add(lati)
+                    dloti.add(loti)
+                    dlati.add(lati)
+                    dloti.add(loti)
+                    drawline()
+                } else {
+                    var tlati = dlati[dsize - 1]
+                    var tloti = dloti[dsize - 1]
+                    if (!dlati.contains(lati) && !dloti.contains(loti)) {
+                        var dis = (tlati - lati) * (tlati - lati) + (tloti - loti) * (tloti - loti)
+                        Log.d("distance", dis.toString())
+                        if (dis <= 100 && dis > 0.0) {
+                            dlati.add(lati)
+                            dloti.add(loti)
+                            drawline()
+                        }
                     }
                 }
             }
@@ -166,8 +169,8 @@ class Fragment2 : NMapFragment(), NMapView.OnMapStateChangeListener, NMapPOIdata
     @SuppressLint("MissingPermission")
     private fun moveMapCenter() {
         Log.e("move", "move")
-        mLocationManager!!.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0.0f, mLocationListener)
-        mLocationManager!!.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0.0f, mLocationListener)
+        mLocationManager!!.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 1.0f, mLocationListener)
+        mLocationManager!!.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1.0f, mLocationListener)
 //        mMapLocationManager = NMapLocationManager(activity!!)
 //        mMapLocationManager?.setOnLocationChangeListener(onMyLocationChangeListener)
 //        mMapLocationManager!!.enableMyLocation(true)
@@ -201,7 +204,7 @@ class Fragment2 : NMapFragment(), NMapView.OnMapStateChangeListener, NMapPOIdata
 
     override fun onPause() {
         Log.e("onPause", "onPause")
-        mLocationManager!!.removeUpdates(mLocationListener)
+        //mLocationManager!!.removeUpdates(mLocationListener)
         //mMapLocationManager!!.removeOnLocationChangeListener(onMyLocationChangeListener)
         super.onPause()
     }
