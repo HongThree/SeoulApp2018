@@ -3,6 +3,7 @@ package com.example.kihunahn.seoulapp2018.Fragment
 import android.annotation.SuppressLint
 import android.app.ProgressDialog
 import android.graphics.Color
+import android.graphics.Rect
 import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -16,6 +17,7 @@ import com.example.kihunahn.seoulapp2018.R
 import com.nightonke.boommenu.BoomButtons.OnBMClickListener
 import com.nightonke.boommenu.BoomButtons.SimpleCircleButton
 import com.nightonke.boommenu.BoomMenuButton
+import com.nightonke.boommenu.Util
 import org.json.JSONObject
 import java.io.BufferedReader
 import java.io.InputStream
@@ -76,7 +78,10 @@ class CourseFragment : Fragment(){
             var builder: SimpleCircleButton.Builder = SimpleCircleButton.Builder()
             var field = drawable.getField("road" + i)
             builder.normalImageRes(field.getInt(null))
-                    .rotateImage(true).shadowColor(Color.parseColor("#ee000000"))
+                    .imageRect(Rect(Util.dp2px(0F), Util.dp2px(0F), Util.dp2px(70F), Util.dp2px(70F)))
+                    .imagePadding( Rect(0, 0, 10, 10))
+                    .rotateImage(true).isRound(false).buttonCornerRadius(Util.dp2px(20F))
+                    .buttonRadius(Util.dp2px(34F)).shadowEffect(false)
                     .listener(OnBMClickListener { index ->
                         var url = "https://mplatform.seoul.go.kr/api/dule/courseInfo.do?course=" + (index + 1).toShort()
                         Getinformation().execute(url)
@@ -88,6 +93,7 @@ class CourseFragment : Fragment(){
                     })
             bmb.addBuilder(builder)
         }
+
         bmb.builders[0].normalColor(Color.parseColor("#EB5919"))
         bmb.builders[1].normalColor(Color.parseColor("#ED62A7"))
         bmb.builders[2].normalColor(Color.parseColor("#0D6FB8"))
