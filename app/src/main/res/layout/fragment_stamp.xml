@@ -68,7 +68,8 @@
                     android:layout_height="108dp"
                     android:adjustViewBounds="true"
                     android:scaleType="centerInside"
-                    android:src="@drawable/stamp01" />
+                    android:src="@drawable/stamp01"
+                    android:tag="off"/>
 
                 <ImageView
                     android:id="@+id/img2"
@@ -77,7 +78,7 @@
                     android:adjustViewBounds="true"
                     android:scaleType="centerInside"
                     android:src="@drawable/stamp02"
-
+                    android:tag="off"
                     />
 
                 <ImageView
@@ -86,7 +87,8 @@
                     android:layout_height="108dp"
                     android:adjustViewBounds="true"
                     android:scaleType="centerInside"
-                    android:src="@drawable/stamp03" />
+                    android:src="@drawable/stamp03"
+                    android:tag="off"/>
             </TableRow>
 
 
@@ -143,7 +145,8 @@
                     android:layout_height="108dp"
                     android:adjustViewBounds="true"
                     android:scaleType="centerInside"
-                    android:src="@drawable/stamp04" />
+                    android:src="@drawable/stamp04"
+                    android:tag="off"/>
 
                 <ImageView
                     android:id="@+id/img5"
@@ -152,7 +155,7 @@
                     android:adjustViewBounds="true"
                     android:scaleType="centerInside"
                     android:src="@drawable/stamp05"
-
+                    android:tag="off"
                     />
 
                 <ImageView
@@ -161,7 +164,8 @@
                     android:layout_height="108dp"
                     android:adjustViewBounds="true"
                     android:scaleType="centerInside"
-                    android:src="@drawable/stamp06" />
+                    android:src="@drawable/stamp06"
+                    android:tag="off"/>
             </TableRow>
 
 
@@ -218,7 +222,8 @@
                     android:layout_height="108dp"
                     android:adjustViewBounds="true"
                     android:scaleType="centerInside"
-                    android:src="@drawable/stamp07" />
+                    android:src="@drawable/stamp07"
+                    android:tag="off"/>
 
                 <ImageView
                     android:id="@+id/img8"
@@ -226,7 +231,8 @@
                     android:layout_height="108dp"
                     android:adjustViewBounds="true"
                     android:scaleType="centerInside"
-                    android:src="@drawable/stamp08" />
+                    android:src="@drawable/stamp08"
+                    android:tag="off"/>
 
                 <ImageView
                     android:id="@+id/img9"
@@ -234,7 +240,8 @@
                     android:layout_height="108dp"
                     android:adjustViewBounds="true"
                     android:scaleType="centerInside"
-                    android:src="@drawable/stamp09" />
+                    android:src="@drawable/stamp09"
+                    android:tag="off"/>
             </TableRow>
 
             <TableRow
@@ -249,7 +256,8 @@
                     android:layout_height="108dp"
                     android:adjustViewBounds="true"
                     android:scaleType="centerInside"
-                    android:src="@drawable/stamp10" />
+                    android:src="@drawable/stamp10"
+                    android:tag="off"/>
 
             </TableRow>
 
@@ -307,7 +315,8 @@
                     android:layout_height="108dp"
                     android:adjustViewBounds="true"
                     android:scaleType="centerInside"
-                    android:src="@drawable/stamp11" />
+                    android:src="@drawable/stamp11"
+                    android:tag="off"/>
 
                 <ImageView
                     android:id="@+id/img12"
@@ -315,7 +324,8 @@
                     android:layout_height="108dp"
                     android:adjustViewBounds="true"
                     android:scaleType="centerInside"
-                    android:src="@drawable/stamp12" />
+                    android:src="@drawable/stamp12"
+                    android:tag="off"/>
 
                 <ImageView
                     android:id="@+id/img13"
@@ -323,7 +333,8 @@
                     android:layout_height="108dp"
                     android:adjustViewBounds="true"
                     android:scaleType="centerInside"
-                    android:src="@drawable/stamp13" />
+                    android:src="@drawable/stamp13"
+                    android:tag="off"/>
             </TableRow>
             <TableRow
                 android:layout_width="178dp"
@@ -381,7 +392,8 @@
                     android:layout_height="108dp"
                     android:adjustViewBounds="true"
                     android:scaleType="centerInside"
-                    android:src="@drawable/stamp14" />
+                    android:src="@drawable/stamp14"
+                    android:tag="off"/>
 
                 <ImageView
                     android:id="@+id/img15"
@@ -389,7 +401,8 @@
                     android:layout_height="108dp"
                     android:adjustViewBounds="true"
                     android:scaleType="centerInside"
-                    android:src="@drawable/stamp15" />
+                    android:src="@drawable/stamp15"
+                    android:tag="off"/>
 
                 <ImageView
                     android:id="@+id/img16"
@@ -397,7 +410,8 @@
                     android:layout_height="108dp"
                     android:adjustViewBounds="true"
                     android:scaleType="centerInside"
-                    android:src="@drawable/stamp16" />
+                    android:src="@drawable/stamp16"
+                    android:tag="off"/>
             </TableRow>
 
             <TableRow
@@ -453,7 +467,8 @@
                     android:layout_height="108dp"
                     android:adjustViewBounds="true"
                     android:scaleType="centerInside"
-                    android:src="@drawable/stamp17" />
+                    android:src="@drawable/stamp17"
+                    android:tag="off"/>
 
                 <ImageView
                     android:id="@+id/img18"
@@ -461,7 +476,8 @@
                     android:layout_height="108dp"
                     android:adjustViewBounds="true"
                     android:scaleType="centerInside"
-                    android:src="@drawable/stamp18" />
+                    android:src="@drawable/stamp18"
+                    android:tag="off"/>
 
                 <ImageView
                     android:id="@+id/img19"
@@ -469,7 +485,8 @@
                     android:layout_height="108dp"
                     android:adjustViewBounds="true"
                     android:scaleType="centerInside"
-                    android:src="@drawable/stamp19" />
+                    android:src="@drawable/stamp19"
+                    android:tag="off"/>
             </TableRow>
 
 
@@ -526,7 +543,8 @@
                     android:layout_height="108dp"
                     android:adjustViewBounds="true"
                     android:scaleType="centerInside"
-                    android:src="@drawable/stamp20" />
+                    android:src="@drawable/stamp20"
+                    android:tag="off"/>
 
                 <ImageView
                     android:id="@+id/img21"
@@ -534,7 +552,8 @@
                     android:layout_height="108dp"
                     android:adjustViewBounds="true"
                     android:scaleType="centerInside"
-                    android:src="@drawable/stamp21" />
+                    android:src="@drawable/stamp21"
+                    android:tag="off"/>
 
                 <ImageView
                     android:id="@+id/img22"
@@ -542,7 +561,8 @@
                     android:layout_height="108dp"
                     android:adjustViewBounds="true"
                     android:scaleType="centerInside"
-                    android:src="@drawable/stamp22" />
+                    android:src="@drawable/stamp22"
+                    android:tag="off"/>
             </TableRow>
 
             <TableRow
@@ -598,7 +618,8 @@
                     android:layout_height="108dp"
                     android:adjustViewBounds="true"
                     android:scaleType="centerInside"
-                    android:src="@drawable/stamp23" />
+                    android:src="@drawable/stamp23"
+                    android:tag="off"/>
 
                 <ImageView
                     android:id="@+id/img24"
@@ -606,7 +627,8 @@
                     android:layout_height="108dp"
                     android:adjustViewBounds="true"
                     android:scaleType="centerInside"
-                    android:src="@drawable/stamp24" />
+                    android:src="@drawable/stamp24"
+                    android:tag="off"/>
 
                 <ImageView
                     android:id="@+id/img25"
@@ -614,7 +636,8 @@
                     android:layout_height="108dp"
                     android:adjustViewBounds="true"
                     android:scaleType="centerInside"
-                    android:src="@drawable/stamp25" />
+                    android:src="@drawable/stamp25"
+                    android:tag="off"/>
 
             </TableRow>
 
@@ -630,7 +653,8 @@
                     android:layout_height="108dp"
                     android:adjustViewBounds="true"
                     android:scaleType="centerInside"
-                    android:src="@drawable/stamp26" />
+                    android:src="@drawable/stamp26"
+                    android:tag="off"/>
 
                 <ImageView
                     android:id="@+id/img27"
@@ -638,7 +662,8 @@
                     android:layout_height="108dp"
                     android:adjustViewBounds="true"
                     android:scaleType="centerInside"
-                    android:src="@drawable/stamp27" />
+                    android:src="@drawable/stamp27"
+                    android:tag="off"/>
 
                 <ImageView
                     android:id="@+id/img28"
@@ -646,7 +671,8 @@
                     android:layout_height="108dp"
                     android:adjustViewBounds="true"
                     android:scaleType="centerInside"
-                    android:src="@drawable/stamp28" />
+                    android:src="@drawable/stamp28"
+                    android:tag="off"/>
             </TableRow>
 
         </TableLayout>

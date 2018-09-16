@@ -11,12 +11,13 @@
         android:layout_height="518dp"
         android:background="@color/light_gray" />
 
-    <Button
+    <ImageButton
         android:id="@+id/btn_start"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:text="여행시작하기" />
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        android:layout_gravity="center"
+        android:src="@drawable/startbtn"
+        />
 
 
 </LinearLayout>

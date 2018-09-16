@@ -1,112 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:orientation="vertical"
-        app:layout_constraintTop_toTopOf="@+id/linearLayout2">
 
-        <EditText
-            android:id="@+id/editText_lat"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:hint="위도"
-            android:inputType="textPersonName"
-            app:layout_constraintEnd_toEndOf="@+id/editText_lon"
-            app:layout_constraintStart_toStartOf="@+id/editText_lon"
-            app:layout_constraintTop_toTopOf="@+id/btn_takePicture" />
+    <Button
+        android:id="@+id/btn_exit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="26dp"
+        android:layout_marginTop="183dp"
+        android:text="여행 끝내기"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-        <EditText
-            android:id="@+id/editText_lon"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="21dp"
-            android:layout_marginLeft="34dp"
-            android:layout_marginRight="21dp"
-            android:layout_marginStart="34dp"
-            android:layout_marginTop="24dp"
-            android:hint="경도"
-            android:inputType="textPersonName"
-            app:layout_constraintEnd_toStartOf="@+id/btn_takePicture"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editText_lat" />
-
-        <Button
-            android:id="@+id/btn_add"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="6dp"
-            android:layout_marginLeft="7dp"
-            android:layout_marginRight="6dp"
-            android:layout_marginStart="7dp"
-            android:layout_marginTop="8dp"
-            android:text="위치 저장하기"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/btn_exit"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editText_lon" />
-
-        <Button
-            android:id="@+id/btn_exit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginTop="8dp"
-            android:text="여행 끝내기"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/btn_add"
-            app:layout_constraintTop_toBottomOf="@+id/editText_lon" />
-
-        <Button
-            android:id="@+id/btn_takePicture"
-            android:layout_width="0dp"
-            android:layout_height="100dp"
-            android:layout_marginEnd="29dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="29dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="46dp"
-            android:text="사진 찍기"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/editText_lon"
-            app:layout_constraintTop_toTopOf="parent" />
-    </android.support.constraint.ConstraintLayout>
+    <Button
+        android:id="@+id/btn_takePicture"
+        android:layout_width="112dp"
+        android:layout_height="100dp"
+        android:layout_alignEnd="@+id/btn_exit"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="27dp"
+        android:text="사진 찍기"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
-    <!--<LinearLayout-->
-        <!--android:id="@+id/linearLayout2"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:orientation="vertical"-->
-        <!--app:layout_constraintBottom_toTopOf="parent"-->
-        <!--app:layout_constraintEnd_toEndOf="parent"-->
-        <!--app:layout_constraintStart_toStartOf="parent"-->
-        <!--app:layout_constraintTop_toTopOf="parent">-->
-
-        <!--&lt;!&ndash;<android.support.v7.widget.AppCompatImageView&ndash;&gt;-->
-            <!--&lt;!&ndash;android:id="@+id/imageView"&ndash;&gt;-->
-            <!--&lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;-->
-            <!--&lt;!&ndash;android:layout_height="match_parent" />&ndash;&gt;-->
-
-
-    <!--</LinearLayout>-->
     <LinearLayout
-    android:id="@+id/fragmentHere"
-    android:layout_width="match_parent"
-    android:layout_height="250dp"
-    android:layout_marginBottom="44dp"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintHorizontal_bias="0.0"
-    app:layout_constraintStart_toStartOf="parent"
-    android:orientation="horizontal" />
-</LinearLayout>
+        android:id="@+id/fragmentHere"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+/>
+</RelativeLayout>
