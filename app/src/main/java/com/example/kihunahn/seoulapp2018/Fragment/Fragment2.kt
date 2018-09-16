@@ -108,7 +108,7 @@ class Fragment2 : NMapFragment(), NMapView.OnMapStateChangeListener, NMapPOIdata
         override fun onLocationChanged(location: Location?) {
             Log.d("accuracy",location!!.accuracy.toString())
             Toast.makeText(activity,location.accuracy.toString(),Toast.LENGTH_SHORT).show()
-            if(location!!.accuracy < 20) {
+            if(location!!.accuracy <= 20) {
                 var lati: Double = java.lang.Double.parseDouble(String.format("%.6f", location?.longitude!!))
                 var loti: Double = java.lang.Double.parseDouble(String.format("%.6f", location.latitude))
                 Log.d("Listener",lati.toString()+" "+loti.toString())
@@ -169,8 +169,8 @@ class Fragment2 : NMapFragment(), NMapView.OnMapStateChangeListener, NMapPOIdata
     @SuppressLint("MissingPermission")
     private fun moveMapCenter() {
         Log.e("move", "move")
-        mLocationManager!!.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 1.0f, mLocationListener)
-        mLocationManager!!.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1.0f, mLocationListener)
+        mLocationManager!!.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0.0f, mLocationListener)
+        mLocationManager!!.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0.0f, mLocationListener)
 //        mMapLocationManager = NMapLocationManager(activity!!)
 //        mMapLocationManager?.setOnLocationChangeListener(onMyLocationChangeListener)
 //        mMapLocationManager!!.enableMyLocation(true)
