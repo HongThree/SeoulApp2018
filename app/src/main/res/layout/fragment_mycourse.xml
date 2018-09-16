@@ -1,26 +1,27 @@
-<LinearLayout
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
 
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="159dp"
-        android:text="나만의 코스" />
+    <!--<Button-->
+        <!--android:id="@+id/btn_start"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_weight="1"-->
+        <!--android:text="여행시작하기"-->
+        <!--tools:layout_editor_absoluteX="269dp"-->
+        <!--tools:layout_editor_absoluteY="498dp" />-->
 
-    <Button
-        android:id="@+id/btn_start"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="여행시작하기" />
-
-    <Button
-        android:id="@+id/btn_archive"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="저장된 여행 보기" />
-</LinearLayout>
+    <!--<Button-->
+        <!--android:id="@+id/btn_archive"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentStart="true"-->
+        <!--android:layout_alignParentTop="true"-->
+        <!--android:layout_weight="1"-->
+        <!--android:text="저장된 여행 보기"-->
+        <!--tools:layout_editor_absoluteX="125dp"-->
+        <!--tools:layout_editor_absoluteY="111dp" />-->
+</android.support.constraint.ConstraintLayout>
