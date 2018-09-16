@@ -28,8 +28,11 @@ class ArchiveFragment : Fragment() {
         override fun onItemClick(view: View, position: Int) {
             Toast.makeText(activity, "Clicked " + position, Toast.LENGTH_SHORT).show()
 
-            val nextFragment = DetailFragment()
+//            val nextFragment = DetailFragment()
+
+            val nextFragment = Content()
             val bundle = Bundle()
+
             bundle.putSerializable("position", position)
             nextFragment.arguments = bundle
 
