@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/light_gray"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
@@ -9,15 +10,19 @@
         android:id="@+id/list_view"
         android:layout_width="match_parent"
         android:layout_height="518dp"
+        android:layout_weight="1"
         android:background="@color/light_gray" />
 
-    <ImageButton
+    <ImageView
         android:id="@+id/btn_start"
-        android:layout_width="match_parent"
-        android:layout_height="500dp"
+        android:layout_width="71dp"
+        android:layout_height="44dp"
+        android:clickable="true"
         android:layout_gravity="center"
-        android:src="@drawable/startbtn"
-        />
+        android:background="@color/light_gray"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp"
+        android:src="@drawable/add" />
 
 
 </LinearLayout>
