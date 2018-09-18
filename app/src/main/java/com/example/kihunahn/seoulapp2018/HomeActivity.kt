@@ -18,11 +18,11 @@ import com.example.kihunahn.seoulapp2018.Fragment.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_home.*
+import kotlinx.android.synthetic.main.view_header.*
 import nl.psdcompany.duonavigationdrawer.views.DuoDrawerLayout
 import nl.psdcompany.duonavigationdrawer.views.DuoMenuView
 import nl.psdcompany.duonavigationdrawer.widgets.DuoDrawerToggle
 import java.util.*
-
 
 class HomeActivity : AppCompatActivity(), DuoMenuView.OnMenuClickListener {
     private var mMenuAdapter: MenuAdapter? = null
@@ -52,6 +52,11 @@ class HomeActivity : AppCompatActivity(), DuoMenuView.OnMenuClickListener {
         goToFragment(MainFragment(), false)
         mMenuAdapter!!.setViewSelected(0, true)
         title = mTitles[0]
+
+        //Firebase 로그인한 사용자 정보
+        var cur_user = FirebaseAuth.getInstance().currentUser?.email
+
+        header_user.text = cur_user!!.substringBeforeLast("@")
 
         if (ContextCompat.checkSelfPermission(this, ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
         } else {
@@ -185,7 +190,7 @@ class HomeActivity : AppCompatActivity(), DuoMenuView.OnMenuClickListener {
     }
 
     override fun onHeaderClicked() {
-        Toast.makeText(this, "onHeaderClicked", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, "사용자 정보입니다", Toast.LENGTH_SHORT).show()
     }
 
     private fun goToFragment(fragment: Fragment, addToBackStack: Boolean) {
