@@ -35,7 +35,9 @@ class PostsAdapter(val posts: ArrayList<Post>, val fragmentmanager : FragmentMan
 
     }
 
+
     override fun onViewRecycled(holder: ViewHolder) {
+
         mViewPagerState[holder.adapterPosition] = holder.imageviewpager.currentItem
         super.onViewRecycled(holder)
     }

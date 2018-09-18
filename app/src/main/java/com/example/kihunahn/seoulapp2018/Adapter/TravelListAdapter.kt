@@ -9,9 +9,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.Toast
 import com.example.kihunahn.seoulapp2018.PlaceData
 import com.example.kihunahn.seoulapp2018.R
+
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.row_places.view.*
 
@@ -23,7 +25,11 @@ class TravelListAdapter(private var context: Context) : RecyclerView.Adapter<Tra
     override fun getItemCount() = PlaceData.placeList().size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.row_places, parent, false)
+
+
+
         return ViewHolder(itemView)
     }
 
@@ -31,6 +37,9 @@ class TravelListAdapter(private var context: Context) : RecyclerView.Adapter<Tra
         Log.d("pos", position.toString())
         val place = PlaceData.placeList()[position]
         Log.d("pos", place.name.toString())
+
+
+
         holder.itemView.placeName.text = place.name
         Log.d("pos", context.toString())
         Picasso.get().load(place.getImageResourceId(context)).into(holder.itemView.placeImage)

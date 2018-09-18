@@ -25,7 +25,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_archive.*
 import kotlinx.android.synthetic.main.fragment_archive.view.*
-import kotlinx.android.synthetic.main.fragment_mycourse.*
 
 
 class MyCourseFragment : Fragment() {
