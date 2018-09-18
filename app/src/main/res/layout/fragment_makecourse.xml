@@ -30,6 +30,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <Button
+        android:id="@+id/cur_location"
+        android:layout_width="wrap_content"
+        android:layout_height="77dp"
+        android:layout_alignEnd="@+id/btn_exit"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="128dp"
+        android:text="현재위치"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:id="@+id/fragmentHere"
