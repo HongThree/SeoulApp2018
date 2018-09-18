@@ -1,6 +1,7 @@
 package com.example.kihunahn.seoulapp2018
 
 import android.Manifest.permission.ACCESS_FINE_LOCATION
+import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -53,18 +54,19 @@ class HomeActivity : AppCompatActivity(), DuoMenuView.OnMenuClickListener {
         title = mTitles[0]
 
         if (ContextCompat.checkSelfPermission(this, ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            //Manifest.permission.READ_CALENDAR이 접근 승낙 상태 일때
         } else {
-            //Manifest.permission.READ_CALENDAR이 접근 거절 상태 일때
             if (ActivityCompat.shouldShowRequestPermissionRationale(this, ACCESS_FINE_LOCATION)) {
-                //사용자가 다시 보지 않기에 체크를 하지 않고, 권한 설정을 거절한 이력이 있는 경우
             } else {
-                //사용자가 다시 보지 않기에 체크하고, 권한 설정을 거절한 이력이 있는 경우
             }
-            //사용자에게 접근권한 설정을 요구하는 다이얼로그를 띄운다.
-            //만약 사용자가 다시 보지 않기에 체크를 했을 경우엔 권한 설정 다이얼로그가 뜨지 않고,
-            //곧바로 OnRequestPermissionResult가 실행된다.
             ActivityCompat.requestPermissions(this, arrayOf(ACCESS_FINE_LOCATION), 0)
+        }
+
+        if (ContextCompat.checkSelfPermission(this, WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+        } else {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, WRITE_EXTERNAL_STORAGE)) {
+            } else {
+            }
+            ActivityCompat.requestPermissions(this, arrayOf(WRITE_EXTERNAL_STORAGE), 0)
         }
     }
 

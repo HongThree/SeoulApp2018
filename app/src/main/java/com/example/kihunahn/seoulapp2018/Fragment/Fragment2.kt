@@ -108,7 +108,7 @@ class Fragment2 : NMapFragment(), NMapView.OnMapStateChangeListener, NMapPOIdata
         override fun onLocationChanged(location: Location?) {
             Log.d("accuracy",location!!.accuracy.toString())
             Toast.makeText(activity,location.accuracy.toString(),Toast.LENGTH_SHORT).show()
-            if(location!!.accuracy <= 20) {
+            if(location!!.accuracy <= 30) {
                 var lati: Double = java.lang.Double.parseDouble(String.format("%.6f", location?.longitude!!))
                 var loti: Double = java.lang.Double.parseDouble(String.format("%.6f", location.latitude))
                 Log.d("Listener",lati.toString()+" "+loti.toString())
@@ -175,6 +175,17 @@ class Fragment2 : NMapFragment(), NMapView.OnMapStateChangeListener, NMapPOIdata
 //        mMapLocationManager?.setOnLocationChangeListener(onMyLocationChangeListener)
 //        mMapLocationManager!!.enableMyLocation(true)
 //        mMyLocationOverlay = mapOverlayManager!!.createMyLocationOverlay(mMapLocationManager, mMapCompassManager)
+    }
+
+    fun move(){
+        if (dlati.size > 0) {
+            val len = dlati.size - 1
+            val currentPoint = NGeoPoint(dlati[len], dloti[len])
+            val pathData = NMapPathData(len)
+            mapController!!.mapCenter = currentPoint
+            mapController!!.setZoomEnabled(true)
+            mapController!!.zoomLevel = 50
+        }
     }
 
     private fun drawline() {
