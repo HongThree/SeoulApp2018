@@ -85,6 +85,7 @@ class CourseFragment : Fragment(){
                     .listener(OnBMClickListener { index ->
                         var url = "https://mplatform.seoul.go.kr/api/dule/courseInfo.do?course=" + (index + 1).toShort()
                         Getinformation().execute(url)
+
                         num = index+1
                         arrayList?.clear()
                         arrayList2?.clear()
