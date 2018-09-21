@@ -38,7 +38,7 @@ class MakeCourseFragment : Fragment(){
 
 
     var PositionList = PositionDTO(ArrayList(), ArrayList())
-    var PictureList = PictureDTO(ArrayList(), ArrayList(), ArrayList())
+    var PictureList = PictureDTO(PositionDTO(), ArrayList())
 
     var courseName = String()
     val cur_user = getUserId()
@@ -91,21 +91,13 @@ class MakeCourseFragment : Fragment(){
             */
         }
 
-        btn_add.setOnClickListener {
-            //PositionList.lat?.add(editText_lat.text.toString().toDouble())
-            //PositionList.lon?.add(editText_lon.text.toString().toDouble())
-            Toast.makeText(activity, "현재 위치 저~장~", Toast.LENGTH_LONG).show()
-            //lat_list.add(editText_lat.text.toString().toDouble())
-            //lon_list.add(editText_lat.text.toString().toDouble())
-
-            //lat_list += editText_lat.text.toString() + " "
-            //lon_list += editText_lon.text.toString() + " "
-            //Toast.makeText(activity, lat_list, Toast.LENGTH_LONG).show()
-            //state.setText(PositionList.toString())
-        }
 
         btn_takePicture.setOnClickListener {
             dispatchCameraIntent()
+        }
+        cur_location.setOnClickListener {
+            Toast.makeText(activity,mapfragment!!.dloti.toString(),Toast.LENGTH_SHORT).show()
+            mapfragment!!.move()
         }
     }
 
@@ -136,8 +128,6 @@ class MakeCourseFragment : Fragment(){
             var bitmap = MediaStore.Images.Media.getBitmap(activity!!.contentResolver, uri)
 
             //uploadImage(bitmap)
-            PictureList.lat?.add(editText_lat.text.toString().toDouble())
-            PictureList.lon?.add(editText_lon.text.toString().toDouble())
             PictureList.uri?.add(uri.toString())
             Toast.makeText(activity, PictureList.uri.toString(), Toast.LENGTH_LONG).show()
             //Toast.makeText(activity, "사진 위치 저~장~", Toast.LENGTH_LONG).show()

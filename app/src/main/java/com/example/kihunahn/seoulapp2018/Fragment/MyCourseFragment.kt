@@ -1,7 +1,9 @@
 package com.example.kihunahn.seoulapp2018.Fragment
 
 import android.app.Activity
+import android.app.ProgressDialog
 import android.content.Intent
+import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.util.Pair
@@ -16,8 +18,10 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import com.example.kihunahn.seoulapp2018.Adapter.TravelListAdapter
+import com.example.kihunahn.seoulapp2018.PlaceData
 import com.example.kihunahn.seoulapp2018.PositionDTO
 import com.example.kihunahn.seoulapp2018.R
+import com.example.kihunahn.seoulapp2018.Server
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.common.api.ResultCallback
 import com.google.android.gms.location.*
@@ -26,6 +30,9 @@ import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_archive.*
 import kotlinx.android.synthetic.main.fragment_archive.view.*
 import kotlinx.android.synthetic.main.fragment_mycourse.*
+import org.json.JSONObject
+import java.net.HttpURLConnection
+import java.net.URL
 
 
 class MyCourseFragment : Fragment() {
@@ -96,7 +103,8 @@ class MyCourseFragment : Fragment() {
         }
     }
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-
+        Getinformation().execute()
+        Toast.makeText(activity, PlaceData.placeNameArray.size.toString(), Toast.LENGTH_SHORT).show()
         val view = inflater!!.inflate(R.layout.fragment_archive, container, false)
 
         staggeredLayoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
@@ -138,21 +146,33 @@ class MyCourseFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-
-        var cur_user = FirebaseAuth.getInstance().currentUser?.uid
-        FirebaseFirestore.getInstance().collection(cur_user.toString()).get().addOnSuccessListener { querySnapshot ->
+        //Getinformation().execute()
+        //Toast.makeText(activity, PlaceData.placeNameArray.size.toString(), Toast.LENGTH_SHORT).show()
+        /*
+        var cur_user = getUserId()
+        FirebaseFirestore.getInstance().collection(cur_user).get().addOnSuccessListener { querySnapshot ->
             // 이 유저에게 저장 된 여행의 개수 출력 됨!!
             //Toast.makeText(activity, querySnapshot.documents.size.toString(), Toast.LENGTH_LONG).show()
             //querySnapshot.documents.size
+
             querySnapshot.forEach {
+                PlaceData.placeNameArray.add(it.id)
+
+                Toast.makeText(activity, it.id, Toast.LENGTH_SHORT).show()
                 //[lat,lon]
                 //Toast.makeText(activity, it.data.keys.toString(), Toast.LENGTH_LONG).show()
 
                 // 이게 실제 여행명 받아오기
                 //Toast.makeText(activity, it.id, Toast.LENGTH_LONG).show()
             }
+            Toast.makeText(activity, PlaceData.placeNameArray.size.toString(), Toast.LENGTH_SHORT).show()
         }
+        */
+    }
+    fun getUserId() : String {
+        var userEmail = FirebaseAuth.getInstance().currentUser!!.email
+        var ret = userEmail!!.substring(0, userEmail!!.indexOf('@'))
+        return ret
     }
 
 
@@ -252,5 +272,59 @@ class MyCourseFragment : Fragment() {
 
     override fun onDetach() {
         super.onDetach()
+    }
+
+    inner class Getinformation : AsyncTask<String, String, String>() {
+        var asyncDialog: ProgressDialog = ProgressDialog(context!!)
+        override fun onPreExecute() {
+            // Before doInBackground
+            asyncDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER)
+            asyncDialog.setMessage("로딩중입니다..")
+
+            // show dialog
+            asyncDialog.show()
+        }
+
+        override fun doInBackground(vararg urls: String?): String {
+            Log.e("update","doInBackground1")
+            try {
+                var cur_user = getUserId()
+                try {
+                    FirebaseFirestore.getInstance().collection(cur_user).get().addOnSuccessListener { querySnapshot ->
+                        // 이 유저에게 저장 된 여행의 개수 출력 됨!!
+                        //Toast.makeText(activity, querySnapshot.documents.size.toString(), Toast.LENGTH_LONG).show()
+                        //querySnapshot.documents.size
+
+                        querySnapshot.forEach {
+                            PlaceData.placeNameArray.add(it.id)
+                            adapter.notifyDataSetChanged()
+                            //[lat,lon]
+                            //Toast.makeText(activity, it.data.keys.toString(), Toast.LENGTH_LONG).show()
+
+                            // 이게 실제 여행명 받아오기
+                            //Toast.makeText(activity, it.id, Toast.LENGTH_LONG).show()
+                        }
+                        Toast.makeText(activity, PlaceData.placeNameArray.size.toString(), Toast.LENGTH_SHORT).show()
+                    }
+                } catch (ex: Exception) {
+                }
+                //publishProgress(inString)
+            } catch (ex: Exception) {
+
+            } finally {
+
+            }
+            return "complete"
+        }
+
+        override fun onProgressUpdate(vararg values: String?) {
+            Log.e("update","onProgressUpdate")
+        }
+
+        override fun onPostExecute(result: String?) {
+            super.onPostExecute(result)
+            if(result.equals("complete"))
+                asyncDialog.dismiss()
+        }
     }
 }

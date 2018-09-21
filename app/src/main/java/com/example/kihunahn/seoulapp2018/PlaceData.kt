@@ -5,8 +5,9 @@ import java.util.ArrayList
 
 object PlaceData {
 
-    var placeNameArray = arrayOf("Bora Bora", "Canada", "Dubai", "Hong Kong", "Iceland", "India", "Kenya", "London", "Switzerland", "Sydney")
-
+    //var placeNameArray = arrayOf("Bora Bora", "Canada", "Dubai", "Hong Kong", "Iceland", "India", "Kenya", "London", "Switzerland", "Sydney")
+    //var placeNameArray = arrayOf("Bora Bora")
+    var placeNameArray = ArrayList<String>()
     fun placeList(): ArrayList<Place> {
         val list = ArrayList<Place>()
         for (i in placeNameArray.indices) {

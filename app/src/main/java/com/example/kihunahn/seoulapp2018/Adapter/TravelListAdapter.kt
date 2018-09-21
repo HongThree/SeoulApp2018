@@ -23,11 +23,13 @@ class TravelListAdapter(private var context: Context) : RecyclerView.Adapter<Tra
     override fun getItemCount() = PlaceData.placeList().size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        Log.d("update", PlaceData.placeNameArray.size.toString())
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.row_places, parent, false)
         return ViewHolder(itemView)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        Log.d("update", PlaceData.placeNameArray.size.toString())
         Log.d("pos", position.toString())
         val place = PlaceData.placeList()[position]
         Log.d("pos", place.name.toString())

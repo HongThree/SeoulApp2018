@@ -13,6 +13,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import com.example.kihunahn.seoulapp2018.Adapter.TravelListAdapter
+import com.example.kihunahn.seoulapp2018.PlaceData
 import com.example.kihunahn.seoulapp2018.PositionDTO
 import com.example.kihunahn.seoulapp2018.R
 import com.google.firebase.auth.FirebaseAuth
@@ -102,19 +103,15 @@ class ArchiveFragment : Fragment() {
 
         view.list_view.adapter = adapter
 
-        return view
-    }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-
+        Toast.makeText(activity, "1", Toast.LENGTH_SHORT).show()
         var cur_user = FirebaseAuth.getInstance().currentUser?.uid
         FirebaseFirestore.getInstance().collection(cur_user.toString()).get().addOnSuccessListener { querySnapshot ->
             // 이 유저에게 저장 된 여행의 개수 출력 됨!!
             //Toast.makeText(activity, querySnapshot.documents.size.toString(), Toast.LENGTH_LONG).show()
             //querySnapshot.documents.size
             querySnapshot.forEach {
+                PlaceData.placeNameArray.set(PlaceData.placeNameArray.size, it.data.keys.toString())
                 //[lat,lon]
                 //Toast.makeText(activity, it.data.keys.toString(), Toast.LENGTH_LONG).show()
 
@@ -122,6 +119,17 @@ class ArchiveFragment : Fragment() {
                 //Toast.makeText(activity, it.id, Toast.LENGTH_LONG).show()
             }
         }
+        Toast.makeText(activity, "2", Toast.LENGTH_SHORT).show()
+        Toast.makeText(activity, PlaceData.placeNameArray.toString(), Toast.LENGTH_SHORT).show()
+
+
+        return view
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+
     }
 
     class ReadRecyclerViewAdapter(initList: ArrayList<PositionDTO>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
