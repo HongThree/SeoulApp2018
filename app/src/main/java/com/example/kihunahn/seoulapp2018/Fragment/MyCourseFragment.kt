@@ -286,16 +286,20 @@ class MyCourseFragment : Fragment() {
         }
 
         override fun doInBackground(vararg urls: String?): String {
-            Log.e("update","doInBackground1")
+            Log.e("ww","doInBackground1")
             try {
-                var cur_user = getUserId()
+                //var cur_user = getUserId()
+                var cur_user = "kihunahn0721"
                 try {
+                    Log.e("ww","doInBackground2")
+
                     FirebaseFirestore.getInstance().collection(cur_user).get().addOnSuccessListener { querySnapshot ->
                         // 이 유저에게 저장 된 여행의 개수 출력 됨!!
                         //Toast.makeText(activity, querySnapshot.documents.size.toString(), Toast.LENGTH_LONG).show()
                         //querySnapshot.documents.size
 
                         querySnapshot.forEach {
+                            Log.e("ww","ok?")
                             PlaceData.placeNameArray.add(it.id)
                             adapter.notifyDataSetChanged()
                             //[lat,lon]

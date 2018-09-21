@@ -95,10 +95,12 @@ class MakeCourseFragment : Fragment(){
         btn_takePicture.setOnClickListener {
             dispatchCameraIntent()
         }
+        /*
         cur_location.setOnClickListener {
             Toast.makeText(activity,mapfragment!!.dloti.toString(),Toast.LENGTH_SHORT).show()
             mapfragment!!.move()
         }
+        */
     }
 
     fun getUserId() : String {

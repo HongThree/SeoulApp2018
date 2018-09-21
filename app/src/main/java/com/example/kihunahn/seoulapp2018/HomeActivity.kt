@@ -127,6 +127,7 @@ class HomeActivity : AppCompatActivity(), DuoMenuView.OnMenuClickListener {
 
     fun updateCourseList() {
         var id = userInfo.id
+        /*
         FirebaseFirestore.getInstance().collection(id).get().addOnSuccessListener { querySnapshot ->
             // 이 유저에게 저장 된 여행의 개수 출력 됨!!
             //Toast.makeText(activity, querySnapshot.documents.size.toString(), Toast.LENGTH_LONG).show()
@@ -150,6 +151,7 @@ class HomeActivity : AppCompatActivity(), DuoMenuView.OnMenuClickListener {
                 }
             }
         }
+        */
     }
 
     private fun handleToolbar() {

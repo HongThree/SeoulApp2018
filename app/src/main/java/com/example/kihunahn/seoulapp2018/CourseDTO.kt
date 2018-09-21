@@ -1,7 +1,7 @@
 package com.example.kihunahn.seoulapp2018
 
 data class CourseDTO(var user : String, var title : String) {
-    var userName = user
+    var userId = user
     var courseName = title
     var score = 0
 
