@@ -38,7 +38,7 @@ class HomeActivity : AppCompatActivity(), DuoMenuView.OnMenuClickListener {
         setContentView(R.layout.activity_home)
 
         Server(this).setting()
-        updateCourseList()
+        //updateCourseList()
         mTitles = ArrayList<String>(Arrays.asList(*resources.getStringArray(R.array.menuOptions)))
         // Initialize the views
         mViewHolder = ViewHolder()
@@ -135,26 +135,19 @@ class HomeActivity : AppCompatActivity(), DuoMenuView.OnMenuClickListener {
     fun updateCourseList() {
         var id = userInfo.id
         FirebaseFirestore.getInstance().collection(id).get().addOnSuccessListener { querySnapshot ->
-            // 이 유저에게 저장 된 여행의 개수 출력 됨!!
-            //Toast.makeText(activity, querySnapshot.documents.size.toString(), Toast.LENGTH_LONG).show()
-            //querySnapshot.documents.size
             querySnapshot.forEach {
-                //[lat,lon]
-                //Toast.makeText(activity, it.data.keys.toString(), Toast.LENGTH_LONG).show()
-                // 이게 실제 여행명 받아오기
-                //Toast.makeText(this, it.id, Toast.LENGTH_SHORT).show()
                 var title = it.id
-                if(title[title.length-1] == '_') {
-                    userInfo.courseList.get(userInfo.courseList.size-1).pictures!!.lat = it.data.get("lat") as ArrayList<Double>
-                    userInfo.courseList.get(userInfo.courseList.size-1).pictures!!.lon = it.data.get("lon") as ArrayList<Double>
-                    userInfo.courseList.get(userInfo.courseList.size-1).pictures!!.uri = it.data.get("uri") as ArrayList<String>
-                }
-                else {
-                    var course = CourseDTO(title)
-                    course.positions.lat = it.data.get("lat") as ArrayList<Double>
-                    course.positions.lon = it.data.get("lon") as ArrayList<Double>
-                    userInfo.courseList.add(course)
-                }
+//                if(title[title.length-1] == '_') {
+//                    userInfo.courseList.get(userInfo.courseList.size-1).pictures!!.lat = it.data.get("lat") as ArrayList<Double>
+//                    userInfo.courseList.get(userInfo.courseList.size-1).pictures!!.lon = it.data.get("lon") as ArrayList<Double>
+//                    userInfo.courseList.get(userInfo.courseList.size-1).pictures!!.uri = it.data.get("uri") as ArrayList<String>
+//                }
+//                else {
+//                      var course = CourseDTO(title)
+////                    course.positions.lat = it.data.get("lat") as ArrayList<Double>
+////                    course.positions.lon = it.data.get("lon") as ArrayList<Double>
+////                    userInfo.courseList.add(course)
+//                }
             }
         }
     }
