@@ -1,6 +1,6 @@
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -10,51 +10,64 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/course_imageView"
-                android:layout_width="200dp"
-                android:layout_height="150dp"
-                android:src="@drawable/sydney" />
+            <TextView
+                android:id="@+id/course_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:textColor="@color/colorPrimaryDark"
+                android:text="1 코스"
+                android:layout_marginBottom="5dp"
+                android:textSize="30dp"
+                android:textStyle="bold" />
 
             <ImageView
+                android:id="@+id/just"
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/course_name"
+
+                android:src="#767b78" />
+
+            <com.github.chrisbanes.photoview.PhotoView
                 android:id="@+id/stamp_imageView"
-                android:layout_width="200dp"
-                android:layout_height="150dp"
-                android:src="@drawable/sydney" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/just"
+                android:layout_marginBottom="20dp"
+                android:src="@drawable/sta0" />
 
             <LinearLayout
                 android:id="@+id/fragmentHere"
-                android:layout_width="fill_parent"
-                android:layout_height="400dp"
-                android:layout_below="@+id/course_imageView"
+                android:layout_width="350dp"
+                android:layout_height="350dp"
+                android:layout_below="@+id/stamp_imageView"
+                android:layout_marginLeft="30dp"
                 android:orientation="vertical" />
 
             <ImageView
                 android:id="@+id/imagetrans"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/fragmentHere"
-                android:layout_alignEnd="@+id/fragmentHere"
-                android:layout_alignLeft="@+id/fragmentHere"
-                android:layout_alignRight="@+id/fragmentHere"
-                android:layout_alignStart="@+id/fragmentHere"
-                android:layout_alignTop="@+id/fragmentHere" />
+                android:layout_width="318dp"
+                android:layout_height="334dp" />
 
-        </LinearLayout>
+        </RelativeLayout>
     </ScrollView>
+
     <com.nightonke.boommenu.BoomMenuButton
         android:id="@+id/bmb"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
-        app:bmb_normalColor="@color/light_green"
         app:bmb_buttonEnum="simpleCircle"
         app:bmb_buttonPlaceEnum="buttonPlace_sc_8_1"
+        app:bmb_normalColor="@color/light_green"
         app:bmb_piecePlaceEnum="piecePlace_dot_8_1" />
 
 </FrameLayout>

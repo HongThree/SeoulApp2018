@@ -32,7 +32,6 @@ import java.util.*
 
 class MakeCourseFragment : Fragment(){
 
-
     var PositionList = PositionDTO(ArrayList(), ArrayList())
     var PictureList = PictureDTO(PositionList, ArrayList())
 

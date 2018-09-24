@@ -18,6 +18,7 @@ import com.nightonke.boommenu.BoomButtons.OnBMClickListener
 import com.nightonke.boommenu.BoomButtons.SimpleCircleButton
 import com.nightonke.boommenu.BoomMenuButton
 import com.nightonke.boommenu.Util
+import kotlinx.android.synthetic.main.fragment_course.*
 import org.json.JSONObject
 import java.io.BufferedReader
 import java.io.InputStream
@@ -40,12 +41,12 @@ class CourseFragment : Fragment(){
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        val view = inflater?.inflate(R.layout.fragment_course, container, false)
-        mainFragment = MainFragment()
-        scroll = view.findViewById(R.id.snackbar_contaner) as ScrollView
-        transparent = view.findViewById(R.id.imagetrans) as ImageView
         Getinformation().execute("https://mplatform.seoul.go.kr/api/dule/courseInfo.do?course=1")
         num = 1
+
+        val view = inflater?.inflate(R.layout.fragment_course, container, false)
+        scroll = view.findViewById(R.id.snackbar_contaner) as ScrollView
+        transparent = view.findViewById(R.id.imagetrans) as ImageView
 
         transparent!!.setOnTouchListener(View.OnTouchListener { v, event ->
             val action = event.action
@@ -68,8 +69,8 @@ class CourseFragment : Fragment(){
                 else -> true
             }
         })
-        arrayList?.clear()
-        arrayList2?.clear()
+        arrayList.clear()
+        arrayList2.clear()
 
         val bmb = view.findViewById(R.id.bmb) as BoomMenuButton
         val drawable = R.drawable::class.java
@@ -77,6 +78,7 @@ class CourseFragment : Fragment(){
         for (i in 0 until bmb.buttonPlaceEnum.buttonNumber()) {
             var builder: SimpleCircleButton.Builder = SimpleCircleButton.Builder()
             var field = drawable.getField("road" + i)
+            var stam = drawable.getField("sta"+i)
             builder.normalImageRes(field.getInt(null))
                     .imageRect(Rect(Util.dp2px(0F), Util.dp2px(0F), Util.dp2px(70F), Util.dp2px(70F)))
                     .imagePadding( Rect(0, 0, 10, 10))
@@ -86,11 +88,16 @@ class CourseFragment : Fragment(){
                         var url = "https://mplatform.seoul.go.kr/api/dule/courseInfo.do?course=" + (index + 1).toShort()
                         Getinformation().execute(url)
 
+                        stamp_imageView.setImageResource(stam.getInt(null))
+                        var conum = i+1
+                        course_name.text = "$conum 코스"
+
+
                         num = index+1
-                        arrayList?.clear()
-                        arrayList2?.clear()
-                        arrayList3?.clear()
-                        arrayList4?.clear()
+                        arrayList.clear()
+                        arrayList2.clear()
+                        arrayList3.clear()
+                        arrayList4.clear()
                     })
             bmb.addBuilder(builder)
         }
