@@ -1,11 +1,6 @@
 package com.example.kihunahn.seoulapp2018.Fragment
 
 
-//import com.google.firebase.storage.FirebaseStorage
-//import io.realm.Realm
-//import io.realm.RealmConfiguration
-//import io.realm.RealmObject
-//import io.realm.RealmResults
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
@@ -20,6 +15,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import com.example.kihunahn.seoulapp2018.CourseDTO
 import com.example.kihunahn.seoulapp2018.PictureDTO
 import com.example.kihunahn.seoulapp2018.PositionDTO
 import com.example.kihunahn.seoulapp2018.R
@@ -37,7 +33,7 @@ import java.util.*
 class MakeCourseFragment : Fragment(){
 
     var PositionList = PositionDTO(ArrayList(), ArrayList())
-    var PictureList = PictureDTO(ArrayList(), ArrayList(), ArrayList())
+    var PictureList = PictureDTO(PositionList, ArrayList())
 
     var courseName = String()
     val cur_user = getUserId()
@@ -45,6 +41,8 @@ class MakeCourseFragment : Fragment(){
     var currentPath: String? = null
     val TAKE_PICTURE = 3
     var mapfragment:Fragment2?=null
+    var dlati: ArrayList<Double>? = null
+    var dloti: ArrayList<Double>? = null
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         val view = inflater?.inflate(R.layout.fragment_makecourse, container, false)
@@ -69,25 +67,16 @@ class MakeCourseFragment : Fragment(){
 
         btn_exit.setOnClickListener {
             var size = mapfragment!!.dlati.size-1
-            var dlati:ArrayList<Double> = mapfragment!!.dlati
-            var dloti:ArrayList<Double> = mapfragment!!.dloti
+            dlati= mapfragment!!.dlati
+            dloti = mapfragment!!.dloti
             for (i in size downTo 0){
-                PositionList.lat?.add(dlati[i])
-                PositionList.lon?.add(dloti[i])
+                PositionList.lat?.add(dlati!![i])
+                PositionList.lon?.add(dloti!![i])
             }
             mapfragment!!.mLocationManager!!.removeUpdates(mapfragment!!.mLocationListener)
-            //mapfragment!!.mMapLocationManager!!.removeOnLocationChangeListener(mapfragment!!.onMyLocationChangeListener)
             showDialog(courseName)
             fragmentManager!!.popBackStack()
 
-            /*
-            val fragment = MyCourseFragment()
-            val fragmentManager = fragmentManager
-            val fragmentTransaction = fragmentManager!!.beginTransaction()
-            fragmentTransaction.replace(R.id.container, fragment)
-            //fragmentTransaction.addToBackStack(null)
-            fragmentTransaction.commit()
-            */
         }
 
 
@@ -110,13 +99,7 @@ class MakeCourseFragment : Fragment(){
         var baos = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos)
         var data = baos.toByteArray()
-        // FirebaseFirestore.getInstance().collection(cur_user.toString()).document(courseName).set(PositionList)
-//        FirebaseStorage.getInstance().reference.child(cur_user.toString()).child(courseName+"_pic").putBytes(data)
-//                .addOnCompleteListener { task->
-//                    if(task.isSuccessful) {
-//                        Toast.makeText(activity, "업로드에 성공하였습니다.", Toast.LENGTH_LONG).show()
-//                    }
-//                }
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -129,8 +112,6 @@ class MakeCourseFragment : Fragment(){
             //uploadImage(bitmap)
             PictureList.uri?.add(uri.toString())
             Toast.makeText(activity, PictureList.uri.toString(), Toast.LENGTH_LONG).show()
-            //Toast.makeText(activity, "사진 위치 저~장~", Toast.LENGTH_LONG).show()
-//            imageView.setImageURI(uri)
         }
     }
 
@@ -162,32 +143,13 @@ class MakeCourseFragment : Fragment(){
     }
 
     fun saveCourse(courseName : String) {
-        /*
-         Realm.init(activity)
-         var mRealm = Realm.getDefaultInstance()
-         mRealm.beginTransaction()
-         var mCourse = mRealm.createObject(Course::class.java)
-         mCourse.course_name = courseName
-         mCourse.lats = lat_list
-         mCourse.lons = lon_list
+        var INFOR = CourseDTO(cur_user,courseName,"ASD",PositionDTO(dloti,dloti),null)
+        FirebaseFirestore.getInstance().collection(cur_user.toString()).document(courseName).set(INFOR).addOnSuccessListener {
 
-         mRealm.commitTransaction()
-
-         var courses = mRealm.where(Course::class.java)
-         Toast.makeText(activity, courses.count().toString(), Toast.LENGTH_LONG).show()
-         */
-        //Toast.makeText(activity, isValid(courseName).toString(), Toast.LENGTH_SHORT).show()
-        FirebaseFirestore.getInstance().collection(cur_user.toString()).document(courseName).set(PositionList).addOnSuccessListener {
-            //Toast.makeText(activity, "여행이 저장되었습니다(위치).", Toast.LENGTH_LONG).show()
         }.addOnFailureListener { exception ->
-            //Toast.makeText(activity, exception.toString(), Toast.LENGTH_LONG).show()
+
         }
 
-        FirebaseFirestore.getInstance().collection(cur_user.toString()).document(courseName+"_pic").set(PictureList).addOnSuccessListener {
-            //Toast.makeText(activity, "여행이 저장되었습니다(사진).", Toast.LENGTH_LONG).show()
-        }.addOnFailureListener { exception ->
-            //Toast.makeText(activity, exception.toString(), Toast.LENGTH_LONG).show()
-        }
     }
     fun showDialog(defaultName : String) {
         updateNameList()
@@ -216,7 +178,6 @@ class MakeCourseFragment : Fragment(){
         }
         mDialogView.btn_defualt_course_name.setOnClickListener {
             mAlerDialog.dismiss()
-            //Toast.makeText(activity, defaultName + "가 저장 되었습니다.", Toast.LENGTH_LONG).show()
             saveCourse(defaultName)
         }
 
@@ -261,9 +222,3 @@ class MakeCourseFragment : Fragment(){
         super.onDetach()
     }
 }
-
-//open class Course : RealmObject() {
-//    var course_name : String? = null
-//    var lats : String? = null
-//    var lons : String? = null
-//}
