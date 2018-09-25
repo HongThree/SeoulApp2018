@@ -46,16 +46,19 @@
 
             <LinearLayout
                 android:id="@+id/fragmentHere"
-                android:layout_width="350dp"
-                android:layout_height="350dp"
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
                 android:layout_below="@+id/stamp_imageView"
-                android:layout_marginLeft="30dp"
                 android:orientation="vertical" />
 
             <ImageView
                 android:id="@+id/imagetrans"
-                android:layout_width="318dp"
-                android:layout_height="334dp" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/fragmentHere"
+                android:layout_alignBottom="@+id/fragmentHere"
+                android:layout_alignEnd="@+id/fragmentHere"
+                android:layout_alignStart="@+id/fragmentHere"/>
 
         </RelativeLayout>
     </ScrollView>
