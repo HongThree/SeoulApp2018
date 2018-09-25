@@ -106,12 +106,9 @@ class Fragment2 : NMapFragment(), NMapView.OnMapStateChangeListener, NMapPOIdata
 
     val mLocationListener: LocationListener = object : LocationListener {
         override fun onLocationChanged(location: Location?) {
-            Log.d("accuracy",location!!.accuracy.toString())
-            Toast.makeText(activity,location.accuracy.toString(),Toast.LENGTH_SHORT).show()
-            if(location!!.accuracy <= 30) {
-                var lati: Double = java.lang.Double.parseDouble(String.format("%.6f", location?.longitude!!))
-                var loti: Double = java.lang.Double.parseDouble(String.format("%.6f", location.latitude))
-                Log.d("Listener",lati.toString()+" "+loti.toString())
+            Toast.makeText(activity,location!!.accuracy.toString(),Toast.LENGTH_SHORT).show()
+            var lati: Double = java.lang.Double.parseDouble(String.format("%.6f", location.longitude))
+            var loti: Double = java.lang.Double.parseDouble(String.format("%.6f", location.latitude))
                 var dsize = dlati.size
                 if (dsize == 0) {
                     dlati.add(lati)
@@ -120,19 +117,20 @@ class Fragment2 : NMapFragment(), NMapView.OnMapStateChangeListener, NMapPOIdata
                     dloti.add(loti)
                     drawline()
                 } else {
-                    var tlati = dlati[dsize - 1]
-                    var tloti = dloti[dsize - 1]
-                    if (!dlati.contains(lati) && !dloti.contains(loti)) {
-                        var dis = (tlati - lati) * (tlati - lati) + (tloti - loti) * (tloti - loti)
-                        Log.d("distance", dis.toString())
-                        if (dis <= 100 && dis > 0.0) {
-                            dlati.add(lati)
-                            dloti.add(loti)
-                            drawline()
+                    if(location.accuracy <= 30) {
+                        var tlati = dlati[dsize - 1]
+                        var tloti = dloti[dsize - 1]
+                        if (!dlati.contains(lati) && !dloti.contains(loti)) {
+                            var dis = (tlati - lati) * (tlati - lati) + (tloti - loti) * (tloti - loti)
+                            Log.d("distance", dis.toString())
+                            if (dis <= 100 && dis > 0.0) {
+                                dlati.add(lati)
+                                dloti.add(loti)
+                                drawline()
+                            }
                         }
                     }
                 }
-            }
         }
 
         override fun onStatusChanged(p0: String?, p1: Int, p2: Bundle?) {
