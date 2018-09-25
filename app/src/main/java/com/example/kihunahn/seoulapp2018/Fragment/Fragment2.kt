@@ -98,6 +98,7 @@ class Fragment2 : NMapFragment(), NMapView.OnMapStateChangeListener, NMapPOIdata
         mapView?.setOnMapStateChangeListener(this)
         mapController = mapView?.mapController
         mapController!!.reload()
+        mapController!!.zoomLevel = 50
         mapViewerResourceProvider = NMapViewerResourceProvider(activity)
         mapOverlayManager = NMapOverlayManager(activity!!, mapView, mapViewerResourceProvider)
         mLocationManager = activity!!.getSystemService(Context.LOCATION_SERVICE) as LocationManager
@@ -106,8 +107,7 @@ class Fragment2 : NMapFragment(), NMapView.OnMapStateChangeListener, NMapPOIdata
 
     val mLocationListener: LocationListener = object : LocationListener {
         override fun onLocationChanged(location: Location?) {
-            Toast.makeText(activity,location!!.accuracy.toString(),Toast.LENGTH_SHORT).show()
-            var lati: Double = java.lang.Double.parseDouble(String.format("%.6f", location.longitude))
+            var lati: Double = java.lang.Double.parseDouble(String.format("%.6f", location!!.longitude))
             var loti: Double = java.lang.Double.parseDouble(String.format("%.6f", location.latitude))
                 var dsize = dlati.size
                 if (dsize == 0) {
@@ -117,6 +117,7 @@ class Fragment2 : NMapFragment(), NMapView.OnMapStateChangeListener, NMapPOIdata
                     dloti.add(loti)
                     drawline()
                 } else {
+                    Toast.makeText(activity,location!!.accuracy.toString(),Toast.LENGTH_SHORT).show()
                     if(location.accuracy <= 30) {
                         var tlati = dlati[dsize - 1]
                         var tloti = dloti[dsize - 1]
@@ -179,7 +180,6 @@ class Fragment2 : NMapFragment(), NMapView.OnMapStateChangeListener, NMapPOIdata
         if (dlati.size > 0) {
             val len = dlati.size - 1
             val currentPoint = NGeoPoint(dlati[len], dloti[len])
-            val pathData = NMapPathData(len)
             mapController!!.mapCenter = currentPoint
             mapController!!.setZoomEnabled(true)
             mapController!!.zoomLevel = 50
@@ -195,7 +195,7 @@ class Fragment2 : NMapFragment(), NMapView.OnMapStateChangeListener, NMapPOIdata
             val pathData = NMapPathData(len)
             mapController!!.mapCenter = currentPoint
             mapController!!.setZoomEnabled(true)
-            mapController!!.zoomLevel = 50
+
             pathData.initPathData()
             for (i in 0..len) {
                 Log.d("QWE", dlati[i].toString() + " " + dloti[i].toString())
