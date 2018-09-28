@@ -8,11 +8,7 @@ import android.support.v4.view.ViewPager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ScrollView
-import android.widget.Toast
-import com.example.kihunahn.seoulapp2018.PlaceData
 import com.example.kihunahn.seoulapp2018.R
-import com.google.firebase.auth.FirebaseAuth
 import com.rd.PageIndicatorView
 import kotlinx.android.synthetic.main.fragment_content.*
 import kotlinx.android.synthetic.main.fragment_content.view.*
@@ -23,9 +19,12 @@ class Content2 : Fragment() {
     var image: ArrayList<String>? = null
     var imageviewpager: ViewPager? = null
     var pageindicator: PageIndicatorView? = null
-    var lati: DoubleArray = doubleArrayOf(127.127948, 127.127814, 127.127696, 127.127462, 127.127266, 127.127190, 127.128467, 127.129556)
-    var loti: DoubleArray = doubleArrayOf(37.439937, 37.440627, 37.441257, 37.442470, 37.443503, 37.444041, 37.444412, 37.444740)
-
+    var tlati:ArrayList<Double>? = null
+    var tloti:ArrayList<Double>? = null
+    var lati: DoubleArray? = null
+    var loti: DoubleArray? = null
+    var stamp:ArrayList<Boolean>?=null
+    var stlst:BooleanArray?=null
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         val view = inflater.inflate(R.layout.fragment_content, container, false)
@@ -33,6 +32,13 @@ class Content2 : Fragment() {
 //        image = MainFragment.posts[position].images
 
         image = arguments!!["PictureList"] as ArrayList<String>?
+        tlati = arguments!!["latitude"] as ArrayList<Double>?
+        tloti = arguments!!["longitude"] as ArrayList<Double>?
+        stamp = arguments!!["stampList"] as ArrayList<Boolean>?
+        lati = tlati!!.toDoubleArray()
+        loti = tloti!!.toDoubleArray()
+        stlst = stamp!!.toBooleanArray()
+
         if(image != null) {
             view.pager.visibility = View.VISIBLE
             view.feed.visibility = View.VISIBLE
@@ -63,6 +69,7 @@ class Content2 : Fragment() {
         var args = Bundle()
         args.putDoubleArray("lati", lati)
         args.putDoubleArray("loti", loti)
+        args.putBooleanArray("stamp",stlst)
         fragment.arguments = args
         val fragmentManager = fragmentManager
         val fragmentTransaction = fragmentManager!!.beginTransaction()
