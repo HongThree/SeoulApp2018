@@ -46,6 +46,7 @@ class MakeCourseFragment : Fragment(){
     val cur_user = getUserId()
     var dlati: ArrayList<Double>? = null
     var dloti: ArrayList<Double>? = null
+    var size = 0
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         val view = inflater?.inflate(R.layout.fragment_makecourse, container, false)
@@ -71,7 +72,7 @@ class MakeCourseFragment : Fragment(){
 
         btn_exit.bringToFront()
         btn_exit.setMagicButtonClickListener(View.OnClickListener {
-            var size = mapfragment!!.dlati.size-1
+            size = mapfragment!!.dlati.size-1
             dlati= mapfragment!!.dlati
             dloti = mapfragment!!.dloti
             for (i in size downTo 0){
