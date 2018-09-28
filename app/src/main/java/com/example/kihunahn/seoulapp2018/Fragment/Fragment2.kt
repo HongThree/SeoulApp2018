@@ -43,7 +43,18 @@ class Fragment2 : NMapFragment(), NMapView.OnMapStateChangeListener, NMapPOIdata
     var dloti: ArrayList<Double> = ArrayList()
 
     var mLocationManager: LocationManager? = null
-    var criteria:Criteria?=null
+    var criteria: Criteria? = null
+    var lati: DoubleArray = doubleArrayOf(127.047186, 127.083653, 127.084997, 127.084997, 127.103100, 127.099870,
+            127.109010, 127.156912, 127.140455, 127.106862, 127.102289, 127.036451, 126.986817,
+            126.976589, 126.946757, 126.906542, 126.902020, 126.871578, 126.864751,
+            126.856430, 126.902661, 126.914705,
+            126.936930, 127.009747, 127.016440, 127.036345, 126.936930, 126.939591)
+    var loti: DoubleArray = doubleArrayOf(37.689364, 37.668395, 37.620475, 37.620475, 37.578790, 37.553143,
+            37.545968, 37.555261, 37.512326, 37.488193, 37.486594, 37.469930, 37.473450,
+            37.467788, 37.467546, 37.433892, 37.434226, 37.496575, 37.561721,
+            37.563844, 37.585151, 37.635650,
+            37.627872, 37.622897, 37.661569, 37.686044, 37.627872, 37.612704)
+
     override fun onMapCenterChangeFine(p0: NMapView?) {
     }
 
@@ -102,12 +113,13 @@ class Fragment2 : NMapFragment(), NMapView.OnMapStateChangeListener, NMapPOIdata
         mapViewerResourceProvider = NMapViewerResourceProvider(activity)
         mapOverlayManager = NMapOverlayManager(activity!!, mapView, mapViewerResourceProvider)
         mLocationManager = activity!!.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+
         criteria = Criteria()
-        criteria!!.accuracy=Criteria.ACCURACY_COARSE
+        criteria!!.accuracy = Criteria.ACCURACY_COARSE
         criteria!!.powerRequirement = Criteria.POWER_LOW
-        criteria!!.isAltitudeRequired=false
-        criteria!!.isBearingRequired=false
-        criteria!!.isSpeedRequired=false
+        criteria!!.isAltitudeRequired = false
+        criteria!!.isBearingRequired = false
+        criteria!!.isSpeedRequired = false
         criteria!!.isCostAllowed = true
         moveMapCenter()
     }
@@ -118,42 +130,17 @@ class Fragment2 : NMapFragment(), NMapView.OnMapStateChangeListener, NMapPOIdata
                 sLocation = location
                 var lati: Double = java.lang.Double.parseDouble(String.format("%.6f", location.longitude))
                 var loti: Double = java.lang.Double.parseDouble(String.format("%.6f", location.latitude))
-                if(dlati.size == 0) {
+                if (dlati.size == 0) {
                     dlati.add(lati)
                     dloti.add(loti)
                     dlati.add(lati)
                     dloti.add(loti)
-                }
-                else{
+                } else {
                     dlati.add(lati)
                     dloti.add(loti)
                 }
                 drawline()
             }
-//            var lati: Double = java.lang.Double.parseDouble(String.format("%.6f", location.longitude))
-//            var loti: Double = java.lang.Double.parseDouble(String.format("%.6f", location.latitude))
-//                var dsize = dlati.size
-//                if (dsize == 0) {
-//                    dlati.add(lati)
-//                    dloti.add(loti)
-//                    dlati.add(lati)
-//                    dloti.add(loti)
-//                    drawline()
-//                } else {
-//                    if(location.accuracy <= 30) {
-//                        var tlati = dlati[dsize - 1]
-//                        var tloti = dloti[dsize - 1]
-//                        if (!dlati.contains(lati) && !dloti.contains(loti)) {
-//                            var dis = (tlati - lati) * (tlati - lati) + (tloti - loti) * (tloti - loti)
-//                            Log.d("distance", dis.toString())
-//                            if (dis <= 100 && dis > 0.0) {
-//                                dlati.add(lati)
-//                                dloti.add(loti)
-//                                drawline()
-//                            }
-//                        }
-//                    }
-//                }
         }
 
         override fun onStatusChanged(p0: String?, p1: Int, p2: Bundle?) {
@@ -179,8 +166,8 @@ class Fragment2 : NMapFragment(), NMapView.OnMapStateChangeListener, NMapPOIdata
         // Check whether the new location fix is newer or older
         val timeDelta: Long = location.time - currentBestLocation.time
         val isSignificantlyNewer: Boolean = timeDelta > TWO_MINUTES
-        val isSignificantlyOlder:Boolean = timeDelta < -TWO_MINUTES
-        Log.d("QWEQWE",isSignificantlyNewer.toString()+" "+isSignificantlyOlder.toString())
+        val isSignificantlyOlder: Boolean = timeDelta < -TWO_MINUTES
+
         when {
             isSignificantlyNewer -> return true
             isSignificantlyOlder -> return false
@@ -205,13 +192,13 @@ class Fragment2 : NMapFragment(), NMapView.OnMapStateChangeListener, NMapPOIdata
     @SuppressLint("MissingPermission")
     private fun moveMapCenter() {
         Log.e("move", "move")
-        val provider =mLocationManager!!.getBestProvider(criteria, true)
+        val provider = mLocationManager!!.getBestProvider(criteria, true)
         mLocationManager!!.requestLocationUpdates(provider, 0, 0.0f, mLocationListener)
 //        mLocationManager!!.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0.0f, mLocationListener)
 //        mLocationManager!!.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0.0f, mLocationListener)
     }
 
-    fun move(){
+    fun move() {
         if (dlati.size > 0) {
             val len = dlati.size - 1
             val currentPoint = NGeoPoint(dlati[len], dloti[len])
@@ -222,18 +209,24 @@ class Fragment2 : NMapFragment(), NMapView.OnMapStateChangeListener, NMapPOIdata
     }
 
     private fun drawline() {
-        Log.d("QWE", "draw"+dlati.size.toString())
+        Log.d("QWE", "draw" + dlati.size.toString())
         if (dlati.size > 0) {
             Log.d("size", dlati.size.toString())
             val len = dlati.size - 1
             val currentPoint = NGeoPoint(dlati[len], dloti[len])
+
+            for(i in 0..27){
+                val diffLatitude = LatitudeInDifference(500)
+                val diffLongitude = LongitudeInDifference(dloti[len], 500)
+
+            }
+
             val pathData = NMapPathData(len)
             mapController!!.mapCenter = currentPoint
             mapController!!.setZoomEnabled(true)
 
             pathData.initPathData()
             for (i in 0..len) {
-                Log.d("QWE", dlati[i].toString() + " " + dloti[i].toString())
                 if (i == 0)
                     pathData.addPathPoint(dlati[i], dloti[i], NMapPathLineStyle.TYPE_SOLID)
                 else
@@ -244,6 +237,16 @@ class Fragment2 : NMapFragment(), NMapView.OnMapStateChangeListener, NMapPOIdata
             val pathDataOverlay = mapOverlayManager!!.createPathDataOverlay(pathData)
             pathDataOverlay.setLineColor(Color.RED, 1000)
         }
+    }
+
+    fun LatitudeInDifference(diff:Int):Double{
+        var earth = 6371000
+        return (diff*360.0) / (2*Math.PI*earth)
+    }
+
+    fun LongitudeInDifference(lon:Double, diff:Int):Double{
+        var earth = 6371000
+        return (diff*360.0) / (2*Math.PI*earth*Math.cos(Math.toRadians(lon)))
     }
 
     override fun onPause() {

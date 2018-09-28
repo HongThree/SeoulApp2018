@@ -235,7 +235,7 @@ class MyCourseFragment : Fragment() {
             Log.e("ww","doInBackground1")
             try {
                 //var cur_user = getUserId()
-                var cur_user = "kihunahn0721"
+                var cur_user = getUserId()
                 try {
                     Log.e("ww","doInBackground2")
                     PlaceData.placeNameArray = ArrayList<String>()
@@ -251,7 +251,7 @@ class MyCourseFragment : Fragment() {
                             var p2 = it.id
                             var p3 = it.data.getValue("lat") as ArrayList<Double>?
                             var p4 = it.data.getValue("lng") as ArrayList<Double>?
-                            var p5 = it.data.getValue("PictureList") as ArrayList<String>?
+                            var p5 = it.data.getValue("pictureList") as ArrayList<String>?
 
                             PlaceData.placeNameArray.add(p2)
                             courseList!!.add(CourseDTO(p1, p2, p3, p4, p5))
@@ -269,9 +269,8 @@ class MyCourseFragment : Fragment() {
                                 val exifInterface = ExifInterface("//storage/emulated/0/Android/data/com.example.kihunahn.seoulapp2018/files/Pictures/img1.jpg")
 
                                 adapter.notifyDataSetChanged()
-
-
                             }
+
                             */
 
                             //[lat,lon]

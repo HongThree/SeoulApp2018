@@ -34,7 +34,7 @@ class TravelListAdapter(private var context: Context) : RecyclerView.Adapter<Tra
         //Picasso.get().load(place.getImageResourceId(context)).into(holder.itemView.placeImage)
         //Picasso.get().load("file:///storage/emulated/0/Android/data/com.example.kihunahn.seoulapp2018/files/Pictures/img3.jpg").into(holder.itemView.placeImage)
         //Log.d("img", place.uris!!.size.toString())
-        if(place.uris != null) {
+        if(place.uris!!.size != 0) {
             var fileName = place.uris!!.get(Random().nextInt(place.uris!!.size))
             Picasso.get().load(fileName).into(holder.itemView.placeImage)
         }

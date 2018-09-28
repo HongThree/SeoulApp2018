@@ -6,6 +6,7 @@ package com.example.kihunahn.seoulapp2018.Fragment
 //import io.realm.RealmConfiguration
 //import io.realm.RealmObject
 //import io.realm.RealmResults
+import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Bitmap
@@ -20,7 +21,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import com.example.kihunahn.seoulapp2018.PictureDTO
+import com.example.kihunahn.seoulapp2018.CourseDTO
 import com.example.kihunahn.seoulapp2018.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -35,17 +36,16 @@ import java.util.*
 
 class MakeCourseFragment : Fragment(){
 
-    var latitude = ArrayList<Double>()
-    var longitude = ArrayList<Double>()
-
-    var PictureList = PictureDTO(String(), ArrayList())
-
+    var PictureList = ArrayList<String>()
+    var StampList = ArrayList<Boolean>()
     var courseName = String()
-    val cur_user = getUserId()
     var nameList = LinkedList<String>()
     var currentPath: String? = null
     val TAKE_PICTURE = 3
     var mapfragment:Fragment2?=null
+    val cur_user = getUserId()
+    var dlati: ArrayList<Double>? = null
+    var dloti: ArrayList<Double>? = null
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         val view = inflater?.inflate(R.layout.fragment_makecourse, container, false)
@@ -72,8 +72,8 @@ class MakeCourseFragment : Fragment(){
         btn_exit.bringToFront()
         btn_exit.setMagicButtonClickListener(View.OnClickListener {
             var size = mapfragment!!.dlati.size-1
-            var dlati:ArrayList<Double> = mapfragment!!.dlati
-            var dloti:ArrayList<Double> = mapfragment!!.dloti
+            dlati= mapfragment!!.dlati
+            dloti = mapfragment!!.dloti
             for (i in size downTo 0){
                 //PositionList.lat?.add(dlati[i])
                 //PositionList.lon?.add(dloti[i])
@@ -100,7 +100,6 @@ class MakeCourseFragment : Fragment(){
         }
         cur_location.bringToFront()
         cur_location.setOnClickListener {
-            Toast.makeText(activity,mapfragment!!.dloti.toString(),Toast.LENGTH_SHORT).show()
             mapfragment!!.move()
         }
     }
@@ -124,22 +123,19 @@ class MakeCourseFragment : Fragment(){
 //                }
     }
 
-    /*
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if(requestCode == TAKE_PICTURE && resultCode == Activity.RESULT_OK){
             var file = File(currentPath)
-            val uri = Uri.fromFile(file)
-            var bitmap = MediaStore.Images.Media.getBitmap(activity!!.contentResolver, uri)
-
             //uploadImage(bitmap)
-            PictureList.uri?.add(uri.toString())
-            Toast.makeText(activity, PictureList.uri.toString(), Toast.LENGTH_LONG).show()
+            PictureList.add(file.toURI().toString())
+            Toast.makeText(activity, "Size: " + PictureList.size.toString(), Toast.LENGTH_LONG).show()
             //Toast.makeText(activity, "사진 위치 저~장~", Toast.LENGTH_LONG).show()
 //            imageView.setImageURI(uri)
         }
     }
-    */
+
 
     fun dispatchCameraIntent() {
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
@@ -165,38 +161,27 @@ class MakeCourseFragment : Fragment(){
         var storageDir = activity!!.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
         var image = File.createTempFile(imageName, ".jpg", storageDir)
         currentPath = image.absolutePath
+        //Toast.makeText(activity, PictureList.size.toString(), Toast.LENGTH_SHORT).show()
+
+        //saveCourse("")
         return image
     }
 
     fun saveCourse(courseName : String) {
         /*
-         Realm.init(activity)
-         var mRealm = Realm.getDefaultInstance()
-         mRealm.beginTransaction()
-         var mCourse = mRealm.createObject(Course::class.java)
-         mCourse.course_name = courseName
-         mCourse.lats = lat_list
-         mCourse.lons = lon_list
-
-         mRealm.commitTransaction()
-
-         var courses = mRealm.where(Course::class.java)
-         Toast.makeText(activity, courses.count().toString(), Toast.LENGTH_LONG).show()
-         */
-        //Toast.makeText(activity, isValid(courseName).toString(), Toast.LENGTH_SHORT).show()
-        /*
-        FirebaseFirestore.getInstance().collection(cur_user.toString()).document(courseName).set(PositionList).addOnSuccessListener {
-            //Toast.makeText(activity, "여행이 저장되었습니다(위치).", Toast.LENGTH_LONG).show()
-        }.addOnFailureListener { exception ->
-            //Toast.makeText(activity, exception.toString(), Toast.LENGTH_LONG).show()
-        }
-
-        FirebaseFirestore.getInstance().collection(cur_user.toString()).document(courseName+"_pic").set(PictureList).addOnSuccessListener {
-            //Toast.makeText(activity, "여행이 저장되었습니다(사진).", Toast.LENGTH_LONG).show()
-        }.addOnFailureListener { exception ->
-            //Toast.makeText(activity, exception.toString(), Toast.LENGTH_LONG).show()
-        }
+        data class CourseDTO(var userId : String? = null,
+                             var CourseName : String? = null,
+                             var lat : ArrayList<Double>? = null,
+                             var lng : ArrayList<Double>? = null,
+                             var PictureList : ArrayList<String>? = null,
+                             var stampList : BooleanArray? = BooleanArray(28) )
         */
+        var myCourse = CourseDTO(cur_user, courseName, dlati, dloti, PictureList, StampList)
+        FirebaseFirestore.getInstance().collection(cur_user).document(courseName).set(myCourse).addOnSuccessListener {
+
+        }.addOnFailureListener { exception ->
+
+        }
     }
     inner class BannerPagerAdapter(var fm: FragmentManager, var imagesList: IntArray, var Position:Int) : FragmentPagerAdapter(fm) {
 
