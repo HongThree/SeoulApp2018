@@ -39,6 +39,9 @@ class Server(val context: Activity?) {
         var course_la8: ArrayList<Double> = ArrayList()
 
         var cnt = 1
+        var stamplst : BooleanArray = booleanArrayOf(false,false,false,false,false,false,false,false,false,false,
+                false,false,false,false,false,false,false,false,false,false,
+                false,false,false,false,false,false,false,false)
     }
 
     fun setting() {

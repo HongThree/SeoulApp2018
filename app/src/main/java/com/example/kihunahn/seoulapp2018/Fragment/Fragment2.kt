@@ -13,14 +13,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.kihunahn.seoulapp2018.NMap.NMapFragment
+import com.example.kihunahn.seoulapp2018.NMap.NMapPOIflagType
 import com.example.kihunahn.seoulapp2018.NMap.NMapViewerResourceProvider
 import com.example.kihunahn.seoulapp2018.R
+import com.example.kihunahn.seoulapp2018.Server.Companion.stamplst
 import com.nhn.android.maps.NMapCompassManager
 import com.nhn.android.maps.NMapController
 import com.nhn.android.maps.NMapLocationManager
 import com.nhn.android.maps.NMapView
 import com.nhn.android.maps.maplib.NGeoPoint
 import com.nhn.android.maps.nmapmodel.NMapError
+import com.nhn.android.maps.overlay.NMapPOIdata
 import com.nhn.android.maps.overlay.NMapPOIitem
 import com.nhn.android.maps.overlay.NMapPathData
 import com.nhn.android.maps.overlay.NMapPathLineStyle
@@ -48,13 +51,14 @@ class Fragment2 : NMapFragment(), NMapView.OnMapStateChangeListener, NMapPOIdata
             127.109010, 127.156912, 127.140455, 127.106862, 127.102289, 127.036451, 126.986817,
             126.976589, 126.946757, 126.906542, 126.902020, 126.871578, 126.864751,
             126.856430, 126.902661, 126.914705,
-            126.936930, 127.009747, 127.016440, 127.036345, 126.936930, 126.939591)
+            126.936930, 127.009747, 127.016440, 127.036345, 126.936930, 126.939591,127.12747)
     var loti: DoubleArray = doubleArrayOf(37.689364, 37.668395, 37.620475, 37.620475, 37.578790, 37.553143,
             37.545968, 37.555261, 37.512326, 37.488193, 37.486594, 37.469930, 37.473450,
             37.467788, 37.467546, 37.433892, 37.434226, 37.496575, 37.561721,
             37.563844, 37.585151, 37.635650,
-            37.627872, 37.622897, 37.661569, 37.686044, 37.627872, 37.612704)
+            37.627872, 37.622897, 37.661569, 37.686044, 37.627872, 37.612704,37.45079)
 
+    var stampFragment: StampFragment? = null
     override fun onMapCenterChangeFine(p0: NMapView?) {
     }
 
@@ -95,6 +99,7 @@ class Fragment2 : NMapFragment(), NMapView.OnMapStateChangeListener, NMapPOIdata
         mapView!!.isFocusable = true
         mapView!!.isFocusableInTouchMode = true
         mapView!!.requestFocus()
+//        stampFragment = StampFragment()
         return v
     }
 
@@ -214,11 +219,27 @@ class Fragment2 : NMapFragment(), NMapView.OnMapStateChangeListener, NMapPOIdata
             Log.d("size", dlati.size.toString())
             val len = dlati.size - 1
             val currentPoint = NGeoPoint(dlati[len], dloti[len])
+            Log.d("QWEQWE",dlati[len].toString()+" "+dloti[len].toString())
 
-            for(i in 0..27){
-                val diffLatitude = LatitudeInDifference(500)
-                val diffLongitude = LongitudeInDifference(dloti[len], 500)
+            for (i in 0..28) {
+                val diffLatitude = LatitudeInDifference(200)
+                val diffLongitude = LongitudeInDifference(dloti[len], 200)
+                if (dlati[len] - diffLongitude <= lati[i] && lati[i] <= dlati[len] + diffLongitude) {
+                    if (dloti[len] - diffLatitude <= loti[i] && loti[i] <= dloti[len] + diffLatitude){
+                        val poiData = NMapPOIdata(2, mapViewerResourceProvider)
+                        poiData.addPOIitem(lati[i], loti[i], "", NMapPOIflagType.FROM, 0)
+                        poiData.endPOIdata()
+                        val poiDataOverlay = mapOverlayManager!!.createPOIdataOverlay(poiData, null)
+                        poiDataOverlay.showAllPOIdata(0)
+                        poiDataOverlay.onStateChangeListener = this
 
+                        if(!stamplst[0]){
+                            stamplst[0] = true
+                        }
+                        break
+                    }
+
+                }
             }
 
             val pathData = NMapPathData(len)
@@ -239,14 +260,14 @@ class Fragment2 : NMapFragment(), NMapView.OnMapStateChangeListener, NMapPOIdata
         }
     }
 
-    fun LatitudeInDifference(diff:Int):Double{
+    fun LatitudeInDifference(diff: Int): Double {
         var earth = 6371000
-        return (diff*360.0) / (2*Math.PI*earth)
+        return (diff * 360.0) / (2 * Math.PI * earth)
     }
 
-    fun LongitudeInDifference(lon:Double, diff:Int):Double{
+    fun LongitudeInDifference(lon: Double, diff: Int): Double {
         var earth = 6371000
-        return (diff*360.0) / (2*Math.PI*earth*Math.cos(Math.toRadians(lon)))
+        return (diff * 360.0) / (2 * Math.PI * earth * Math.cos(Math.toRadians(lon)))
     }
 
     override fun onPause() {
