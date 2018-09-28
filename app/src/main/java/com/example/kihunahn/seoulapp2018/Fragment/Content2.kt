@@ -8,14 +8,19 @@ import android.support.v4.view.ViewPager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ScrollView
 import android.widget.Toast
+import com.example.kihunahn.seoulapp2018.PlaceData
 import com.example.kihunahn.seoulapp2018.R
+import com.google.firebase.auth.FirebaseAuth
 import com.rd.PageIndicatorView
+import kotlinx.android.synthetic.main.fragment_content.*
+import kotlinx.android.synthetic.main.fragment_content.view.*
 
 class Content2 : Fragment() {
 
     var position: Int = 0
-    var image: IntArray? = null
+    var image: ArrayList<String>? = null
     var imageviewpager: ViewPager? = null
     var pageindicator: PageIndicatorView? = null
     var lati: DoubleArray = doubleArrayOf(127.127948, 127.127814, 127.127696, 127.127462, 127.127266, 127.127190, 127.128467, 127.129556)
@@ -23,29 +28,36 @@ class Content2 : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        //Toast.makeText(activity, PlaceData.placeNameArray.get(arguments!!["position"].toString().toInt()), Toast.LENGTH_SHORT).show()
         val view = inflater.inflate(R.layout.fragment_content, container, false)
-        position = arguments!!.getInt("adapter_pos")
-        image = MainFragment.posts[position].images
+//        position = arguments!!.getInt("adapter_pos")
+//        image = MainFragment.posts[position].images
 
-        var myCourse = arguments!!.get("course")
-        Toast.makeText(activity, myCourse.toString(), Toast.LENGTH_SHORT).show()
+        image = arguments!!["PictureList"] as ArrayList<String>?
+        if(image != null) {
+            view.pager.visibility = View.VISIBLE
+            view.feed.visibility = View.VISIBLE
+            //pager?.visibility = View.VISIBLE
+            //feed?.visibility = View.VISIBLE
+            val bannerPagerAdapter = BannerPagerAdapter(childFragmentManager, image!!)
+            imageviewpager = view.findViewById(R.id.pager) as ViewPager
+            pageindicator = view.findViewById(R.id.feed) as PageIndicatorView
+            imageviewpager!!.adapter = bannerPagerAdapter
+            imageviewpager!!.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+                override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+                }
 
-        val bannerPagerAdapter = BannerPagerAdapter(childFragmentManager, image!!)
-        imageviewpager = view.findViewById(R.id.pager) as ViewPager
-        pageindicator = view.findViewById(R.id.feed) as PageIndicatorView
-        imageviewpager!!.adapter = bannerPagerAdapter
-        imageviewpager!!.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
-            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-            }
+                override fun onPageSelected(position: Int) {
+                    pageindicator!!.selection = position
+                }
 
-            override fun onPageSelected(position: Int) {
-                pageindicator!!.selection = position
-            }
-
-            override fun onPageScrollStateChanged(state: Int) {
-            }
-        })
+                override fun onPageScrollStateChanged(state: Int) {
+                }
+            })
+        }
+        else {
+            pager?.visibility = View.GONE
+            feed?.visibility = View.GONE
+        }
 
         var fragment = Fragment3()
         var args = Bundle()
@@ -64,12 +76,12 @@ class Content2 : Fragment() {
 
     }
 
-    inner class BannerPagerAdapter(var fm: FragmentManager, var imagesList: IntArray) : FragmentPagerAdapter(fm) {
+    inner class BannerPagerAdapter(var fm: FragmentManager, var imagesList: ArrayList<String>) : FragmentPagerAdapter(fm) {
 
         override fun getItem(position: Int): Fragment {
-            return ContentFragment.getInstance(imagesList[position])
+            //return ContentFragment.getInstance(imagesList[position])
+            return ContentFragment2.getInstance(image!!.get(position))
         }
-
         override fun getCount(): Int {
             return imagesList.size
         }

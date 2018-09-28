@@ -29,7 +29,6 @@ import java.net.URL
 
 
 class CourseFragment : Fragment(){
-    var mainFragment: Fragment? = null
     var scroll: ScrollView? = null
     var transparent: ImageView? = null
     var arrayList: ArrayList<String> = ArrayList()
