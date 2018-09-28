@@ -38,12 +38,15 @@ class MyCourseFragment : Fragment() {
 
     private val onItemClickListener = object : TravelListAdapter.OnItemClickListener {
         override fun onItemClick(view: View, position: Int) {
-            Toast.makeText(activity, "Clicked " + position, Toast.LENGTH_SHORT).show()
+            //Toast.makeText(activity, "Clicked " + position, Toast.LENGTH_SHORT).show()
 
             val nextFragment = Content2()
             val bundle = Bundle()
 
-            bundle.putSerializable("course", courseList!!.get(position))
+            bundle.putSerializable("PictureList", courseList!!.get(position).PictureList)
+            bundle.putSerializable("latitude", courseList!!.get(position).lat)
+            bundle.putSerializable("longitude", courseList!!.get(position).lng)
+
             nextFragment.arguments = bundle
             val placeImage = view.findViewById<ImageView>(R.id.placeImage)
             val placeNameHolder = view.findViewById<LinearLayout>(R.id.placeNameHolder)
@@ -231,11 +234,12 @@ class MyCourseFragment : Fragment() {
         override fun doInBackground(vararg urls: String?): String {
             Log.e("ww","doInBackground1")
             try {
-                var cur_user = getUserId()
-//                var cur_user = "hanwjdgh"
+                //var cur_user = getUserId()
+                var cur_user = "kihunahn0721"
                 try {
                     Log.e("ww","doInBackground2")
-
+                    PlaceData.placeNameArray = ArrayList<String>()
+                    PlaceData.placeArray = ArrayList<PictureDTO>()
                     FirebaseFirestore.getInstance().collection(cur_user).get().addOnSuccessListener { querySnapshot ->
                         // 이 유저에게 저장 된 여행의 개수 출력 됨!!
                         //Toast.makeText(activity, querySnapshot.documents.size.toString(), Toast.LENGTH_LONG).show()
@@ -245,21 +249,30 @@ class MyCourseFragment : Fragment() {
 
                             var p1 = it.data.getValue("userId").toString()
                             var p2 = it.id
-
-                            var p3 = it.data.getValue("lat") as ArrayList<Double>
-                            var p4 = it.data.getValue("lng") as ArrayList<Double>
+                            var p3 = it.data.getValue("lat") as ArrayList<Double>?
+                            var p4 = it.data.getValue("lng") as ArrayList<Double>?
                             var p5 = it.data.getValue("PictureList") as ArrayList<String>?
 
+                            PlaceData.placeNameArray.add(p2)
+                            courseList!!.add(CourseDTO(p1, p2, p3, p4, p5))
+                            //n개의 사진 --> 0 .. n-1
+                            PlaceData.placeArray.add(PictureDTO(p2, p5))
+                            //val exifInterface = ExifInterface("//storage/emulated/0/Android/data/com.example.kihunahn.seoulapp2018/files/Pictures/img1.jpg")
+
+                            adapter.notifyDataSetChanged()
+                            /*
                             if (!PlaceData.placeNameArray.contains(p2)){
                                 PlaceData.placeNameArray.add(p2)
                                 courseList!!.add(CourseDTO(p1, p2, p3, p4, p5))
                                 //n개의 사진 --> 0 .. n-1
                                 PlaceData.placeArray.add(PictureDTO(p2, p5))
-//                                val exifInterface = ExifInterface("//storage/emulated/0/Android/data/com.example.kihunahn.seoulapp2018/files/Pictures/img1.jpg")
+                                val exifInterface = ExifInterface("//storage/emulated/0/Android/data/com.example.kihunahn.seoulapp2018/files/Pictures/img1.jpg")
 
                                 adapter.notifyDataSetChanged()
-                            }
 
+
+                            }
+                            */
 
                             //[lat,lon]
                             //Toast.makeText(activity, it.data.keys.toString(), Toast.LENGTH_LONG).show()

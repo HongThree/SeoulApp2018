@@ -2,6 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/scroll"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
@@ -12,6 +13,7 @@
 
         <android.support.v4.view.ViewPager
             android:id="@+id/pager"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:layout_marginTop="30dp">
@@ -19,6 +21,7 @@
 
         <com.rd.PageIndicatorView xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/feed"
+            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
@@ -34,7 +37,7 @@
         <LinearLayout
             android:id="@+id/Fragmenthere"
             android:layout_width="fill_parent"
-            android:layout_height="309dp"
+            android:layout_height="match_parent"
             android:orientation="vertical"
             android:layout_below="@id/feed"
             />

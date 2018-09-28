@@ -144,14 +144,9 @@ class HomeActivity : AppCompatActivity(), DuoMenuView.OnMenuClickListener {
     }
 
     override fun onFooterClicked() {
-        //       Toast.makeText(this, "onFooterClicked", Toast.LENGTH_SHORT).show()
-//        FirebaseAuth.getInstance().signOut()
-//        finish()
-
     }
 
     override fun onHeaderClicked() {
-//        Toast.makeText(this, "사용자 정보입니다", Toast.LENGTH_SHORT).show()
     }
 
     private fun goToFragment(fragment: Fragment, addToBackStack: Boolean) {
