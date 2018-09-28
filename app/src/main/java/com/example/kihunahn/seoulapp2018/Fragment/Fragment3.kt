@@ -5,6 +5,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.kihunahn.seoulapp2018.Fragment.Fragment2.Companion.location_lati
+import com.example.kihunahn.seoulapp2018.Fragment.Fragment2.Companion.location_loti
 import com.example.kihunahn.seoulapp2018.NMap.NMapFragment
 import com.example.kihunahn.seoulapp2018.NMap.NMapPOIflagType
 import com.example.kihunahn.seoulapp2018.NMap.NMapViewerResourceProvider
@@ -28,7 +30,7 @@ class Fragment3 : NMapFragment(), NMapView.OnMapStateChangeListener, NMapPOIdata
 
     var lati: DoubleArray? = null
     var loti:  DoubleArray? = null
-
+    var stamplist :BooleanArray?=null
     override fun onMapCenterChangeFine(p0: NMapView?) {
 
     }
@@ -77,6 +79,7 @@ class Fragment3 : NMapFragment(), NMapView.OnMapStateChangeListener, NMapPOIdata
         super.onCreate(savedInstanceState)
         lati = arguments!!.getDoubleArray("lati")
         loti = arguments!!.getDoubleArray("loti")
+        stamplist = arguments!!.getBooleanArray("stamp")
     }
 
     override fun onStart() {
@@ -94,9 +97,19 @@ class Fragment3 : NMapFragment(), NMapView.OnMapStateChangeListener, NMapPOIdata
             var len = lati!!.size - 1
             val currentPoint = NGeoPoint(lati!![len / 2], loti!![len / 2])
 
-            val poiData = NMapPOIdata(2, mapViewerResourceProvider)
+            var cnt = 0
+            for(i in 0..27){
+                if(stamplist!![i])
+                    cnt++
+            }
+
+            val poiData = NMapPOIdata(2+cnt, mapViewerResourceProvider)
             poiData.addPOIitem(lati!![0], loti!![0], "", NMapPOIflagType.FROM, 0)
             poiData.addPOIitem(lati!![len], loti!![len], "", NMapPOIflagType.TO, 0)
+            for(i in 0..27){
+                if(stamplist!![i])
+                    poiData.addPOIitem(location_lati[i], location_loti[i], "", NMapPOIflagType.PIN, 0)
+            }
             poiData.endPOIdata()
             val poiDataOverlay = mapOverlayManager!!.createPOIdataOverlay(poiData, null)
             poiDataOverlay.showAllPOIdata(0)

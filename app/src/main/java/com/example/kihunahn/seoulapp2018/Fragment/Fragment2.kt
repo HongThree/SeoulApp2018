@@ -17,9 +17,7 @@ import com.example.kihunahn.seoulapp2018.NMap.NMapPOIflagType
 import com.example.kihunahn.seoulapp2018.NMap.NMapViewerResourceProvider
 import com.example.kihunahn.seoulapp2018.R
 import com.example.kihunahn.seoulapp2018.Server.Companion.stamplst
-import com.nhn.android.maps.NMapCompassManager
 import com.nhn.android.maps.NMapController
-import com.nhn.android.maps.NMapLocationManager
 import com.nhn.android.maps.NMapView
 import com.nhn.android.maps.maplib.NGeoPoint
 import com.nhn.android.maps.nmapmodel.NMapError
@@ -27,7 +25,6 @@ import com.nhn.android.maps.overlay.NMapPOIdata
 import com.nhn.android.maps.overlay.NMapPOIitem
 import com.nhn.android.maps.overlay.NMapPathData
 import com.nhn.android.maps.overlay.NMapPathLineStyle
-import com.nhn.android.mapviewer.overlay.NMapMyLocationOverlay
 import com.nhn.android.mapviewer.overlay.NMapOverlayManager
 import com.nhn.android.mapviewer.overlay.NMapPOIdataOverlay
 
@@ -37,9 +34,6 @@ class Fragment2 : NMapFragment(), NMapView.OnMapStateChangeListener, NMapPOIdata
     var mapController: NMapController? = null
     var mapViewerResourceProvider: NMapViewerResourceProvider? = null
     var mapOverlayManager: NMapOverlayManager? = null
-    var mMapLocationManager: NMapLocationManager? = null
-    var mMyLocationOverlay: NMapMyLocationOverlay? = null
-    var mMapCompassManager: NMapCompassManager? = null
     var sLocation: Location? = null
 
     var dlati: ArrayList<Double> = ArrayList()
@@ -47,18 +41,10 @@ class Fragment2 : NMapFragment(), NMapView.OnMapStateChangeListener, NMapPOIdata
 
     var mLocationManager: LocationManager? = null
     var criteria: Criteria? = null
-    var lati: DoubleArray = doubleArrayOf(127.047186, 127.083653, 127.084997, 127.084997, 127.103100, 127.099870,
-            127.109010, 127.156912, 127.140455, 127.106862, 127.102289, 127.036451, 126.986817,
-            126.976589, 126.946757, 126.906542, 126.902020, 126.871578, 126.864751,
-            126.856430, 126.902661, 126.914705,
-            126.936930, 127.009747, 127.016440, 127.036345, 126.936930, 126.939591,127.12747)
-    var loti: DoubleArray = doubleArrayOf(37.689364, 37.668395, 37.620475, 37.620475, 37.578790, 37.553143,
-            37.545968, 37.555261, 37.512326, 37.488193, 37.486594, 37.469930, 37.473450,
-            37.467788, 37.467546, 37.433892, 37.434226, 37.496575, 37.561721,
-            37.563844, 37.585151, 37.635650,
-            37.627872, 37.622897, 37.661569, 37.686044, 37.627872, 37.612704,37.45079)
 
-    var stampFragment: StampFragment? = null
+    var s_lst : ArrayList<Boolean> = arrayListOf(false,false,false,false,false,false,false,false,false,false,
+            false,false,false,false,false,false,false,false,false,false,
+            false,false,false,false,false,false,false,false)
     override fun onMapCenterChangeFine(p0: NMapView?) {
     }
 
@@ -99,7 +85,6 @@ class Fragment2 : NMapFragment(), NMapView.OnMapStateChangeListener, NMapPOIdata
         mapView!!.isFocusable = true
         mapView!!.isFocusableInTouchMode = true
         mapView!!.requestFocus()
-//        stampFragment = StampFragment()
         return v
     }
 
@@ -199,8 +184,6 @@ class Fragment2 : NMapFragment(), NMapView.OnMapStateChangeListener, NMapPOIdata
         Log.e("move", "move")
         val provider = mLocationManager!!.getBestProvider(criteria, true)
         mLocationManager!!.requestLocationUpdates(provider, 0, 0.0f, mLocationListener)
-//        mLocationManager!!.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0.0f, mLocationListener)
-//        mLocationManager!!.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0.0f, mLocationListener)
     }
 
     fun move() {
@@ -214,27 +197,25 @@ class Fragment2 : NMapFragment(), NMapView.OnMapStateChangeListener, NMapPOIdata
     }
 
     private fun drawline() {
-        Log.d("QWE", "draw" + dlati.size.toString())
         if (dlati.size > 0) {
-            Log.d("size", dlati.size.toString())
             val len = dlati.size - 1
             val currentPoint = NGeoPoint(dlati[len], dloti[len])
-            Log.d("QWEQWE",dlati[len].toString()+" "+dloti[len].toString())
 
-            for (i in 0..28) {
+            for (i in 0..27) {
                 val diffLatitude = LatitudeInDifference(200)
                 val diffLongitude = LongitudeInDifference(dloti[len], 200)
-                if (dlati[len] - diffLongitude <= lati[i] && lati[i] <= dlati[len] + diffLongitude) {
-                    if (dloti[len] - diffLatitude <= loti[i] && loti[i] <= dloti[len] + diffLatitude){
+                if (dlati[len] - diffLongitude <= location_lati[i] && location_lati[i] <= dlati[len] + diffLongitude) {
+                    if (dloti[len] - diffLatitude <= location_loti[i] && location_loti[i] <= dloti[len] + diffLatitude){
                         val poiData = NMapPOIdata(2, mapViewerResourceProvider)
-                        poiData.addPOIitem(lati[i], loti[i], "", NMapPOIflagType.FROM, 0)
+                        poiData.addPOIitem(location_lati[i], location_loti[i], "", NMapPOIflagType.FROM, 0)
                         poiData.endPOIdata()
                         val poiDataOverlay = mapOverlayManager!!.createPOIdataOverlay(poiData, null)
                         poiDataOverlay.showAllPOIdata(0)
                         poiDataOverlay.onStateChangeListener = this
 
-                        if(!stamplst[0]){
-                            stamplst[0] = true
+                        if(!stamplst[i]){
+                            s_lst[i] = true
+                            stamplst[i] = true
                         }
                         break
                     }
@@ -295,5 +276,15 @@ class Fragment2 : NMapFragment(), NMapView.OnMapStateChangeListener, NMapPOIdata
 
     companion object {
         private const val CLIENT_ID = "XrPrMsRtFpXGFaq_Az1I"// 애플리케이션 클라이언트 아이디 값
+        var location_lati: DoubleArray = doubleArrayOf(127.047186, 127.083653, 127.084997, 127.084997, 127.103100, 127.099870,
+                127.109010, 127.156912, 127.140455, 127.106862, 127.102289, 127.036451, 126.986817,
+                126.976589, 126.946757, 126.906542, 126.902020, 126.871578, 126.864751,
+                126.856430, 126.902661, 126.914705,
+                126.936930, 127.009747, 127.016440, 127.036345, 126.936930, 126.939591, 127.12747)
+        var location_loti: DoubleArray = doubleArrayOf(37.689364, 37.668395, 37.620475, 37.620475, 37.578790, 37.553143,
+                37.545968, 37.555261, 37.512326, 37.488193, 37.486594, 37.469930, 37.473450,
+                37.467788, 37.467546, 37.433892, 37.434226, 37.496575, 37.561721,
+                37.563844, 37.585151, 37.635650,
+                37.627872, 37.622897, 37.661569, 37.686044, 37.627872, 37.612704, 37.45079)
     }
 }

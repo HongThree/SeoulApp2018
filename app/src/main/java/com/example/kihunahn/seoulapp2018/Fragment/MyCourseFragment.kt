@@ -46,7 +46,7 @@ class MyCourseFragment : Fragment() {
             bundle.putSerializable("PictureList", courseList!!.get(position).PictureList)
             bundle.putSerializable("latitude", courseList!!.get(position).lat)
             bundle.putSerializable("longitude", courseList!!.get(position).lng)
-
+            bundle.putSerializable("stampList", courseList!!.get(position).stampList)
             nextFragment.arguments = bundle
             val placeImage = view.findViewById<ImageView>(R.id.placeImage)
             val placeNameHolder = view.findViewById<LinearLayout>(R.id.placeNameHolder)
@@ -252,9 +252,9 @@ class MyCourseFragment : Fragment() {
                             var p3 = it.data.getValue("lat") as ArrayList<Double>?
                             var p4 = it.data.getValue("lng") as ArrayList<Double>?
                             var p5 = it.data.getValue("pictureList") as ArrayList<String>?
-
+                            var p6:ArrayList<Boolean>? = it.data.getValue("stampList") as ArrayList<Boolean>?
                             PlaceData.placeNameArray.add(p2)
-                            courseList!!.add(CourseDTO(p1, p2, p3, p4, p5))
+                            courseList!!.add(CourseDTO(p1, p2, p3, p4, p5, p6))
                             //n개의 사진 --> 0 .. n-1
                             PlaceData.placeArray.add(PictureDTO(p2, p5))
                             //val exifInterface = ExifInterface("//storage/emulated/0/Android/data/com.example.kihunahn.seoulapp2018/files/Pictures/img1.jpg")

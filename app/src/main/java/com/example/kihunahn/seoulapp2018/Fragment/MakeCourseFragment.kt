@@ -75,6 +75,7 @@ class MakeCourseFragment : Fragment(){
             size = mapfragment!!.dlati.size-1
             dlati= mapfragment!!.dlati
             dloti = mapfragment!!.dloti
+            StampList = mapfragment!!.s_lst
             for (i in size downTo 0){
                 //PositionList.lat?.add(dlati[i])
                 //PositionList.lon?.add(dloti[i])
