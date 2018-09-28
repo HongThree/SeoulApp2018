@@ -7,37 +7,43 @@
     android:orientation="vertical">
 
 
-    <Button
+    <br.com.bloder.magic.view.MagicButton
         android:id="@+id/btn_exit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginEnd="26dp"
-        android:layout_marginTop="183dp"
-        android:text="여행 끝내기"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="10dp"
+        app:magic_button_size="50dp"
+        app:button_icon="@drawable/savetrip"
+        app:button_icon_width="25dp"
+        app:button_icon_height="25dp"
+        app:hide_text="Save Trip"
+        app:icon_button_color="#ffffff"
+        app:expandable_area_color="#000700"/>
 
-    <Button
+    <ImageView
         android:id="@+id/btn_takePicture"
-        android:layout_width="112dp"
-        android:layout_height="100dp"
-        android:layout_alignEnd="@+id/btn_exit"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="27dp"
-        android:text="사진 찍기"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_width="65dp"
+        android:layout_height="58dp"
 
-    <Button
+        android:layout_above="@+id/cur_location"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="15dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:src="@drawable/camera" />
+
+    <ImageView
         android:id="@+id/cur_location"
-        android:layout_width="wrap_content"
-        android:layout_height="77dp"
-        android:layout_alignEnd="@+id/btn_exit"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="128dp"
-        android:text="현재위치"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="22dp"
+        android:layout_marginEnd="26dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:src="@drawable/location"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -45,6 +51,7 @@
         android:id="@+id/fragmentHere"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal"
-/>
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:orientation="horizontal" />
 </RelativeLayout>

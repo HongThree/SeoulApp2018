@@ -39,13 +39,23 @@ class CourseFragment : Fragment(){
     var num:Int=0
 
     @SuppressLint("ClickableViewAccessibility")
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        Getinformation().execute("https://mplatform.seoul.go.kr/api/dule/courseInfo.do?course=1")
-        num = 1
-
         val view = inflater?.inflate(R.layout.fragment_course, container, false)
+
+        Getinformation().execute("https://mplatform.seoul.go.kr/api/dule/courseInfo.do?course=1")
+
+        num = 1
         scroll = view.findViewById(R.id.snackbar_contaner) as ScrollView
+
+        scroll!!.post {
+            scroll!!.scrollTo(0, 0)
+
+            scroll!!.fullScroll(ScrollView.FOCUS_UP)
+            scroll!!.smoothScrollTo(0,0)
+        }
+
         transparent = view.findViewById(R.id.imagetrans) as ImageView
 
         transparent!!.setOnTouchListener(View.OnTouchListener { v, event ->
@@ -53,6 +63,7 @@ class CourseFragment : Fragment(){
             when (action) {
                 MotionEvent.ACTION_DOWN -> {
                     scroll!!.requestDisallowInterceptTouchEvent(true)
+
                     // Disable touch on transparent view
                     false
                 }
@@ -113,13 +124,14 @@ class CourseFragment : Fragment(){
         return view
     }
 
+
     inner class Getinformation : AsyncTask<String, String, String>() {
+
         var asyncDialog: ProgressDialog = ProgressDialog(activity)
         override fun onPreExecute() {
             // Before doInBackground
             asyncDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER)
             asyncDialog.setMessage("로딩중입니다..")
-
             // show dialog
             asyncDialog.show()
         }
@@ -177,6 +189,12 @@ class CourseFragment : Fragment(){
             fragmentTransaction.replace(R.id.fragmentHere, fragment2)
             fragmentTransaction.commit()
             asyncDialog.dismiss()
+            scroll!!.post {
+                scroll!!.scrollTo(0, 0)
+
+                scroll!!.fullScroll(ScrollView.FOCUS_UP)
+                scroll!!.smoothScrollTo(0,0)
+            }
         }
     }
 
@@ -213,5 +231,15 @@ class CourseFragment : Fragment(){
         } catch (ex: Exception) {
         }
         return result
+    }
+
+    override fun onResume() {
+        super.onResume()
+        scroll!!.post {
+            scroll!!.scrollTo(0, 0)
+
+            scroll!!.fullScroll(ScrollView.FOCUS_UP)
+            scroll!!.smoothScrollTo(0,0)
+        }
     }
 }
