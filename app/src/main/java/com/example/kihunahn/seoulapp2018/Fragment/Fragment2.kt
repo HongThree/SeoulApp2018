@@ -3,6 +3,7 @@ package com.example.kihunahn.seoulapp2018.Fragment
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
+import android.location.Criteria
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
@@ -11,7 +12,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import com.example.kihunahn.seoulapp2018.NMap.NMapFragment
 import com.example.kihunahn.seoulapp2018.NMap.NMapViewerResourceProvider
 import com.example.kihunahn.seoulapp2018.R
@@ -37,12 +37,13 @@ class Fragment2 : NMapFragment(), NMapView.OnMapStateChangeListener, NMapPOIdata
     var mMapLocationManager: NMapLocationManager? = null
     var mMyLocationOverlay: NMapMyLocationOverlay? = null
     var mMapCompassManager: NMapCompassManager? = null
+    var sLocation: Location? = null
 
     var dlati: ArrayList<Double> = ArrayList()
     var dloti: ArrayList<Double> = ArrayList()
 
     var mLocationManager: LocationManager? = null
-
+    var criteria:Criteria?=null
     override fun onMapCenterChangeFine(p0: NMapView?) {
     }
 
@@ -101,36 +102,58 @@ class Fragment2 : NMapFragment(), NMapView.OnMapStateChangeListener, NMapPOIdata
         mapViewerResourceProvider = NMapViewerResourceProvider(activity)
         mapOverlayManager = NMapOverlayManager(activity!!, mapView, mapViewerResourceProvider)
         mLocationManager = activity!!.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        criteria = Criteria()
+        criteria!!.accuracy=Criteria.ACCURACY_COARSE
+        criteria!!.powerRequirement = Criteria.POWER_LOW
+        criteria!!.isAltitudeRequired=false
+        criteria!!.isBearingRequired=false
+        criteria!!.isSpeedRequired=false
+        criteria!!.isCostAllowed = true
         moveMapCenter()
     }
 
     val mLocationListener: LocationListener = object : LocationListener {
         override fun onLocationChanged(location: Location?) {
-            var lati: Double = java.lang.Double.parseDouble(String.format("%.6f", location!!.longitude))
-            var loti: Double = java.lang.Double.parseDouble(String.format("%.6f", location.latitude))
-                var dsize = dlati.size
-                if (dsize == 0) {
+            if (isBetterLocation(location!!, sLocation)) {
+                sLocation = location
+                var lati: Double = java.lang.Double.parseDouble(String.format("%.6f", location.longitude))
+                var loti: Double = java.lang.Double.parseDouble(String.format("%.6f", location.latitude))
+                if(dlati.size == 0) {
                     dlati.add(lati)
                     dloti.add(loti)
                     dlati.add(lati)
                     dloti.add(loti)
-                    drawline()
-                } else {
-                    Toast.makeText(activity,location!!.accuracy.toString(),Toast.LENGTH_SHORT).show()
-                    if(location.accuracy <= 30) {
-                        var tlati = dlati[dsize - 1]
-                        var tloti = dloti[dsize - 1]
-                        if (!dlati.contains(lati) && !dloti.contains(loti)) {
-                            var dis = (tlati - lati) * (tlati - lati) + (tloti - loti) * (tloti - loti)
-                            Log.d("distance", dis.toString())
-                            if (dis <= 100 && dis > 0.0) {
-                                dlati.add(lati)
-                                dloti.add(loti)
-                                drawline()
-                            }
-                        }
-                    }
                 }
+                else{
+                    dlati.add(lati)
+                    dloti.add(loti)
+                }
+                drawline()
+            }
+//            var lati: Double = java.lang.Double.parseDouble(String.format("%.6f", location.longitude))
+//            var loti: Double = java.lang.Double.parseDouble(String.format("%.6f", location.latitude))
+//                var dsize = dlati.size
+//                if (dsize == 0) {
+//                    dlati.add(lati)
+//                    dloti.add(loti)
+//                    dlati.add(lati)
+//                    dloti.add(loti)
+//                    drawline()
+//                } else {
+//                    if(location.accuracy <= 30) {
+//                        var tlati = dlati[dsize - 1]
+//                        var tloti = dloti[dsize - 1]
+//                        if (!dlati.contains(lati) && !dloti.contains(loti)) {
+//                            var dis = (tlati - lati) * (tlati - lati) + (tloti - loti) * (tloti - loti)
+//                            Log.d("distance", dis.toString())
+//                            if (dis <= 100 && dis > 0.0) {
+//                                dlati.add(lati)
+//                                dloti.add(loti)
+//                                drawline()
+//                            }
+//                        }
+//                    }
+//                }
         }
 
         override fun onStatusChanged(p0: String?, p1: Int, p2: Bundle?) {
@@ -146,33 +169,46 @@ class Fragment2 : NMapFragment(), NMapView.OnMapStateChangeListener, NMapPOIdata
         }
 
     }
+    private val TWO_MINUTES: Long = 1000 * 60 * 2
 
-    val onMyLocationChangeListener = object : NMapLocationManager.OnLocationChangeListener {
-        override fun onLocationChanged(locationManager: NMapLocationManager, myLocation: NGeoPoint): Boolean {
-            if (mapController != null) {
-                mapController!!.animateTo(myLocation)
-            }
+    fun isBetterLocation(location: Location, currentBestLocation: Location?): Boolean {
+        if (currentBestLocation == null) {
             return true
         }
 
-        override fun onLocationUpdateTimeout(locationManager: NMapLocationManager) {
-
+        // Check whether the new location fix is newer or older
+        val timeDelta: Long = location.time - currentBestLocation.time
+        val isSignificantlyNewer: Boolean = timeDelta > TWO_MINUTES
+        val isSignificantlyOlder:Boolean = timeDelta < -TWO_MINUTES
+        Log.d("QWEQWE",isSignificantlyNewer.toString()+" "+isSignificantlyOlder.toString())
+        when {
+            isSignificantlyNewer -> return true
+            isSignificantlyOlder -> return false
         }
 
-        override fun onLocationUnavailableArea(locationManager: NMapLocationManager, myLocation: NGeoPoint) {
-            Toast.makeText(activity!!, "QWEQWE", Toast.LENGTH_SHORT).show()
+        val isNewer: Boolean = timeDelta > 0L
+        val accuracyDelta: Float = location.accuracy - currentBestLocation.accuracy
+        val isLessAccurate: Boolean = accuracyDelta > 0f
+        val isMoreAccurate: Boolean = accuracyDelta < 0f
+        val isSignificantlyLessAccurate: Boolean = accuracyDelta > 200f
+
+        val isFromSameProvider: Boolean = location.provider == currentBestLocation.provider
+
+        return when {
+            isMoreAccurate -> true
+            isNewer && !isLessAccurate -> true
+            isNewer && !isSignificantlyLessAccurate && isFromSameProvider -> true
+            else -> false
         }
     }
 
     @SuppressLint("MissingPermission")
     private fun moveMapCenter() {
         Log.e("move", "move")
-        mLocationManager!!.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0.0f, mLocationListener)
-        mLocationManager!!.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0.0f, mLocationListener)
-//        mMapLocationManager = NMapLocationManager(activity!!)
-//        mMapLocationManager?.setOnLocationChangeListener(onMyLocationChangeListener)
-//        mMapLocationManager!!.enableMyLocation(true)
-//        mMyLocationOverlay = mapOverlayManager!!.createMyLocationOverlay(mMapLocationManager, mMapCompassManager)
+        val provider =mLocationManager!!.getBestProvider(criteria, true)
+        mLocationManager!!.requestLocationUpdates(provider, 0, 0.0f, mLocationListener)
+//        mLocationManager!!.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0.0f, mLocationListener)
+//        mLocationManager!!.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0.0f, mLocationListener)
     }
 
     fun move(){
@@ -212,8 +248,6 @@ class Fragment2 : NMapFragment(), NMapView.OnMapStateChangeListener, NMapPOIdata
 
     override fun onPause() {
         Log.e("onPause", "onPause")
-        //mLocationManager!!.removeUpdates(mLocationListener)
-        //mMapLocationManager!!.removeOnLocationChangeListener(onMyLocationChangeListener)
         super.onPause()
     }
 
@@ -230,7 +264,8 @@ class Fragment2 : NMapFragment(), NMapView.OnMapStateChangeListener, NMapPOIdata
     override fun onDestroy() {
         Log.e("onPause", "onDestroy")
         mLocationManager!!.removeUpdates(mLocationListener)
-        //mMapLocationManager!!.removeOnLocationChangeListener(onMyLocationChangeListener)
+        dlati.clear()
+        dloti.clear()
         super.onDestroy()
     }
 

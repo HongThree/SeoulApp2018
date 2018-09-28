@@ -1,7 +1,6 @@
 package com.example.kihunahn.seoulapp2018
 
-import android.Manifest.permission.ACCESS_FINE_LOCATION
-import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+import android.Manifest
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -16,7 +15,6 @@ import android.widget.Toast
 import com.example.kihunahn.seoulapp2018.Adapter.MenuAdapter
 import com.example.kihunahn.seoulapp2018.Fragment.*
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.view_header.*
 import nl.psdcompany.duonavigationdrawer.views.DuoDrawerLayout
@@ -31,14 +29,13 @@ class HomeActivity : AppCompatActivity(), DuoMenuView.OnMenuClickListener {
     companion object {
         var curFragment : Int = 0
     }
-    private var userInfo = UserInfoDTO(getUserId())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
         Server(this).setting()
-        //updateCourseList()
+
         mTitles = ArrayList<String>(Arrays.asList(*resources.getStringArray(R.array.menuOptions)))
         // Initialize the views
         mViewHolder = ViewHolder()
@@ -58,36 +55,25 @@ class HomeActivity : AppCompatActivity(), DuoMenuView.OnMenuClickListener {
 
         header_user.text = cur_user!!.substringBeforeLast("@")
 
-        if (ContextCompat.checkSelfPermission(this, ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-        } else {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this, ACCESS_FINE_LOCATION)) {
-            } else {
-            }
-            ActivityCompat.requestPermissions(this, arrayOf(ACCESS_FINE_LOCATION), 0)
+        if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                || ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.WRITE_EXTERNAL_STORAGE), 0)
         }
 
-        if (ContextCompat.checkSelfPermission(this, WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-        } else {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this, WRITE_EXTERNAL_STORAGE)) {
-            } else {
+        //로그아웃
+        logout.setOnClickListener{
+            val builder = AlertDialog.Builder(this)
+            builder.setTitle("알림")
+            builder.setMessage("로그아웃 하시겠습니까?")
+            builder.setNegativeButton("취소",null)
+            builder.setPositiveButton("로그아웃") { arg0, arg1 ->
+                FirebaseAuth.getInstance().signOut()
+                finish()
             }
-            ActivityCompat.requestPermissions(this, arrayOf(WRITE_EXTERNAL_STORAGE), 0)
+            builder.show()
         }
+
     }
-
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if(requestCode == 0){
-            // requestPermission의 두번째 매개변수는 배열이므로 아이템이 여러개 있을 수 있기 때문에 결과를 배열로 받는다.
-            // 해당 예시는 요청 퍼미션이 한개 이므로 i=0 만 호출한다.
-            if(grantResults[0] == 0){
-                //해당 권한이 승낙된 경우.
-            }else{
-                //해당 권한이 거절된 경우.
-            }
-        }
-    }
-
 
     fun getUserId() : String {
         var userEmail = FirebaseAuth.getInstance().currentUser!!.email
@@ -132,25 +118,7 @@ class HomeActivity : AppCompatActivity(), DuoMenuView.OnMenuClickListener {
         }
     }
 
-    fun updateCourseList() {
-        var id = userInfo.id
-        FirebaseFirestore.getInstance().collection(id).get().addOnSuccessListener { querySnapshot ->
-            querySnapshot.forEach {
-                var title = it.id
-//                if(title[title.length-1] == '_') {
-//                    userInfo.courseList.get(userInfo.courseList.size-1).pictures!!.lat = it.data.get("lat") as ArrayList<Double>
-//                    userInfo.courseList.get(userInfo.courseList.size-1).pictures!!.lon = it.data.get("lon") as ArrayList<Double>
-//                    userInfo.courseList.get(userInfo.courseList.size-1).pictures!!.uri = it.data.get("uri") as ArrayList<String>
-//                }
-//                else {
-//                      var course = CourseDTO(title)
-////                    course.positions.lat = it.data.get("lat") as ArrayList<Double>
-////                    course.positions.lon = it.data.get("lon") as ArrayList<Double>
-////                    userInfo.courseList.add(course)
-//                }
-            }
-        }
-    }
+
 
     private fun handleToolbar() {
         setSupportActionBar(mViewHolder!!.mToolbar)
@@ -177,13 +145,13 @@ class HomeActivity : AppCompatActivity(), DuoMenuView.OnMenuClickListener {
 
     override fun onFooterClicked() {
         //       Toast.makeText(this, "onFooterClicked", Toast.LENGTH_SHORT).show()
-        FirebaseAuth.getInstance().signOut()
-        finish()
+//        FirebaseAuth.getInstance().signOut()
+//        finish()
 
     }
 
     override fun onHeaderClicked() {
-        Toast.makeText(this, "사용자 정보입니다", Toast.LENGTH_SHORT).show()
+//        Toast.makeText(this, "사용자 정보입니다", Toast.LENGTH_SHORT).show()
     }
 
     private fun goToFragment(fragment: Fragment, addToBackStack: Boolean) {
