@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import com.example.kihunahn.seoulapp2018.PlaceData
 import com.example.kihunahn.seoulapp2018.R
 import com.squareup.picasso.Picasso
@@ -51,17 +52,23 @@ class TravelListAdapter(private var context: Context) : RecyclerView.Adapter<Tra
         return context!!.resources.getIdentifier(fileName, "drawable", context!!.packageName)
     }
 
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener, View.OnLongClickListener {
 
         init {
             itemView.placeHolder.setOnClickListener(this)
+            itemView.placeHolder.setOnLongClickListener(this)
         }
 
         override fun onClick(view: View) = itemClickListener.onItemClick(itemView, adapterPosition)
+        override fun onLongClick(view: View): Boolean {
+            itemClickListener.onItemLongClick(itemView, adapterPosition)
+            return true
+        }
     }
 
     interface OnItemClickListener {
         fun onItemClick(view: View, position: Int)
+        fun onItemLongClick(view: View, position: Int)
     }
 
     fun setOnItemClickListener(itemClickListener: OnItemClickListener) {
