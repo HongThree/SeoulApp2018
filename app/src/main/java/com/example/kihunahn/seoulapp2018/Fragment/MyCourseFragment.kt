@@ -7,6 +7,7 @@ import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.util.Pair
+import android.support.v7.app.AlertDialog
 import android.support.v7.widget.StaggeredGridLayoutManager
 import android.util.Log
 import android.view.LayoutInflater
@@ -24,9 +25,10 @@ import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.common.api.ResultCallback
 import com.google.android.gms.location.*
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.*
 import kotlinx.android.synthetic.main.fragment_archive.*
 import kotlinx.android.synthetic.main.fragment_archive.view.*
+
 
 class MyCourseFragment : Fragment() {
     var mGoogleApiClient: GoogleApiClient? = null
@@ -35,6 +37,8 @@ class MyCourseFragment : Fragment() {
     lateinit private var adapter: TravelListAdapter
 
     var courseList : ArrayList<CourseDTO>? = ArrayList<CourseDTO>()
+
+    var courseRef = FirebaseFirestore.getInstance().collection("posts")
 
     private val onItemClickListener = object : TravelListAdapter.OnItemClickListener {
         override fun onItemClick(view: View, position: Int) {
@@ -64,6 +68,17 @@ class MyCourseFragment : Fragment() {
             fragmentTransaction.replace(R.id.container, nextFragment)
             fragmentTransaction.addToBackStack(null)
             fragmentTransaction.commit()
+        }
+
+        override fun onItemLongClick(view: View, position: Int) {
+            val builder = AlertDialog.Builder(context!!)
+            builder.setTitle("알림")
+            builder.setMessage("삭제 하시겠습니까?")
+            builder.setNegativeButton("취소",null)
+            builder.setPositiveButton("확인") { arg0, arg1 ->
+                courseRef.document(courseList!!.get(position).postId!!).delete()
+            }
+            builder.show()
         }
     }
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -240,23 +255,33 @@ class MyCourseFragment : Fragment() {
                     Log.e("ww","doInBackground2")
                     PlaceData.placeNameArray = ArrayList<String>()
                     PlaceData.placeArray = ArrayList<PictureDTO>()
-                    FirebaseFirestore.getInstance().collection(cur_user).get().addOnSuccessListener { querySnapshot ->
+
+                    // FirebaseFirestore.getInstance().collection(cur_user).get().addOnSuccessListener { querySnapshot ->
+
+                    /*
+                    docRef.get().addOnSuccessListener { querySnapshot ->
                         // 이 유저에게 저장 된 여행의 개수 출력 됨!!
                         //Toast.makeText(activity, querySnapshot.documents.size.toString(), Toast.LENGTH_LONG).show()
                         //querySnapshot.documents.size
 
-                        querySnapshot.forEach {
 
-                            var p1 = it.data.getValue("userId").toString()
-                            var p2 = it.id
-                            var p3 = it.data.getValue("lat") as ArrayList<Double>?
-                            var p4 = it.data.getValue("lng") as ArrayList<Double>?
-                            var p5 = it.data.getValue("pictureList") as ArrayList<String>?
-                            var p6:ArrayList<Boolean>? = it.data.getValue("stampList") as ArrayList<Boolean>?
-                            PlaceData.placeNameArray.add(p2)
-                            courseList!!.add(CourseDTO(p1, p2, p3, p4, p5, p6))
+                        querySnapshot.forEach {
+                            var courseDTO = it.toObject(CourseDTO::class.java)
+                            courseDTO.CourseName = it.id
+
+//                            var p1 = it.data.getValue("userId").toString()
+//                            var p2 = it.id
+//                            var p3 = it.data.getValue("lat") as ArrayList<Double>?
+//                            var p4 = it.data.getValue("lng") as ArrayList<Double>?
+//                            var p5 = it.data.getValue("pictureList") as ArrayList<String>?
+//                            var p6:ArrayList<Boolean>? = it.data.getValue("stampList") as ArrayList<Boolean>?
+//                            var p7 = it.data.getValue("like") as Int
+
+                            PlaceData.placeNameArray.add(courseDTO.CourseName!!)
+                            courseList!!.add(courseDTO)
+
                             //n개의 사진 --> 0 .. n-1
-                            PlaceData.placeArray.add(PictureDTO(p2, p5))
+                            PlaceData.placeArray.add(PictureDTO(courseDTO.CourseName, courseDTO.PictureList))
                             //val exifInterface = ExifInterface("//storage/emulated/0/Android/data/com.example.kihunahn.seoulapp2018/files/Pictures/img1.jpg")
 
                             adapter.notifyDataSetChanged()
@@ -280,7 +305,85 @@ class MyCourseFragment : Fragment() {
                             //Toast.makeText(activity, it.id, Toast.LENGTH_LONG).show()
                         }
                         //Toast.makeText(activity, "저장 된 여행 수: " + courseList!!.size.toString(), Toast.LENGTH_SHORT).show()
-                    }
+                    }*/
+
+                    courseRef.addSnapshotListener(EventListener<QuerySnapshot> { snapshots, e ->
+                        if (e != null)
+                            return@EventListener
+                        /*
+                        snapshots!!.forEach {
+                            var courseDTO = it.toObject(CourseDTO::class.java)
+                            courseDTO.CourseName = it.id
+
+                            var isExist = false
+
+                            courseList!!.forEach {
+                                if (it.CourseName.equals(courseDTO.CourseName))
+                                    isExist = true
+                            }
+
+                            if (!isExist) {
+                                PlaceData.placeNameArray.add(courseDTO.CourseName!!)
+                                courseList!!.add(courseDTO)
+                                PlaceData.placeArray.add(PictureDTO(courseDTO.CourseName, courseDTO.PictureList))
+                                adapter.notifyDataSetChanged()
+                            }
+                        }*/
+
+                        for(dc in snapshots!!.documentChanges) {
+                            if(dc.document.data.getValue("userName").equals(getUserId())) {
+                                when (dc.type) {
+                                    DocumentChange.Type.ADDED -> {
+                                        var courseDTO = dc.document.toObject(CourseDTO::class.java)
+                                        courseDTO.postId = dc.document.id
+
+                                        var isExist = false
+
+                                        courseList!!.forEach {
+                                            if (it.postId.equals(courseDTO.postId))
+                                                isExist = true
+                                        }
+
+                                        if (!isExist) {
+                                            PlaceData.placeNameArray.add(courseDTO.CourseName!!)
+                                            courseList!!.add(courseDTO)
+                                            PlaceData.placeArray.add(PictureDTO(courseDTO.CourseName, courseDTO.PictureList))
+                                            adapter.notifyDataSetChanged()
+                                        }
+                                    }
+
+                                    DocumentChange.Type.REMOVED -> {
+                                        var postId = dc.document.id
+
+                                        var toRemove = -1
+
+                                        for (idx in 0..courseList!!.size - 1) {
+                                            if (courseList!!.get(idx).postId.equals(postId)) {
+                                                toRemove = idx
+                                                break;
+                                            }
+                                        }
+
+                                        if (toRemove != -1) {
+                                            PlaceData.placeNameArray.remove(courseList!!.get(toRemove).CourseName)
+                                            var picIdx = -1
+                                            for(idx in 0..PlaceData.placeArray.size-1) {
+                                                if(PlaceData.placeArray.get(idx).name.equals(courseList!!.get(toRemove).CourseName)) {
+                                                    picIdx = idx
+                                                    break
+                                                }
+                                            }
+                                            if(picIdx != -1)
+                                                PlaceData.placeArray.remove(PlaceData.placeArray.get(picIdx))
+
+                                            courseList!!.remove(courseList!!.get(toRemove))
+                                            adapter.notifyDataSetChanged()
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    })
                 } catch (ex: Exception) {
                 }
                 //publishProgress(inString)
@@ -301,8 +404,8 @@ class MyCourseFragment : Fragment() {
             if(result.equals("complete"))
                 asyncDialog.dismiss()
         }
-
     }
+
     fun getDrawble(fileName : String ) : Int {
         return context!!.resources.getIdentifier(fileName, "drawable", context!!.packageName)
     }

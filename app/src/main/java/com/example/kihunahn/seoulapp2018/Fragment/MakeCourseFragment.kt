@@ -32,6 +32,7 @@ import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 class MakeCourseFragment : Fragment(){
@@ -46,6 +47,7 @@ class MakeCourseFragment : Fragment(){
     val cur_user = getUserId()
     var dlati: ArrayList<Double>? = null
     var dloti: ArrayList<Double>? = null
+    var like : ArrayList<String> = ArrayList<String>()
     var size = 0
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -83,7 +85,6 @@ class MakeCourseFragment : Fragment(){
             mapfragment!!.mLocationManager!!.removeUpdates(mapfragment!!.mLocationListener)
             //mapfragment!!.mMapLocationManager!!.removeOnLocationChangeListener(mapfragment!!.onMyLocationChangeListener)
             showDialog(courseName)
-            fragmentManager!!.popBackStack()
 
             /*
             val fragment = MyCourseFragment()
@@ -178,12 +179,19 @@ class MakeCourseFragment : Fragment(){
                              var PictureList : ArrayList<String>? = null,
                              var stampList : BooleanArray? = BooleanArray(28) )
         */
-        var myCourse = CourseDTO(cur_user, courseName, dlati, dloti, PictureList, StampList)
-        FirebaseFirestore.getInstance().collection(cur_user).document(courseName).set(myCourse).addOnSuccessListener {
+        var myCourse = CourseDTO(cur_user, courseName, dlati, dloti, PictureList, StampList, like)
+
+        FirebaseFirestore.getInstance().collection("posts").document().set(myCourse).addOnSuccessListener {
 
         }.addOnFailureListener { exception ->
 
         }
+
+//        FirebaseFirestore.getInstance().collection(cur_user).document(courseName).set(myCourse).addOnSuccessListener {
+//
+//        }.addOnFailureListener { exception ->
+//
+//        }
     }
     inner class BannerPagerAdapter(var fm: FragmentManager, var imagesList: IntArray, var Position:Int) : FragmentPagerAdapter(fm) {
 
@@ -218,16 +226,19 @@ class MakeCourseFragment : Fragment(){
 
                 saveCourse(courseName)
                 mAlerDialog.dismiss()
+                fragmentManager!!.popBackStack()
             }
         }
         mDialogView.btn_defualt_course_name.setOnClickListener {
             mAlerDialog.dismiss()
+            fragmentManager!!.popBackStack()
             //Toast.makeText(activity, defaultName + "가 저장 되었습니다.", Toast.LENGTH_LONG).show()
             saveCourse(defaultName)
         }
 
 
     }
+
     fun isValid(name : String) : Boolean {
         for( n in nameList){
             if(name.equals(n)) return false
@@ -236,7 +247,7 @@ class MakeCourseFragment : Fragment(){
     }
 
     fun updateNameList() {
-        FirebaseFirestore.getInstance().collection(cur_user).get().addOnSuccessListener { querySnapshot ->
+        FirebaseFirestore.getInstance().collection("posts").get().addOnSuccessListener { querySnapshot ->
             // 이 유저에게 저장 된 여행의 개수 출력 됨!!
             //Toast.makeText(activity, querySnapshot.documents.size.toString(), Toast.LENGTH_LONG).show()
             //querySnapshot.documents.size
@@ -246,7 +257,8 @@ class MakeCourseFragment : Fragment(){
                 //Toast.makeText(activity, it.data.keys.toString(), Toast.LENGTH_LONG).show()
 
                 // 이게 실제 여행명 받아오기
-                nameList.add(it.id)
+                if(it.data.getValue("userName").equals(cur_user))
+                    nameList.add(it.data.getValue("courseName") as String)
             }
         }
     }
