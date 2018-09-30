@@ -5,6 +5,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.kihunahn.seoulapp2018.Fragment.Fragment2.Companion.location_lati
+import com.example.kihunahn.seoulapp2018.Fragment.Fragment2.Companion.location_loti
 import com.example.kihunahn.seoulapp2018.NMap.NMapFragment
 import com.example.kihunahn.seoulapp2018.NMap.NMapPOIflagType
 import com.example.kihunahn.seoulapp2018.NMap.NMapViewerResourceProvider
@@ -37,6 +39,8 @@ class Fragment1 : NMapFragment(), NMapView.OnMapStateChangeListener, NMapPOIdata
     var dloti1: ArrayList<Double> = ArrayList()
     var cnum: Int = 0
 
+    var index: IntArray = intArrayOf(3, 6, 10, 13, 16, 19, 22, 28)
+    var count: IntArray = intArrayOf(3, 3, 4, 3, 3, 3, 3, 6)
     var odds = intArrayOf(15423769, 15423769, 15557287, 880568, 495930, 9570179, 12782883, 10842661, 1317215)
     override fun onMapCenterChangeFine(p0: NMapView?) {
 
@@ -150,9 +154,11 @@ class Fragment1 : NMapFragment(), NMapView.OnMapStateChangeListener, NMapPOIdata
             val currentPoint = NGeoPoint(dlati[len / 2], dloti[len / 2])
 
             if (cnum > 1) {
-                val poiData = NMapPOIdata(2, mapViewerResourceProvider)
+                val poiData = NMapPOIdata(2+count[cnum-1], mapViewerResourceProvider)
                 poiData.addPOIitem(dlati[0], dloti[0], "", NMapPOIflagType.FROM, 0)
                 poiData.addPOIitem(dlati[len], dloti[len], "", NMapPOIflagType.TO, 0)
+                for(i in index[cnum-2]..index[cnum-1]-1)
+                    poiData.addPOIitem(location_lati[i], location_loti[i], "", NMapPOIflagType.PIN, 0)
                 poiData.endPOIdata()
                 val poiDataOverlay = mapOverlayManager!!.createPOIdataOverlay(poiData, null)
                 poiDataOverlay.showAllPOIdata(0)
@@ -179,9 +185,11 @@ class Fragment1 : NMapFragment(), NMapView.OnMapStateChangeListener, NMapPOIdata
             var len = dlati1.size - 1
             val currentPoint = NGeoPoint(dlati1[len / 2], dloti1[len / 2])
             if (cnum == 1) {
-                val poiData = NMapPOIdata(2, mapViewerResourceProvider)
+                val poiData = NMapPOIdata(2+count[cnum-1], mapViewerResourceProvider)
                 poiData.addPOIitem(dlati1[0], dloti1[0], "", NMapPOIflagType.FROM, 0)
                 poiData.addPOIitem(dlati1[len], dloti1[len], "", NMapPOIflagType.TO, 0)
+                for(i in 0..count[cnum-1])
+                    poiData.addPOIitem(location_lati[i], location_loti[i], "", NMapPOIflagType.PIN, 0)
                 poiData.endPOIdata()
                 val poiDataOverlay = mapOverlayManager!!.createPOIdataOverlay(poiData, null)
                 poiDataOverlay.showAllPOIdata(0)

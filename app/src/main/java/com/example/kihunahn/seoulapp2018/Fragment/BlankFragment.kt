@@ -58,7 +58,7 @@ class BlankFragment : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        bitmap!!.recycle()
+        //bitmap!!.recycle()
         bitmap = null
     }
 

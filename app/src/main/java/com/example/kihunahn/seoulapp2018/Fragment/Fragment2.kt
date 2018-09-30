@@ -42,9 +42,10 @@ class Fragment2 : NMapFragment(), NMapView.OnMapStateChangeListener, NMapPOIdata
     var mLocationManager: LocationManager? = null
     var criteria: Criteria? = null
 
-    var s_lst : ArrayList<Boolean> = arrayListOf(false,false,false,false,false,false,false,false,false,false,
-            false,false,false,false,false,false,false,false,false,false,
-            false,false,false,false,false,false,false,false)
+    var s_lst: ArrayList<Boolean> = arrayListOf(false, false, false, false, false, false, false, false, false, false,
+            false, false, false, false, false, false, false, false, false, false,
+            false, false, false, false, false, false, false, false)
+
     override fun onMapCenterChangeFine(p0: NMapView?) {
     }
 
@@ -205,7 +206,7 @@ class Fragment2 : NMapFragment(), NMapView.OnMapStateChangeListener, NMapPOIdata
                 val diffLatitude = LatitudeInDifference(200)
                 val diffLongitude = LongitudeInDifference(dloti[len], 200)
                 if (dlati[len] - diffLongitude <= location_lati[i] && location_lati[i] <= dlati[len] + diffLongitude) {
-                    if (dloti[len] - diffLatitude <= location_loti[i] && location_loti[i] <= dloti[len] + diffLatitude){
+                    if (dloti[len] - diffLatitude <= location_loti[i] && location_loti[i] <= dloti[len] + diffLatitude) {
                         val poiData = NMapPOIdata(2, mapViewerResourceProvider)
                         poiData.addPOIitem(location_lati[i], location_loti[i], "", NMapPOIflagType.FROM, 0)
                         poiData.endPOIdata()
@@ -213,7 +214,7 @@ class Fragment2 : NMapFragment(), NMapView.OnMapStateChangeListener, NMapPOIdata
                         poiDataOverlay.showAllPOIdata(0)
                         poiDataOverlay.onStateChangeListener = this
 
-                        if(!stamplst[i]){
+                        if (!stamplst[i]) {
                             s_lst[i] = true
                             stamplst[i] = true
                         }
@@ -276,14 +277,20 @@ class Fragment2 : NMapFragment(), NMapView.OnMapStateChangeListener, NMapPOIdata
 
     companion object {
         private const val CLIENT_ID = "XrPrMsRtFpXGFaq_Az1I"// 애플리케이션 클라이언트 아이디 값
-        var location_lati: DoubleArray = doubleArrayOf(127.047186, 127.083653, 127.084997, 127.084997, 127.103100, 127.099870,
-                127.109010, 127.156912, 127.140455, 127.106862, 127.102289, 127.036451, 126.986817,
-                126.976589, 126.946757, 126.906542, 126.902020, 126.871578, 126.864751,
+        var location_lati: DoubleArray = doubleArrayOf(127.047186, 127.083653, 127.084997,
+                127.084997, 127.103100, 127.099870,
+                127.109010, 127.156912, 127.140455, 127.106862,
+                127.102289, 127.036451, 126.986817,
+                126.976589, 126.946757, 126.906542,
+                126.902020, 126.871578, 126.864751,
                 126.856430, 126.902661, 126.914705,
                 126.936930, 127.009747, 127.016440, 127.036345, 126.936930, 126.939591, 127.12747)
-        var location_loti: DoubleArray = doubleArrayOf(37.689364, 37.668395, 37.620475, 37.620475, 37.578790, 37.553143,
-                37.545968, 37.555261, 37.512326, 37.488193, 37.486594, 37.469930, 37.473450,
-                37.467788, 37.467546, 37.433892, 37.434226, 37.496575, 37.561721,
+        var location_loti: DoubleArray = doubleArrayOf(37.689364, 37.668395, 37.620475,
+                37.620475, 37.578790, 37.553143,
+                37.545968, 37.555261, 37.512326, 37.488193,
+                37.486594, 37.469930, 37.473450,
+                37.467788, 37.467546, 37.433892,
+                37.434226, 37.496575, 37.561721,
                 37.563844, 37.585151, 37.635650,
                 37.627872, 37.622897, 37.661569, 37.686044, 37.627872, 37.612704, 37.45079)
     }
