@@ -1,13 +1,17 @@
 package com.example.kihunahn.seoulapp2018.Fragment
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.view.ViewPager
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.ScrollView
 import com.example.kihunahn.seoulapp2018.R
 import com.rd.PageIndicatorView
 
@@ -18,11 +22,38 @@ class Content : Fragment() {
     var pageindicator: PageIndicatorView? = null
     var lati: DoubleArray = doubleArrayOf(127.127948, 127.127814, 127.127696, 127.127462, 127.127266, 127.127190, 127.128467, 127.129556)
     var loti: DoubleArray = doubleArrayOf(37.439937, 37.440627, 37.441257, 37.442470, 37.443503, 37.444041, 37.444412, 37.444740)
+    var transpp: ImageView? = null
+    var scrollv: ScrollView?=null
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         val view = inflater.inflate(R.layout.fragment_content, container, false)
+        scrollv = view.findViewById(R.id.scrollview) as ScrollView
 
+        transpp = view.findViewById(R.id.trans) as ImageView
+        transpp!!.setOnTouchListener(View.OnTouchListener { v, event ->
+            val action = event.action
+            when (action) {
+                MotionEvent.ACTION_DOWN -> {
+                    scrollv!!.requestDisallowInterceptTouchEvent(true)
+
+                    // Disable touch on transparent view
+                    false
+                }
+
+                MotionEvent.ACTION_UP -> {
+                    scrollv!!.requestDisallowInterceptTouchEvent(false)
+                    true
+                }
+
+                MotionEvent.ACTION_MOVE -> {
+                    scrollv!!.requestDisallowInterceptTouchEvent(true)
+                    false
+                }
+                else -> true
+            }
+        })
         position = arguments!!.getInt("adapter_pos")
         image = MainFragment.posts[position].images
 

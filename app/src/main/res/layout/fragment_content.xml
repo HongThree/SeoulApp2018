@@ -2,13 +2,14 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/scroll"
+    android:id="@+id/scrollview"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/relativeLayout"
         android:orientation="vertical">
 
         <android.support.v4.view.ViewPager
@@ -41,7 +42,14 @@
             android:orientation="vertical"
             android:layout_below="@id/feed"
             />
-
+        <ImageView
+            android:id="@+id/trans"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/Fragmenthere"
+            android:layout_alignBottom="@+id/Fragmenthere"
+            android:layout_alignEnd="@+id/Fragmenthere"
+            android:layout_alignStart="@+id/Fragmenthere"/>
     </RelativeLayout>
 
 </ScrollView>
