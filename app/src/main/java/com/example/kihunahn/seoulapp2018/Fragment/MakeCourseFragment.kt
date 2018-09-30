@@ -218,7 +218,7 @@ class MakeCourseFragment : Fragment(){
 
             var tempName = mDialogView.editText_course_name.text.toString()
             if(!isValid(tempName)){
-                Toast.makeText(activity, "이미 존재하는 이름입니다. 다시 입력 해주세요.", Toast.LENGTH_LONG).show()
+                //Toast.makeText(activity, "이미 존재하는 이름입니다. 다시 입력 해주세요.", Toast.LENGTH_LONG).show()
             }
             else {
                 if (!tempName.equals(""))

@@ -15,7 +15,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
-import android.widget.Toast
 import com.example.kihunahn.seoulapp2018.Adapter.TravelListAdapter
 import com.example.kihunahn.seoulapp2018.CourseDTO
 import com.example.kihunahn.seoulapp2018.PictureDTO
@@ -25,7 +24,10 @@ import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.common.api.ResultCallback
 import com.google.android.gms.location.*
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.*
+import com.google.firebase.firestore.DocumentChange
+import com.google.firebase.firestore.EventListener
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.QuerySnapshot
 import kotlinx.android.synthetic.main.fragment_archive.*
 import kotlinx.android.synthetic.main.fragment_archive.view.*
 
@@ -83,13 +85,13 @@ class MyCourseFragment : Fragment() {
     }
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         //Getinformation().execute()
-        Toast.makeText(activity, PlaceData.placeNameArray.size.toString(), Toast.LENGTH_SHORT).show()
+        //Toast.makeText(activity, PlaceData.placeNameArray.size.toString(), Toast.LENGTH_SHORT).show()
         val view = inflater!!.inflate(R.layout.fragment_archive, container, false)
 
         staggeredLayoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
 
         if (view.list_view == null) {
-            Toast.makeText(activity, "널이야 시발", Toast.LENGTH_LONG).show()
+            //Toast.makeText(activity, "널이야 시발", Toast.LENGTH_LONG).show()
         }
 
         view.list_view.layoutManager = staggeredLayoutManager
@@ -112,14 +114,6 @@ class MyCourseFragment : Fragment() {
             showSettingDialog()
         }
 
-//        btn_archive.setOnClickListener {
-//            val fragment2 = ArchiveFragment()
-//            val fragmentManager = fragmentManager
-//            val fragmentTransaction = fragmentManager!!.beginTransaction()
-//            fragmentTransaction.replace(R.id.container, fragment2)
-//            fragmentTransaction.addToBackStack(null)
-//            fragmentTransaction.commit()
-//        }
 
     }
 
@@ -143,7 +137,7 @@ class MyCourseFragment : Fragment() {
                 .addLocationRequest(locationRequest)
         builder.setAlwaysShow(true) //this is the key ingredient to show dialog always when GPS is off
 
-        Toast.makeText(activity, "showSettingDialog", Toast.LENGTH_SHORT).show()
+        //Toast.makeText(activity, "showSettingDialog", Toast.LENGTH_SHORT).show()
 
         val result = LocationServices.SettingsApi.checkLocationSettings(mGoogleApiClient, builder.build())
         result.setResultCallback(ResultCallback<LocationSettingsResult> { result ->
@@ -170,9 +164,9 @@ class MyCourseFragment : Fragment() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        Toast.makeText(activity, "onActivityResult", Toast.LENGTH_SHORT).show()
+        //Toast.makeText(activity, "onActivityResult", Toast.LENGTH_SHORT).show()
         when (requestCode) {
-        // Check for the integer request code originally supplied to startResolutionForResult().
+            // Check for the integer request code originally supplied to startResolutionForResult().
             REQUEST_CHECK_SETTINGS -> when (resultCode) {
                 Activity.RESULT_OK -> {
                     val fragment2 = MakeCourseFragment()
@@ -188,35 +182,6 @@ class MyCourseFragment : Fragment() {
             }
         }
     }
-
-
-    /*
-    class ReadRecyclerViewAdapter(initList: ArrayList<PositionDTO>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-
-        var list: ArrayList<PositionDTO>? = initList
-
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-            var view = LayoutInflater.from(parent!!.context).inflate(R.layout.item_recyclerview, parent, false)
-            return CustomViewHolder(view)
-        }
-
-        class CustomViewHolder(view: View?) : RecyclerView.ViewHolder(view!!) {
-            var textview_course_name = view!!.findViewById<TextView>(R.id.textView_course_name)
-            var textview_position_count = view!!.findViewById<TextView>(R.id.textView_position_count)
-        }
-
-        override fun getItemCount(): Int {
-            return list!!.size
-        }
-
-        override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-            var customViewHolder = holder as CustomViewHolder
-            customViewHolder.textview_course_name.text = list!!.get(position).toString()
-            customViewHolder.textview_position_count.text = list!!.get(position).lat!!.size.toString()
-        }
-
-    }
-    */
 
 
     override fun onResume() {
@@ -256,79 +221,9 @@ class MyCourseFragment : Fragment() {
                     PlaceData.placeNameArray = ArrayList<String>()
                     PlaceData.placeArray = ArrayList<PictureDTO>()
 
-                    // FirebaseFirestore.getInstance().collection(cur_user).get().addOnSuccessListener { querySnapshot ->
-
-                    /*
-                    docRef.get().addOnSuccessListener { querySnapshot ->
-                        // 이 유저에게 저장 된 여행의 개수 출력 됨!!
-                        //Toast.makeText(activity, querySnapshot.documents.size.toString(), Toast.LENGTH_LONG).show()
-                        //querySnapshot.documents.size
-
-
-                        querySnapshot.forEach {
-                            var courseDTO = it.toObject(CourseDTO::class.java)
-                            courseDTO.CourseName = it.id
-
-//                            var p1 = it.data.getValue("userId").toString()
-//                            var p2 = it.id
-//                            var p3 = it.data.getValue("lat") as ArrayList<Double>?
-//                            var p4 = it.data.getValue("lng") as ArrayList<Double>?
-//                            var p5 = it.data.getValue("pictureList") as ArrayList<String>?
-//                            var p6:ArrayList<Boolean>? = it.data.getValue("stampList") as ArrayList<Boolean>?
-//                            var p7 = it.data.getValue("like") as Int
-
-                            PlaceData.placeNameArray.add(courseDTO.CourseName!!)
-                            courseList!!.add(courseDTO)
-
-                            //n개의 사진 --> 0 .. n-1
-                            PlaceData.placeArray.add(PictureDTO(courseDTO.CourseName, courseDTO.PictureList))
-                            //val exifInterface = ExifInterface("//storage/emulated/0/Android/data/com.example.kihunahn.seoulapp2018/files/Pictures/img1.jpg")
-
-                            adapter.notifyDataSetChanged()
-                            /*
-                            if (!PlaceData.placeNameArray.contains(p2)){
-                                PlaceData.placeNameArray.add(p2)
-                                courseList!!.add(CourseDTO(p1, p2, p3, p4, p5))
-                                //n개의 사진 --> 0 .. n-1
-                                PlaceData.placeArray.add(PictureDTO(p2, p5))
-                                val exifInterface = ExifInterface("//storage/emulated/0/Android/data/com.example.kihunahn.seoulapp2018/files/Pictures/img1.jpg")
-
-                                adapter.notifyDataSetChanged()
-                            }
-
-                            */
-
-                            //[lat,lon]
-                            //Toast.makeText(activity, it.data.keys.toString(), Toast.LENGTH_LONG).show()
-
-                            // 이게 실제 여행명 받아오기
-                            //Toast.makeText(activity, it.id, Toast.LENGTH_LONG).show()
-                        }
-                        //Toast.makeText(activity, "저장 된 여행 수: " + courseList!!.size.toString(), Toast.LENGTH_SHORT).show()
-                    }*/
-
                     courseRef.addSnapshotListener(EventListener<QuerySnapshot> { snapshots, e ->
                         if (e != null)
                             return@EventListener
-                        /*
-                        snapshots!!.forEach {
-                            var courseDTO = it.toObject(CourseDTO::class.java)
-                            courseDTO.CourseName = it.id
-
-                            var isExist = false
-
-                            courseList!!.forEach {
-                                if (it.CourseName.equals(courseDTO.CourseName))
-                                    isExist = true
-                            }
-
-                            if (!isExist) {
-                                PlaceData.placeNameArray.add(courseDTO.CourseName!!)
-                                courseList!!.add(courseDTO)
-                                PlaceData.placeArray.add(PictureDTO(courseDTO.CourseName, courseDTO.PictureList))
-                                adapter.notifyDataSetChanged()
-                            }
-                        }*/
 
                         for(dc in snapshots!!.documentChanges) {
                             if(dc.document.data.getValue("userName").equals(getUserId())) {
