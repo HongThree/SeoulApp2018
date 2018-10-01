@@ -8,15 +8,17 @@ package com.example.kihunahn.seoulapp2018.Fragment
 //import io.realm.RealmResults
 import android.app.Activity
 import android.app.AlertDialog
+import android.app.ProgressDialog
 import android.content.Intent
 import android.graphics.Bitmap
+import android.net.Uri
+import android.os.AsyncTask
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.content.FileProvider
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,6 +27,7 @@ import com.example.kihunahn.seoulapp2018.CourseDTO
 import com.example.kihunahn.seoulapp2018.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.coursename_dialog.view.*
 import kotlinx.android.synthetic.main.fragment_makecourse.*
 import java.io.ByteArrayOutputStream
@@ -36,8 +39,13 @@ import kotlin.collections.ArrayList
 
 
 class MakeCourseFragment : Fragment(){
+    var latitude = java.util.ArrayList<Double>()
+    var longitude = java.util.ArrayList<Double>()
 
     var PictureList = ArrayList<String>()
+    var UpdatedPictureList = ArrayList<String>()
+
+    var postId = String()
     var StampList = ArrayList<Boolean>()
     var courseName = String()
     var nameList = LinkedList<String>()
@@ -45,10 +53,9 @@ class MakeCourseFragment : Fragment(){
     val TAKE_PICTURE = 3
     var mapfragment:Fragment2?=null
     val cur_user = getUserId()
-    var dlati: ArrayList<Double>? = null
-    var dloti: ArrayList<Double>? = null
-    var like : ArrayList<String> = ArrayList<String>()
-    var size = 0
+    var like= ArrayList<String>()
+    var end = 0
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         val view = inflater?.inflate(R.layout.fragment_makecourse, container, false)
@@ -66,18 +73,18 @@ class MakeCourseFragment : Fragment(){
 
     override fun onStart() {
         super.onStart()
-        Toast.makeText(activity, fragmentManager!!.backStackEntryCount.toString(), Toast.LENGTH_LONG).show()
+
 
         var dateFormat = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault())
         var date = Date()
         courseName = dateFormat.format(date).toString()
 
         btn_exit.bringToFront()
-        btn_exit.setMagicButtonClickListener(View.OnClickListener {
-            size = mapfragment!!.dlati.size-1
-            dlati= mapfragment!!.dlati
-            dloti = mapfragment!!.dloti
-            StampList = mapfragment!!.s_lst
+        btn_exit.setMagicButtonClickListener {
+            var size = mapfragment!!.dlati.size-1
+            var dlati= mapfragment!!.dlati
+            var dloti = mapfragment!!.dloti
+
             for (i in size downTo 0){
                 //PositionList.lat?.add(dlati[i])
                 //PositionList.lon?.add(dloti[i])
@@ -94,7 +101,7 @@ class MakeCourseFragment : Fragment(){
             //fragmentTransaction.addToBackStack(null)
             fragmentTransaction.commit()
             */
-        })
+        }
 
 
         btn_takePicture.bringToFront()
@@ -113,28 +120,28 @@ class MakeCourseFragment : Fragment(){
         return ret
     }
 
-    fun uploadImage(bitmap : Bitmap) {
-        var baos = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos)
-        var data = baos.toByteArray()
-        // FirebaseFirestore.getInstance().collection(cur_user.toString()).document(courseName).set(PositionList)
+//    fun uploadImage(bitmap : Bitmap) {
+//        var baos = ByteArrayOutputStream()
+//        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos)
+//        var data = baos.toByteArray()
+    // FirebaseFirestore.getInstance().collection(cur_user.toString()).document(courseName).set(PositionList)
 //        FirebaseStorage.getInstance().reference.child(cur_user.toString()).child(courseName+"_pic").putBytes(data)
 //                .addOnCompleteListener { task->
 //                    if(task.isSuccessful) {
 //                        Toast.makeText(activity, "업로드에 성공하였습니다.", Toast.LENGTH_LONG).show()
 //                    }
 //                }
-    }
+//    }
 
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if(requestCode == TAKE_PICTURE && resultCode == Activity.RESULT_OK){
-            var file = File(currentPath)
+//            var file = File(currentPath)
             //uploadImage(bitmap)
-            PictureList.add(file.toURI().toString())
-            Toast.makeText(activity, "Size: " + PictureList.size.toString(), Toast.LENGTH_LONG).show()
-            //Toast.makeText(activity, "사진 위치 저~장~", Toast.LENGTH_LONG).show()
+//            PictureList.add(file.toString())
+//            Toast.makeText(activity, "Size: " + PictureList.size.toString(), Toast.LENGTH_LONG).show()
+//            Toast.makeText(activity, currentPath, Toast.LENGTH_LONG).show()
 //            imageView.setImageURI(uri)
         }
     }
@@ -164,7 +171,7 @@ class MakeCourseFragment : Fragment(){
         var storageDir = activity!!.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
         var image = File.createTempFile(imageName, ".jpg", storageDir)
         currentPath = image.absolutePath
-        //Toast.makeText(activity, PictureList.size.toString(), Toast.LENGTH_SHORT).show()
+        PictureList.add(currentPath!!)
 
         //saveCourse("")
         return image
@@ -179,13 +186,17 @@ class MakeCourseFragment : Fragment(){
                              var PictureList : ArrayList<String>? = null,
                              var stampList : BooleanArray? = BooleanArray(28) )
         */
-        var myCourse = CourseDTO(cur_user, courseName, dlati, dloti, PictureList, StampList, like)
+//        var myCourse = CourseDTO(cur_user, courseName, dlati, dloti, PictureList, StampList, like)
 
-        FirebaseFirestore.getInstance().collection("posts").document().set(myCourse).addOnSuccessListener {
+//        FirebaseFirestore.getInstance().collection("posts").document().set(myCourse).addOnSuccessListener {
 
-        }.addOnFailureListener { exception ->
+//        }.addOnFailureListener { exception ->
 
-        }
+//        }
+//        end = PictureList.size
+        Getinformation().execute()
+
+
 
 //        FirebaseFirestore.getInstance().collection(cur_user).document(courseName).set(myCourse).addOnSuccessListener {
 //
@@ -193,16 +204,7 @@ class MakeCourseFragment : Fragment(){
 //
 //        }
     }
-    inner class BannerPagerAdapter(var fm: FragmentManager, var imagesList: IntArray, var Position:Int) : FragmentPagerAdapter(fm) {
 
-        override fun getItem(position: Int): Fragment {
-            return BlankFragment.getInstance(imagesList[position],Position)
-        }
-
-        override fun getCount(): Int {
-            return imagesList.size
-        }
-    }
 
     fun showDialog(defaultName : String) {
         updateNameList()
@@ -218,7 +220,7 @@ class MakeCourseFragment : Fragment(){
 
             var tempName = mDialogView.editText_course_name.text.toString()
             if(!isValid(tempName)){
-                //Toast.makeText(activity, "이미 존재하는 이름입니다. 다시 입력 해주세요.", Toast.LENGTH_LONG).show()
+                Toast.makeText(activity, "이미 존재하는 이름입니다. 다시 입력 해주세요.", Toast.LENGTH_LONG).show()
             }
             else {
                 if (!tempName.equals(""))
@@ -226,12 +228,10 @@ class MakeCourseFragment : Fragment(){
 
                 saveCourse(courseName)
                 mAlerDialog.dismiss()
-                fragmentManager!!.popBackStack()
             }
         }
         mDialogView.btn_defualt_course_name.setOnClickListener {
             mAlerDialog.dismiss()
-            fragmentManager!!.popBackStack()
             //Toast.makeText(activity, defaultName + "가 저장 되었습니다.", Toast.LENGTH_LONG).show()
             saveCourse(defaultName)
         }
@@ -277,6 +277,86 @@ class MakeCourseFragment : Fragment(){
 
     override fun onDetach() {
         super.onDetach()
+    }
+
+    inner class Getinformation : AsyncTask<String, String, String>() {
+        var asyncDialog: ProgressDialog = ProgressDialog(context!!)
+        override fun onPreExecute() {
+            // Before doInBackground
+            asyncDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER)
+            asyncDialog.setMessage("로딩중입니다..")
+
+            // show dialog
+            asyncDialog.show()
+        }
+
+        override fun doInBackground(vararg urls: String?): String {
+            Log.e("ww","doInBackground1")
+            try {
+                for(i in 0..PictureList.size-1)
+                    Log.d("loc", PictureList.get(i))
+
+                //var cur_user = getUserId()
+                for(i in 0 until PictureList.size) {
+                    //for(i in 0 ..1) {
+                    Log.d("ssss", "for: " + i.toString() )
+
+
+                    var bitmap : Bitmap? = MediaStore.Images.Media.getBitmap(activity!!.getContentResolver() , Uri.parse(File(PictureList.get(i)).toURI().toString()))
+                    if(bitmap == null)
+                        Log.d("ssss", "null " + i.toString())
+                    if(bitmap != null) {
+                        var baos = ByteArrayOutputStream()
+                        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos)
+                        var data = baos.toByteArray()
+                        Log.d("ssss", i.toString() + "Wwwwwwwwwwwwwwwwwwwwwww")
+                        Log.d("ssss", PictureList.get(i))
+
+                        FirebaseStorage.getInstance().reference.child(cur_user + "//" + courseName).child(i.toString()).putBytes(data)
+                                .addOnCompleteListener { task ->
+                                    if (task.isSuccessful) {
+                                        UpdatedPictureList.add(task.result.downloadUrl.toString())
+                                        Log.e("check", task.result.downloadUrl.toString())
+                                    } else {
+                                        Log.e("check", "fail")
+                                    }
+                                }
+                    }
+                }
+            } catch (ex: Exception) {
+
+            } finally {
+                Log.d("ssss", "finally")
+
+            }
+            while(PictureList.size != UpdatedPictureList.size) {
+                Log.d("ssss",PictureList.size.toString() + " " + UpdatedPictureList.size.toString())
+
+                Thread.sleep(1000)
+            }
+            Log.d("ssss", "ffff")
+
+            return "complete"
+        }
+
+        override fun onProgressUpdate(vararg values: String?) {
+            Log.e("update","onProgressUpdate")
+        }
+
+        override fun onPostExecute(result: String?) {
+            super.onPostExecute(result)
+            if(result.equals("complete"))
+                asyncDialog.dismiss()
+            fragmentManager?.popBackStack()
+            var myCourse = CourseDTO(cur_user, courseName, latitude, longitude, UpdatedPictureList, StampList, like, postId)
+            FirebaseFirestore.getInstance().collection("posts").document().set(myCourse).addOnSuccessListener {
+
+            }.addOnFailureListener { exception ->
+
+
+            }
+        }
+
     }
 }
 
