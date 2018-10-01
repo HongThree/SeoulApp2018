@@ -10,16 +10,20 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import com.example.kihunahn.seoulapp2018.HomeActivity
 import com.example.kihunahn.seoulapp2018.R
+import com.squareup.picasso.Picasso
+import java.util.*
 
 
 class BlankFragment : Fragment() {
     private var imageResource: Int = 0
     private var bitmap: Bitmap? = null
+    var plst:ArrayList<String>?=null
     var position :Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         imageResource = arguments!!.getInt("image_source")
+        plst = arguments!!.getStringArrayList("lst")
         position = arguments!!.getInt("adapter_pos")
     }
 
@@ -35,8 +39,10 @@ class BlankFragment : Fragment() {
         val o = BitmapFactory.Options()
         o.inSampleSize = 1
         //o.inDither = false
-        bitmap = BitmapFactory.decodeResource(resources, imageResource, o)
-        imageView.setImageBitmap(bitmap)
+        var fileName = plst!!.get(0)
+        Picasso.get().load(fileName).into(imageView)
+//        bitmap = BitmapFactory.decodeResource(resources, imageResource, o)
+//        imageView.setImageBitmap(bitmap)
 
 
         imageView.setOnClickListener {
@@ -63,10 +69,11 @@ class BlankFragment : Fragment() {
     }
 
     companion object {
-        fun getInstance(resourceID: Int, pos: Int): BlankFragment {
+        fun getInstance(resourceID: Int, lst:ArrayList<String>, pos: Int): BlankFragment {
             val f = BlankFragment()
             val args = Bundle()
             args.putInt("image_source", resourceID)
+            args.putStringArrayList("lst",lst)
             args.putInt("adapter_pos", pos)
             f.arguments = args
             return f

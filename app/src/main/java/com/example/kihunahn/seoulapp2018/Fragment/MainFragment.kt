@@ -11,8 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.kihunahn.seoulapp2018.Adapter.PostsAdapter
 import com.example.kihunahn.seoulapp2018.CourseDTO
-import com.example.kihunahn.seoulapp2018.PictureDTO
-import com.example.kihunahn.seoulapp2018.PlaceData
+import com.example.kihunahn.seoulapp2018.HomeActivity
 import com.example.kihunahn.seoulapp2018.R
 import com.example.kihunahn.seoulapp2018.model.Post
 import com.google.firebase.auth.FirebaseAuth
@@ -34,9 +33,27 @@ class MainFragment : Fragment(){
 
     //Firebase 로그인한 사용자 정보
     var cur_user = FirebaseAuth.getInstance().currentUser?.email
-    var cur_uid = FirebaseAuth.getInstance().currentUser?.uid
+    private val onItemClickListener = object : PostsAdapter.OnItemClickListener {
+        override fun onItemClick(view: View, position: Int) {
+            val nextFragment = Content2()
+            val bundle = Bundle()
 
+            bundle.putSerializable("PictureList", courseList!!.get(position).PictureList)
+            bundle.putSerializable("latitude", courseList!!.get(position).lat)
+            bundle.putSerializable("longitude", courseList!!.get(position).lng)
+            bundle.putSerializable("stampList", courseList!!.get(position).stampList)
+            nextFragment.arguments = bundle
 
+            val fragmentManager = fragmentManager
+            val fragmentTransaction = fragmentManager!!.beginTransaction()
+
+            fragmentTransaction.setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
+            fragmentTransaction.replace(R.id.container, nextFragment)
+            //fragmentTransaction.addToBackStack(null)
+            HomeActivity.curFragment = 1
+            fragmentTransaction.commit()
+        }
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -48,7 +65,6 @@ class MainFragment : Fragment(){
 
         //Firebase 로그인한 사용자 정보
         val mAuth = FirebaseAuth.getInstance()
-        val user = mAuth.getCurrentUser()
 
         return view
     }
@@ -60,7 +76,7 @@ class MainFragment : Fragment(){
             posts.add(Post(cur_user!!.substringBeforeLast("@") + " 의 여행", "이곳에 여행에 대해 한줄 요약", resourceIDs))
 
         adapter = PostsAdapter(courseList, childFragmentManager)
-
+        adapter.setOnItemClickListener(onItemClickListener)
         newsfeed?.layoutManager = LinearLayoutManager(activity)
         newsfeed?.adapter = adapter
     }
